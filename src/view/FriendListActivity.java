@@ -1,9 +1,10 @@
 package view;
 
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.FriendListModel;
+import model.ModelListener;
 import service.LoadFriendsService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -15,32 +16,25 @@ import android.os.Bundle;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ListAdapter;
 
 import com.origamilabs.library.views.StaggeredGridView;
-import com.origamilabs.library.views.StaggeredGridView.OnItemClickListener;
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
 
-public class FriendListActivity extends Activity {
+public class FriendListActivity extends Activity implements ModelListener {
 	private ActivityHelper helper;
 	private Renren renren;
 	private LoadFriendsService service;
+	private FriendListModel friendListModel;
 
 	private ServiceConnection sConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder binder) {
 			service = ((LoadFriendsService.MyBinder) binder).getService();
 			Log.i("ServiceConnection", "connected");
-			//helper.showWaitingDialog(FriendListActivity.this);
-			while (true) {
-				if (service.isDone()) {
-					helper.dismissProgress();
-					showData(service.getFriendList());
-					break;
-				}
-			}
+			helper.showWaitingDialog(FriendListActivity.this);
+			friendListModel = FriendListModel.getInstance();
+			friendListModel.register(FriendListActivity.this);
 		}
 
 		@Override
@@ -97,24 +91,6 @@ public class FriendListActivity extends Activity {
 		int margin = getResources().getDimensionPixelSize(R.dimen.margin);
 		gridView.setItemMargin(margin);
 		gridView.setPadding(margin, 0, margin, 0);
-//		gridView.setOnItemClickListener(new OnItemClickListener() {
-//			@Override
-//			public void onItemClick(StaggeredGridView parent, View view,
-//					int position, long id) {
-//				ListAdapter adapter = parent.getAdapter();
-//
-//				@SuppressWarnings("unchecked")
-//				HashMap<String, Object> item = (HashMap<String, Object>) adapter
-//						.getItem(position);
-//
-//				long uid = (Long) item.get("uid");
-//				Intent intent = new Intent(FriendListActivity.this,
-//						PhotoFragmentActivity.class);
-//				intent.putExtra("uid", uid);
-//				intent.putExtra(Renren.RENREN_LABEL, renren);
-//				startActivity(intent);
-//			}
-//		});
 	
 		MyStaggeredAdapter adapter = new MyStaggeredAdapter(
 				FriendListActivity.this, data, R.layout.friend_list_item,
@@ -122,6 +98,7 @@ public class FriendListActivity extends Activity {
 						R.id.ItemImage });
 
 		gridView.setAdapter(adapter);
+		helper.dismissProgress();
 		adapter.notifyDataSetChanged();
 	}
 
@@ -130,6 +107,13 @@ public class FriendListActivity extends Activity {
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 	    bindService(intent, sConnection, Context.BIND_AUTO_CREATE);
 	    Log.i("log service", "bind");
+	}
+
+	@Override
+	public void doSomething() {
+		if (friendListModel.getFriendList() != null) {
+			showData(friendListModel.getFriendList());
+		}
 	}
 
 }

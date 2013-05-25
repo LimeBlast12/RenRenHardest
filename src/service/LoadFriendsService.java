@@ -5,6 +5,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import model.FriendListModel;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
@@ -55,6 +57,9 @@ public class LoadFriendsService extends Service {
 	        map.put("uid", friend.getUid());
 	        data.add(map);
 		}
+		
+		FriendListModel model = FriendListModel.getInstance();
+		model.setFriendList(data);
 	}
 	
 	public List<Map<String, Object>> getFriendList() {
@@ -94,7 +99,8 @@ public class LoadFriendsService extends Service {
 //						}
 //					});
 					//helper.dismissProgress();
-					setData(bean.getFriendList());	
+					Log.i("FriendListService","complete");
+					setData(bean.getFriendList());				
 					isDone = true;
 				}
 

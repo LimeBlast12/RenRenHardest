@@ -4,9 +4,9 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
+<!--     <uses-sdk
         android:minSdkVersion="8"
-        android:targetSdkVersion="17" />
+        android:targetSdkVersion="17" /> -->
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -34,7 +34,6 @@
 			android:name="com.renren.api.connect.android.AuthorizationHelper$BlockActivity"
 			android:theme="@android:style/Theme.Dialog"></activity>			
 		
-        <activity android:name="view.PhotoFragmentActivity" ></activity>
         <activity android:name="view.FriendListActivity" ></activity>
         <activity android:name="view.LoginedMainActivity" ></activity>
         

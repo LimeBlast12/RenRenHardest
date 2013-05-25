@@ -16,9 +16,9 @@ import com.renren.api.connect.android.view.RenrenAuthListener;
 import edu.nju.renrenhardest.R;
 
 public class MainActivity extends Activity {
-	private static final String API_KEY = "955c70ff53b8488488c0ea84a75b92ce";
-	private static final String SECRET_KEY = "f15118b13b7a4440af0bcd6a46e5dedf";
-	private static final String APP_ID = "232588";
+	private static final String API_KEY = "aa72e895b6a84941bb4ef31c8a69c179";
+	private static final String SECRET_KEY = "322b904c74674d0ba333d5e4557dc7bf";
+	private static final String APP_ID = "235450";
 	private Renren renren;
 	private Handler handler;
 	private ActivityHelper helper;
@@ -34,6 +34,7 @@ public class MainActivity extends Activity {
 		handler = new Handler();
 		initButtons();
 		if (renren.isSessionKeyValid()) {//已经登录
+			Log.i("MainActivity", "logined");
 			startLoginedMainActivity();
 		}
 	}
@@ -58,6 +59,7 @@ public class MainActivity extends Activity {
 	 * 展示已登录的主界面
 	 */
 	private void startLoginedMainActivity() {
+		Log.i("MainActivity", "start LoginedActivity");
 		Intent intent = new Intent(this, LoginedMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);
