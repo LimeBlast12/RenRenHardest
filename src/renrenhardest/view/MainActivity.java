@@ -1,5 +1,6 @@
-package edu.nju.renrenhardest;
+package renrenhardest.view;
 
+import edu.nju.renrenhardest.R;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
