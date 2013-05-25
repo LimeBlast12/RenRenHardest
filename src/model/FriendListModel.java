@@ -16,6 +16,7 @@ public class FriendListModel extends AbstractModel {
 	}
 	
 	public void setFriendList(List<Map<String, Object>> data) {
+		Log.i("FriendListModel","setFriendList");
 		this.friendList = data;
 		if (friendList == null) {
 			Log.i("FriendListModel setter","null");
@@ -24,6 +25,7 @@ public class FriendListModel extends AbstractModel {
 	}
 
 	public List<Map<String, Object>> getFriendList() {
+		Log.i("FriendListModel","getFriendList");
 		if (friendList == null) {
 			Log.i("FriendListModel getter","null");
 		}

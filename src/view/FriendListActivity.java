@@ -13,6 +13,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.ServiceConnection;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
@@ -27,12 +28,20 @@ public class FriendListActivity extends Activity implements ModelListener {
 	private Renren renren;
 	private LoadFriendsService service;
 	private FriendListModel friendListModel;
+	/*使用handler来避免更新UI的线程安全问题*/
+	private Handler handler = null;
+	/*实际用于更新UI的线程*/
+	private Runnable runnableUi = new Runnable() {
+		@Override
+		public void run() {
+			showData(friendListModel.getFriendList());
+		}
+	};
 
 	private ServiceConnection sConnection = new ServiceConnection() {
 		public void onServiceConnected(ComponentName className, IBinder binder) {
 			service = ((LoadFriendsService.MyBinder) binder).getService();
 			Log.i("ServiceConnection", "connected");
-			helper.showWaitingDialog(FriendListActivity.this);
 			friendListModel = FriendListModel.getInstance();
 			friendListModel.register(FriendListActivity.this);
 		}
@@ -43,7 +52,6 @@ public class FriendListActivity extends Activity implements ModelListener {
 			Log.i("ServiceConnection", "disconnected");
 		}
 	};
-
 
 	@SuppressLint("NewApi")
 	@Override
@@ -59,6 +67,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 			renren = helper.getRenren();
 		}	
 		setContentView(R.layout.friend_list);
+		handler = new Handler();
 		loadFriends();
 	}
 
@@ -85,6 +94,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 	}
 
 	public void showData(List<Map<String, Object>> data) {
+		Log.i("FriendListActivity", "show data");
 		StaggeredGridView gridView = (StaggeredGridView) this
 				.findViewById(R.id.staggeredGridView1);
 
@@ -98,8 +108,8 @@ public class FriendListActivity extends Activity implements ModelListener {
 						R.id.ItemImage });
 
 		gridView.setAdapter(adapter);
-		helper.dismissProgress();
-		adapter.notifyDataSetChanged();
+		//helper.dismissProgress();
+		adapter.notifyDataSetChanged();   
 	}
 
 	private void loadFriends() {
@@ -109,10 +119,19 @@ public class FriendListActivity extends Activity implements ModelListener {
 	    Log.i("log service", "bind");
 	}
 
+	/*当FriendListModel的数据更新时调用*/
 	@Override
 	public void doSomething() {
+		Log.i("FriendListActivity", "do something");
 		if (friendListModel.getFriendList() != null) {
-			showData(friendListModel.getFriendList());
+			new Thread(){  
+	            public void run(){          
+	            	/*触发更新UI的线程启动*/
+	                handler.post(runnableUi);   
+	            }                     
+	        }.start();   
+		} else {
+			Log.i("FriendListActivity", "friend list is null");
 		}
 	}
 
