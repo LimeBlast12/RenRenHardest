@@ -11,7 +11,7 @@
         android:layout_width="250dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
-        android:paddingTop="15dip"
+        android:layout_marginTop="50dip"
         android:src="@drawable/logo_wide" />
 
     <!-- auth buttons -->

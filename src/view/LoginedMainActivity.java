@@ -20,7 +20,7 @@ public class LoginedMainActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		this.setContentView(R.layout.logined_main);
+		this.setContentView(R.layout.game_chooseview);
 		helper = ActivityHelper.getInstance();
 		Intent intent = getIntent();
 		renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
@@ -44,7 +44,7 @@ public class LoginedMainActivity extends Activity {
 	}
 
 	private void initButtons() {
-		seeFriendsButton = (Button) findViewById(R.id.see_friends);
+		seeFriendsButton = (Button) findViewById(R.id.friend_portrait);
 		seeFriendsButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -53,7 +53,7 @@ public class LoginedMainActivity extends Activity {
 			}
 		});
 
-		seeMyselfButton = (Button) findViewById(R.id.see_myself);
+		seeMyselfButton = (Button) findViewById(R.id.self_portrait);
 		seeMyselfButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
