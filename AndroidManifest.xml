@@ -37,6 +37,10 @@
         <activity android:name="view.FriendListActivity" ></activity>
         <activity android:name="view.MyImagesActivity" ></activity>
         <activity android:name="view.LoginedMainActivity" ></activity>
+        <activity
+            android:name="view.GameMainActivity"
+            android:label="@string/title_activity_game_main" >
+        </activity>
         
         <service android:name="service.LoadFriendsService"></service>
         <service android:name="service.LoadMyImagesService"></service>
