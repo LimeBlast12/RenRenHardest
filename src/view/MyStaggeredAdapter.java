@@ -30,7 +30,7 @@ public class MyStaggeredAdapter extends SimpleAdapter {
 
 		if (convertView == null) {
 			LayoutInflater layoutInflator = LayoutInflater.from(context);
-			convertView = layoutInflator.inflate(R.layout.friend_list_item,
+			convertView = layoutInflator.inflate(R.layout.grid_item_with_text,
 					null);
 			holder = new ViewHolder();
 			holder.imageView = (ScaleImageView) convertView.findViewById(R.id.ItemImage);

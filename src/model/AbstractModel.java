@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public abstract class AbstractModel {
-	private List<ModelListener> listeners = new ArrayList<ModelListener>();
+	protected List<ModelListener> listeners = new ArrayList<ModelListener>();
+	protected boolean done = false; 
 	
 	public void register(ModelListener listener) {
 		this.listeners.add(listener);
@@ -15,8 +16,13 @@ public abstract class AbstractModel {
 	}
 	
 	protected void notifyListeners() {
+		done = true;
 		for (ModelListener listener : listeners) {
 			listener.doSomething();
 		}
+	}
+	
+	public boolean isDone() {
+		return done;
 	}
 }

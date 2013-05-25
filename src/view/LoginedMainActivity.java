@@ -106,11 +106,9 @@ public class LoginedMainActivity extends Activity {
 	}
 	
 	private void startMyPhotoFragmentActivity() {
-//		Intent intent = new Intent(LoginedMainActivity.this, PhotoFragmentActivity.class);
-//		long uid = renren.getCurrentUid();
-//        intent.putExtra("uid", uid);
-//        intent.putExtra(Renren.RENREN_LABEL, renren);
-//        startActivity(intent);
+		Intent intent = new Intent(this, MyImagesActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
 	}
 	
 	private void startGameMainActivity(){

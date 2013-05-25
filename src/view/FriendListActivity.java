@@ -66,7 +66,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		} else {
 			renren = helper.getRenren();
 		}	
-		setContentView(R.layout.friend_list);
+		setContentView(R.layout.staggered_grid_view);
 		handler = new Handler();
 		loadFriends();
 	}
@@ -93,7 +93,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		return super.onOptionsItemSelected(item);
 	}
 
-	public void showData(List<Map<String, Object>> data) {
+	private void showData(List<Map<String, Object>> data) {
 		Log.i("FriendListActivity", "show data");
 		StaggeredGridView gridView = (StaggeredGridView) this
 				.findViewById(R.id.staggeredGridView1);
@@ -103,12 +103,12 @@ public class FriendListActivity extends Activity implements ModelListener {
 		gridView.setPadding(margin, 0, margin, 0);
 	
 		MyStaggeredAdapter adapter = new MyStaggeredAdapter(
-				FriendListActivity.this, data, R.layout.friend_list_item,
+				FriendListActivity.this, data, R.layout.grid_item_with_text,
 				new String[] { "name", "image" }, new int[] { R.id.ItemText,
 						R.id.ItemImage });
 
 		gridView.setAdapter(adapter);
-		//helper.dismissProgress();
+		helper.dismissProgress();
 		adapter.notifyDataSetChanged();   
 	}
 
@@ -117,6 +117,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 	    bindService(intent, sConnection, Context.BIND_AUTO_CREATE);
 	    Log.i("log service", "bind");
+	    helper.showWaitingDialog(FriendListActivity.this);
 	}
 
 	/*当FriendListModel的数据更新时调用*/

@@ -108,7 +108,7 @@ public class MainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				//需要用户授予read_user_photo权限
+				//需要用户授予read_user_photo权限及read_user_album权限
 				String[] permissions = {PhotoHelper.GET_PHOTOS_PERMISSION, PhotoHelper.GET_ALBUMS_PERMISSION};
 				renren.authorize(MainActivity.this, permissions, listener);
 			}
