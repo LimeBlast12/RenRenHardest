@@ -2,12 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:background="@drawable/background" >
 
     <!-- Logo -->
 
     <ImageView
-        android:layout_width="wrap_content"
+        android:layout_width="250dip"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:paddingTop="15dip"
@@ -27,11 +28,11 @@
 
         <Button
             android:id="@+id/auth_site_mode"
-            android:layout_width="fill_parent"
-            android:layout_height="40dip"
-            android:layout_marginBottom="12dip"
-            android:gravity="center"
-            android:text="@string/auth_text" />         
+            android:background="@drawable/connect"
+            android:layout_width="150dip"
+            android:layout_height="30dip"
+            android:layout_marginTop="50dip"
+            android:layout_gravity="center" />         
 
     </LinearLayout>
 
