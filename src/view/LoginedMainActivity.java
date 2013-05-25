@@ -15,6 +15,7 @@ public class LoginedMainActivity extends Activity {
 	private ActivityHelper helper;
 	private Button seeFriendsButton;
 	private Button seeMyselfButton;
+	private Button startGameButton;
 	private Button logoutButton;
 
 	@Override
@@ -61,6 +62,15 @@ public class LoginedMainActivity extends Activity {
 				startMyPhotoFragmentActivity();
 			}
 		});
+		
+		startGameButton = (Button) findViewById(R.id.start_game);
+		startGameButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				startGameMainActivity();
+			}
+		});
 
 		logoutButton = (Button) findViewById(R.id.logout);
 		logoutButton.setOnClickListener(new View.OnClickListener() {
@@ -102,4 +112,11 @@ public class LoginedMainActivity extends Activity {
 //        intent.putExtra(Renren.RENREN_LABEL, renren);
 //        startActivity(intent);
 	}
+	
+	private void startGameMainActivity(){
+		Intent intent = new Intent(this, GameMainActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
 }

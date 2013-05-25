@@ -4,23 +4,20 @@
     <string name="app_name">RenRenHardest</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-	<string name="filter_grey">黑白</string>
-	<string name="filter_old">复古</string>
-	<string name="friend">好友</string>
-	<string name="number">No.1</string>
-	<string name="time">10.0</string>
-	<string name="choose_self_portrait">自己的头像</string>
-	<string name="choose_friend_portrait">好友的头像</string>
-	<string name="choose_start_game">开始游戏</string>
-	
-	<string name="exit_app">退出程序</string>
-    <string name="auth_text">连接人人网</string>
-   	<string name="see_friends">查看好友头像</string>
-   	<string name="see_myself">查看自己头像</string>
+    <string name="filter_grey">黑白</string>
+    <string name="filter_old">复古</string>
+    <string name="friend">好友</string>
+    <string name="number">No.1</string>
+    <string name="time">10.0</string>
+    <string name="choose_self_portrait">自己的头像</string>
+    <string name="choose_friend_portrait">好友的头像</string>
+    <string name="choose_start_game">开始游戏</string>
+    <string name="exit_app">退出程序</string>
     <string name="auth_failed">验证失败</string>
-
     <string name="logout">退出登录</string>
     <string name="logout_success">退出登录成功</string>
     <string name="username"></string>
     <string name="password"></string>
+    <string name="title_activity_game_main">GameMainActivity</string>
+
 </resources>
