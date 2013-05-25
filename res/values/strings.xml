@@ -19,5 +19,6 @@
     <string name="username"></string>
     <string name="password"></string>
     <string name="title_activity_game_main">GameMainActivity</string>
+    <string name="title_activity_dannni_main">DannniMainActivity</string>
 
 </resources>
