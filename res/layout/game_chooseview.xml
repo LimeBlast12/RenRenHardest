@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/MistyRose" >
+    
+    <LinearLayout
+    android:layout_width="200dip"
+    android:layout_height="250dip" 
+    android:orientation="vertical"
+    android:layout_gravity="center" >
+    
+        <Button
+            android:id="@+id/self_portrait"
+            android:background="@color/blue"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:text="@string/choose_self_portrait"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        
+        <Button
+            android:id="@+id/friend_portrait"
+            android:background="@color/yellow"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:text="@string/choose_friend_portrait"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        
+        <Button
+            android:id="@+id/start_game"
+            android:background="@color/red"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dip"
+            android:text="@string/choose_start_game"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        
+    </LinearLayout>
+
+</FrameLayout>

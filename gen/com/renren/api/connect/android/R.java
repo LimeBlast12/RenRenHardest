@@ -8,47 +8,47 @@ package com.renren.api.connect.android;
 
 public final class R {
 	public static final class id {
-		public static final int renren_sdk_upload_photo_cancel = 0x7f090033;
-		public static final int renren_sdk_pay_repair_item = 0x7f09001f;
-		public static final int renren_sdk_status_pub_buttons = 0x7f09002e;
-		public static final int renren_sdk_profile_photo = 0x7f09000b;
-		public static final int renren_sdk_pay_repair_item_bid = 0x7f090023;
-		public static final int renren_sdk_title_text = 0x7f09002d;
-		public static final int renren_sdk_album_location_label = 0x7f090011;
-		public static final int renren_sdk_pay_repair_item_time = 0x7f090022;
-		public static final int renren_sdk_profile_name = 0x7f09000c;
-		public static final int renren_sdk_pay_repair_item_order_num = 0x7f090020;
-		public static final int renren_sdk_pay_repair_logo_image_view = 0x7f09001b;
-		public static final int renren_sdk_create_album_cancel = 0x7f090016;
-		public static final int renren_album_name_value = 0x7f090017;
-		public static final int renren_sdk_status_ch_counter = 0x7f090027;
-		public static final int renren_sdk_album_description_label = 0x7f090013;
-		public static final int renren_sdk_album_location_value = 0x7f090012;
-		public static final int renren_sdk_status_edit_text = 0x7f090028;
-		public static final int renren_sdk_login_entry_password = 0x7f090019;
-		public static final int renren_sdk_login_entry_username = 0x7f090018;
-		public static final int renren_sdk_photo_view_image = 0x7f090031;
-		public static final int renren_sdk_album_name_value = 0x7f09000e;
-		public static final int renren_sdk_pay_repair_order_list = 0x7f09001d;
-		public static final int renren_sdk_album_visible_value = 0x7f090010;
-		public static final int renren_sdk_status_user_info = 0x7f09002b;
-		public static final int renren_sdk_status_cancel = 0x7f09002a;
-		public static final int renren_sdk_pay_repair_item_repair_button = 0x7f090026;
-		public static final int renren_sdk_login_confirm_button = 0x7f09001a;
-		public static final int renren_sdk_title_logo = 0x7f09002c;
-		public static final int renren_sdk_upload_photo_submit = 0x7f090032;
-		public static final int renren_sdk_create_album_submit = 0x7f090015;
-		public static final int renren_sdk_album_visible_label = 0x7f09000f;
-		public static final int renren_sdk_pay_repair_item_des = 0x7f090024;
-		public static final int renren_sdk_photo_caption_counter = 0x7f09002f;
-		public static final int renren_sdk_pay_repair_remove_all_button = 0x7f09001e;
-		public static final int renren_sdk_album_description_value = 0x7f090014;
-		public static final int renren_sdk_album_name_label = 0x7f09000d;
-		public static final int renren_sdk_photo_caption_value = 0x7f090030;
-		public static final int renren_sdk_pay_repair_item_amount = 0x7f090021;
-		public static final int renren_sdk_pay_repair_item_status = 0x7f090025;
-		public static final int renren_sdk_status_publish = 0x7f090029;
-		public static final int renren_sdk_pay_repair_overview_text_view = 0x7f09001c;
+		public static final int renren_sdk_upload_photo_cancel = 0x7f090036;
+		public static final int renren_sdk_pay_repair_item = 0x7f090022;
+		public static final int renren_sdk_status_pub_buttons = 0x7f090031;
+		public static final int renren_sdk_profile_photo = 0x7f09000e;
+		public static final int renren_sdk_pay_repair_item_bid = 0x7f090026;
+		public static final int renren_sdk_title_text = 0x7f090030;
+		public static final int renren_sdk_album_location_label = 0x7f090014;
+		public static final int renren_sdk_pay_repair_item_time = 0x7f090025;
+		public static final int renren_sdk_profile_name = 0x7f09000f;
+		public static final int renren_sdk_pay_repair_item_order_num = 0x7f090023;
+		public static final int renren_sdk_pay_repair_logo_image_view = 0x7f09001e;
+		public static final int renren_sdk_create_album_cancel = 0x7f090019;
+		public static final int renren_album_name_value = 0x7f09001a;
+		public static final int renren_sdk_status_ch_counter = 0x7f09002a;
+		public static final int renren_sdk_album_description_label = 0x7f090016;
+		public static final int renren_sdk_album_location_value = 0x7f090015;
+		public static final int renren_sdk_status_edit_text = 0x7f09002b;
+		public static final int renren_sdk_login_entry_password = 0x7f09001c;
+		public static final int renren_sdk_login_entry_username = 0x7f09001b;
+		public static final int renren_sdk_photo_view_image = 0x7f090034;
+		public static final int renren_sdk_album_name_value = 0x7f090011;
+		public static final int renren_sdk_pay_repair_order_list = 0x7f090020;
+		public static final int renren_sdk_album_visible_value = 0x7f090013;
+		public static final int renren_sdk_status_user_info = 0x7f09002e;
+		public static final int renren_sdk_status_cancel = 0x7f09002d;
+		public static final int renren_sdk_pay_repair_item_repair_button = 0x7f090029;
+		public static final int renren_sdk_login_confirm_button = 0x7f09001d;
+		public static final int renren_sdk_title_logo = 0x7f09002f;
+		public static final int renren_sdk_upload_photo_submit = 0x7f090035;
+		public static final int renren_sdk_create_album_submit = 0x7f090018;
+		public static final int renren_sdk_album_visible_label = 0x7f090012;
+		public static final int renren_sdk_pay_repair_item_des = 0x7f090027;
+		public static final int renren_sdk_photo_caption_counter = 0x7f090032;
+		public static final int renren_sdk_pay_repair_remove_all_button = 0x7f090021;
+		public static final int renren_sdk_album_description_value = 0x7f090017;
+		public static final int renren_sdk_album_name_label = 0x7f090010;
+		public static final int renren_sdk_photo_caption_value = 0x7f090033;
+		public static final int renren_sdk_pay_repair_item_amount = 0x7f090024;
+		public static final int renren_sdk_pay_repair_item_status = 0x7f090028;
+		public static final int renren_sdk_status_publish = 0x7f09002c;
+		public static final int renren_sdk_pay_repair_overview_text_view = 0x7f09001f;
 	}
 	public static final class color {
 		public static final int renren_sdk_edittext_bg = 0x7f040001;
@@ -101,12 +101,12 @@ public final class R {
 		public static final int renren_sdk_pay_repair_overview = 0x7f05001b;
 	}
 	public static final class layout {
-		public static final int renren_sdk_upload_photo = 0x7f03000b;
-		public static final int renren_sdk_pay_repair_item = 0x7f030009;
-		public static final int renren_sdk_create_album = 0x7f030006;
-		public static final int renren_sdk_pay_repair = 0x7f030008;
-		public static final int renren_sdk_login_entry = 0x7f030007;
-		public static final int renren_sdk_status_pub = 0x7f03000a;
+		public static final int renren_sdk_upload_photo = 0x7f03000c;
+		public static final int renren_sdk_pay_repair_item = 0x7f03000a;
+		public static final int renren_sdk_create_album = 0x7f030007;
+		public static final int renren_sdk_pay_repair = 0x7f030009;
+		public static final int renren_sdk_login_entry = 0x7f030008;
+		public static final int renren_sdk_status_pub = 0x7f03000b;
 	}
 	public static final class drawable {
 		public static final int renren_sdk_edittext_bg = 0x7f020014;
