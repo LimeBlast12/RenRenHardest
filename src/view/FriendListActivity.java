@@ -8,13 +8,9 @@ import model.ModelListener;
 import service.LoadFriendsService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
-import android.content.ComponentName;
-import android.content.Context;
 import android.content.Intent;
-import android.content.ServiceConnection;
 import android.os.Bundle;
 import android.os.Handler;
-import android.os.IBinder;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -26,7 +22,6 @@ import edu.nju.renrenhardest.R;
 public class FriendListActivity extends Activity implements ModelListener {
 	private ActivityHelper helper;
 	private Renren renren;
-	private LoadFriendsService service;
 	private FriendListModel friendListModel;
 	/*使用handler来避免更新UI的线程安全问题*/
 	private Handler handler = null;
@@ -38,20 +33,20 @@ public class FriendListActivity extends Activity implements ModelListener {
 		}
 	};
 
-	private ServiceConnection sConnection = new ServiceConnection() {
-		public void onServiceConnected(ComponentName className, IBinder binder) {
-			service = ((LoadFriendsService.MyBinder) binder).getService();
-			Log.i("ServiceConnection", "connected");
-			friendListModel = FriendListModel.getInstance();
-			friendListModel.register(FriendListActivity.this);
-		}
-
-		@Override
-		public void onServiceDisconnected(ComponentName arg0) {
-			service = null;
-			Log.i("ServiceConnection", "disconnected");
-		}
-	};
+//	private ServiceConnection sConnection = new ServiceConnection() {
+//		public void onServiceConnected(ComponentName className, IBinder binder) {
+//			service = ((LoadFriendsService.MyBinder) binder).getService();
+//			Log.i("ServiceConnection", "connected");
+//			friendListModel = FriendListModel.getInstance();
+//			friendListModel.register(FriendListActivity.this);
+//		}
+//
+//		@Override
+//		public void onServiceDisconnected(ComponentName arg0) {
+//			service = null;
+//			Log.i("ServiceConnection", "disconnected");
+//		}
+//	};
 
 	@SuppressLint("NewApi")
 	@Override
@@ -68,6 +63,8 @@ public class FriendListActivity extends Activity implements ModelListener {
 		}	
 		setContentView(R.layout.staggered_grid_view);
 		handler = new Handler();
+		friendListModel = FriendListModel.getInstance();
+        friendListModel.register(FriendListActivity.this);
 		loadFriends();
 	}
 
@@ -113,10 +110,13 @@ public class FriendListActivity extends Activity implements ModelListener {
 	}
 
 	private void loadFriends() {
-		Intent intent = new Intent(FriendListActivity.this, LoadFriendsService.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-	    bindService(intent, sConnection, Context.BIND_AUTO_CREATE);
-	    Log.i("log service", "bind");
+		if (friendListModel.isDone()) {//已有数据
+			startUpdateUiThread();
+		} else {
+			Intent intent = new Intent(FriendListActivity.this, LoadFriendsService.class);
+			intent.putExtra(Renren.RENREN_LABEL, renren);
+			startService(intent);
+		}
 	    helper.showWaitingDialog(FriendListActivity.this);
 	}
 
@@ -124,16 +124,20 @@ public class FriendListActivity extends Activity implements ModelListener {
 	@Override
 	public void doSomething() {
 		Log.i("FriendListActivity", "do something");
-		if (friendListModel.getFriendList() != null) {
-			new Thread(){  
-	            public void run(){          
-	            	/*触发更新UI的线程启动*/
-	                handler.post(runnableUi);   
-	            }                     
-	        }.start();   
+		if (friendListModel.isDone()) {
+			startUpdateUiThread();
 		} else {
 			Log.i("FriendListActivity", "friend list is null");
 		}
+	}
+	
+	private void startUpdateUiThread() {		
+		new Thread(){  
+            public void run(){          
+            	/*触发更新UI的线程启动*/
+                handler.post(runnableUi);   
+            }                     
+        }.start();   
 	}
 
 }

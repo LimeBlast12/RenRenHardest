@@ -1,5 +1,7 @@
 package view;
 
+import service.LoadFriendsService;
+import service.LoadMyImagesService;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -34,6 +36,8 @@ public class MainActivity extends Activity {
 		handler = new Handler();
 		initButtons();
 		if (renren.isSessionKeyValid()) {//已经登录
+			loadFriends();
+			loadMyImages();
 			Log.i("MainActivity", "logined");
 			startLoginedMainActivity();
 		}
@@ -74,6 +78,8 @@ public class MainActivity extends Activity {
 			@Override
 			public void onComplete(Bundle values) {
 				Log.d("test", values.toString());
+				loadFriends();
+				loadMyImages();
 				startLoginedMainActivity();
 			}
 
@@ -121,6 +127,18 @@ public class MainActivity extends Activity {
 		if (renren != null) {
 			renren.authorizeCallback(requestCode, resultCode, data);
 		}
+	}
+	
+	private void loadFriends() {
+		Intent intent = new Intent(this, LoadFriendsService.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startService(intent);
+	}
+	
+	private void loadMyImages() {
+		Intent intent = new Intent(this, LoadMyImagesService.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startService(intent);
 	}
 
 }

@@ -23,8 +23,6 @@ import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean;
 import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Friend;
 
 public class LoadFriendsService extends Service {
-	private List<Map<String, Object>> data;
-	private boolean isDone = false;
 	private final IBinder binder = new MyBinder();
 	
 	@Override
@@ -37,6 +35,7 @@ public class LoadFriendsService extends Service {
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startedId) {
 		Log.i("LoadFriendsService", "onStartCommand");
+		loadFriends(intent);
 		return Service.START_REDELIVER_INTENT;
 	}
 	
@@ -47,8 +46,39 @@ public class LoadFriendsService extends Service {
 		return binder;
 	}
 	
-	public void setData(List<Friend> friendList) {
-		data = new ArrayList<Map<String, Object>>();
+	private void loadFriends(Intent intent) {
+		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
+		Log.i("loadFriends", "begin");
+		if (renren != null) {
+			Log.i("loadFriends", "renren is not null");
+			AsyncRenren asyncRenren = new AsyncRenren(renren);
+			FriendsGetFriendsRequestParam param = new FriendsGetFriendsRequestParam();
+			AbstractRequestListener<FriendsGetFriendsResponseBean> listener = new AbstractRequestListener<FriendsGetFriendsResponseBean>() {
+
+				@Override
+				public void onComplete(final FriendsGetFriendsResponseBean bean) {
+					Log.i("FriendListService","complete");
+					setData(bean.getFriendList());				
+				}
+
+				@Override
+				public void onRenrenError(RenrenError renrenError) {
+					// TODO Auto-generated method stub
+				}
+
+				@Override
+				public void onFault(Throwable fault) {
+					// TODO Auto-generated method stub		
+				}
+
+			};
+			asyncRenren.getFriends(param, listener);	
+		}
+		
+	}
+	
+	private void setData(List<Friend> friendList) {
+		List<Map<String, Object>>data = new ArrayList<Map<String, Object>>();
         
 		for (Friend friend: friendList) {
 			Map<String, Object> map = new HashMap<String, Object>();
@@ -62,73 +92,10 @@ public class LoadFriendsService extends Service {
 		model.setFriendList(data);
 	}
 	
-	public List<Map<String, Object>> getFriendList() {
-		return data;
-	}
-	
-	public boolean isDone() {
-		return isDone;
-	}
-
 	public class MyBinder extends Binder {
 		public LoadFriendsService getService() {
 			return LoadFriendsService.this;
 		}
-	}
-	
-	private void loadFriends(Intent intent) {
-		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
-		Log.i("loadFriends", "begin");
-		if (renren != null) {
-			Log.i("loadFriends", "renren is not null");
-			AsyncRenren asyncRenren = new AsyncRenren(renren);
-			//helper.showWaitingDialog(this);
-			FriendsGetFriendsRequestParam param = new FriendsGetFriendsRequestParam();
-			AbstractRequestListener<FriendsGetFriendsResponseBean> listener = new AbstractRequestListener<FriendsGetFriendsResponseBean>() {
-
-				@Override
-				public void onComplete(final FriendsGetFriendsResponseBean bean) {
-//					runOnUiThread(new Runnable() {
-//						
-//						@Override
-//						public void run() {
-//							helper.dismissProgress();
-//							setData(bean.getFriendList());	
-//							isDone = true;
-//							display();
-//						}
-//					});
-					//helper.dismissProgress();
-					Log.i("FriendListService","complete");
-					setData(bean.getFriendList());				
-					isDone = true;
-				}
-
-				@Override
-				public void onRenrenError(final RenrenError renrenError) {
-//					runOnUiThread(new Runnable() {
-//						
-//						@Override
-//						public void run() {
-//							helper.dismissProgress();
-//						}
-//					});
-				}
-
-				@Override
-				public void onFault(final Throwable fault) {
-//					runOnUiThread(new Runnable() {
-//						
-//						@Override
-//						public void run() {
-//							helper.dismissProgress();
-//						}
-//					});
-				}
-			};
-			asyncRenren.getFriends(param, listener);	
-		}
-		
 	}
 
 }
