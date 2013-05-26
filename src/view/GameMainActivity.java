@@ -1,30 +1,29 @@
 package view;
 
+import helper.ImageLoader;
+
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import com.renren.api.connect.android.Renren;
-
-import loader.ImageLoader;
 import model.ImageDisplay;
-import edu.nju.renrenhardest.R;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.util.Log;
+import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
+
+import com.renren.api.connect.android.Renren;
+
+import edu.nju.renrenhardest.R;
 
 public class GameMainActivity extends Activity {
 	private Renren renren;

@@ -1,9 +1,10 @@
 package view;
 
+import helper.ImageLoader;
+
 import java.util.List;
 import java.util.Map;
 
-import loader.ImageLoader;
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;

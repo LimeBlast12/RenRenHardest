@@ -111,7 +111,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 
 	private void loadFriends() {
 		if (friendListModel.isDone()) {//已有数据
-			startUpdateUiThread();
+			//startUpdateUiThread();
 		} else {
 			Intent intent = new Intent(FriendListActivity.this, LoadFriendsService.class);
 			intent.putExtra(Renren.RENREN_LABEL, renren);
