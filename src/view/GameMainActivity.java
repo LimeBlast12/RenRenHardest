@@ -6,6 +6,8 @@ import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import com.renren.api.connect.android.Renren;
+
 import loader.ImageLoader;
 import model.ImageDisplay;
 import edu.nju.renrenhardest.R;
@@ -25,7 +27,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 public class GameMainActivity extends Activity {
-	
+	private Renren renren;
 	private ImageView mImageView = null;
 	private TextView mTextView_number = null;
 	private TextView mTextView_time = null;
@@ -49,6 +51,7 @@ public class GameMainActivity extends Activity {
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
+		System.out.println("onCreate");
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true); //添加后退键
 		setContentView(R.layout.game_mainview);
@@ -58,16 +61,44 @@ public class GameMainActivity extends Activity {
 		mTextView_number = (TextView)findViewById(R.id.image_number);
 		/*初始化imageList，这里先写死*/
 		imageList = new ArrayList<ImageDisplay>();
-		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20130508/2110/h_large_QUg5_7e8f0000005b113e.jpg",0,0));
-		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn221/20120917/2305/h_large_o5GZ_3a09000032131375.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20120617/1240/h_large_aXvi_092e0000015a1376.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn221/20120411/0920/h_large_xDMR_5630000481282f76.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20120908/2030/h_large_nYKP_77f600000b4d1376.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn321/20120901/2005/h_large_n9cT_5cde000024bc1376.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn421/20120717/0830/h_large_4FNU_4d0a000004c61375.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120328/2205/h_large_swwA_5f400002f1642f75.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20120316/2300/h_large_Ozk8_563d00019bca2f76.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120315/2325/h_large_1Fli_5f4c00017f242f75.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn421/20120315/2320/h_large_aMGY_5f3d00017e712f75.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120229/2150/h_large_hyxy_7a94000784202f75.jpg",0,0));
 		/*初始化imageView,imageLoader*/
 		mImageView = (ImageView)findViewById(R.id.iv);
 		setImage(0);
 		/*计时开始*/
 		timer();
+	}
+	
+	public void onResume(){
+		super.onResume();
+		System.out.println("onResume");
+	}
+	
+	public void onRestart(){
+		super.onRestart();
+		System.out.println("onRestart");
+	}
+	
+	public void onDestroy(){
+		System.out.println("onDestroy");
+		mTimer.cancel();
+		mTimerTask.cancel();
+		super.onDestroy();
+	}
+	
+	public void onStop(){
+		super.onStop();
+		count = 0;
+		System.out.println("onStop");
 	}
 
 	@Override
@@ -91,6 +122,7 @@ public class GameMainActivity extends Activity {
 		}
 		return super.onOptionsItemSelected(item);
 	}
+
 	
 	private void initButtons() {
 		mButton_filter_grey = (Button) findViewById(R.id.filter_grey);
@@ -121,7 +153,7 @@ public class GameMainActivity extends Activity {
 	/*change_image与更换图片有关*/
 	private void change_image_and_number(){
 		/*这里的5是一组图片的总数*/
-		if(current_index<5){
+		if(current_index<10){
 			/*先改变图片*/
 			setImage(current_index);
 	        /*再改变数字*/
@@ -168,7 +200,14 @@ public class GameMainActivity extends Activity {
 						} catch (InterruptedException e) {
 						}	
 					} while (count-total_time>=0);
-					count ++;  
+					count ++;
+					/*时间到了调至GameOver界面*/
+					if(count==10){
+						/*先要关闭Timer和TimerTask*/
+						mTimer.cancel();
+						mTimerTask.cancel();
+						startGameOverView();
+					}
 				}
 			};
 		}
@@ -187,5 +226,11 @@ public class GameMainActivity extends Activity {
 	private void updateTextView_time(){
 		int time_left = total_time-count;
 		mTextView_time.setText(String.valueOf(time_left));
+	}
+	
+	public void startGameOverView(){
+		Intent intent = new Intent(GameMainActivity.this, GameOverActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
 	}
 }

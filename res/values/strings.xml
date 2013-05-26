@@ -12,6 +12,7 @@
     <string name="choose_self_portrait">自己的头像</string>
     <string name="choose_friend_portrait">好友的头像</string>
     <string name="choose_start_game">开始游戏</string>
+    <string name="game_over">Game Over</string>
     <string name="exit_app">退出程序</string>
     <string name="auth_failed">验证失败</string>
     <string name="logout">退出登录</string>
@@ -20,5 +21,6 @@
     <string name="password"></string>
     <string name="title_activity_game_main">GameMainActivity</string>
     <string name="title_activity_dannni_main">DannniMainActivity</string>
+    <string name="title_activity_game_over">GameOverActivity</string>
 
 </resources>
