@@ -61,7 +61,6 @@ public class GameMainActivity extends Activity {
 		/*初始化imageView,imageLoader*/
 		mImageView = (ImageView)findViewById(R.id.iv);
 		setImage(0);
-		imageLoader = new ImageLoader(GameMainActivity.this);
 		/*计时开始*/
 		timer();
 	}
@@ -114,6 +113,7 @@ public class GameMainActivity extends Activity {
 	}
 	
 	public void setImage(int index){
+		imageLoader = new ImageLoader(GameMainActivity.this);
 		Bitmap originalBitmap = imageLoader.getBitmap(imageList.get(index).getUrl());
 		mImageView = (ImageView)findViewById(R.id.iv);
 		mImageView.setImageBitmap(originalBitmap);
