@@ -1,8 +1,7 @@
 package test.unit;
 
+import model.FriendListModel;
 import service.LoadFriendsService;
-import android.app.ActivityManager;
-import android.app.ActivityManager.RunningServiceInfo;
 import android.content.Context;
 import android.content.Intent;
 import android.test.ServiceTestCase;
@@ -11,7 +10,7 @@ import android.util.Log;
 import com.renren.api.connect.android.PasswordFlowRequestParam;
 import com.renren.api.connect.android.Renren;
 
-public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService>{
+public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService> {
 	private String TAG = "Test LoadFriendsService";
 	private Context mContext;
 	private static final String API_KEY = "aa72e895b6a84941bb4ef31c8a69c179";
@@ -20,16 +19,18 @@ public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService>{
 	private static final String USERNAME = "wannan91@163.com";
 	private static final String PASSWORD = "101250171";
 	private Renren renren;
-	
+	private boolean started = false;
+
 	public LoadFriendsServiceTest() {
 		super(LoadFriendsService.class);
 	}
-	
+
 	protected void setUp() throws Exception {
 		Log.i(TAG, "set up");
 		mContext = this.getContext();
 		renren = new Renren(API_KEY, SECRET_KEY, APP_ID, mContext);
-		PasswordFlowRequestParam param = new PasswordFlowRequestParam(USERNAME, PASSWORD);
+		PasswordFlowRequestParam param = new PasswordFlowRequestParam(USERNAME,
+				PASSWORD);
 		try {
 			renren.authorize(param);
 		} catch (Throwable e) {
@@ -38,7 +39,7 @@ public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService>{
 		}
 		super.setUp();
 	}
-	
+
 	protected void tearDown() {
 		Log.i(TAG, "tear down");
 		try {
@@ -47,7 +48,7 @@ public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService>{
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * 测试LoadFriendsService的启动
 	 * 
@@ -55,45 +56,65 @@ public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService>{
 	public void testStart() {
 		Log.i(TAG, "test start");
 		try {
-			Intent intent = new Intent(getSystemContext(), LoadFriendsService.class);
+			Intent intent = new Intent(getSystemContext(),
+					LoadFriendsService.class);
 			intent.putExtra(Renren.RENREN_LABEL, renren);
 			startService(intent);
 			LoadFriendsService service = getService();
 			assertNotNull(service);
-			serviceIsRunning();
-		} catch(Exception e) {
+			started = true;
+		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
 	}
-	
-	public void testStop() {
-		Log.i(TAG, "test stop");
+
+	/**
+	 * 测试LoadFriendsService的任务完成情况：</br>
+	 * 十秒内会得到数据
+	 * 
+	 */
+	public void testLoadFriends() {
+		Log.i(TAG, "test load friends");
 		try {
-			Intent intent = new Intent(getSystemContext(), LoadFriendsService.class);
-			intent.putExtra(Renren.RENREN_LABEL, renren);
-			startService(intent);
-			LoadFriendsService service = getService();
+			if (!started) {//如果testStart先执行则不需要再启动
+				Intent intent = new Intent(getSystemContext(),
+						LoadFriendsService.class);
+				intent.putExtra(Renren.RENREN_LABEL, renren);
+				startService(intent);			
+			}
+			
+			final FriendListModel model = FriendListModel.getInstance();
+			
+			new Thread() {
+				@Override
+				public void run() {
+					int times = 10;
+					while (true) {
+						if (times < 0) {
+							break;
+						}
+						
+						if (model.isDone()) {
+							assertNotNull(model.getFriendList());
+							break;
+						}
+						
+						times--;
+						
+						try {
+							sleep(1000);
+						} catch (Exception ex) {
 
-			service.stopService(intent);
-			serviceIsRunning();
-		} catch(Exception e) {
+						}											
+					}
+				}
+			}.start();
+		} catch (Exception e) {
 			Log.e(TAG, e.getMessage());
 			e.printStackTrace();
 			fail(e.getMessage());
 		}
-	}
-
-	private boolean serviceIsRunning() {
-		Context mContext = getContext();
-		ActivityManager manager=(ActivityManager) mContext.getSystemService(Context.ACTIVITY_SERVICE);
-	    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
-	    	System.out.println(service.service.getClassName());
-	        if ("service.LoadFriendsService".equals(service.service.getClassName())) {
-	            return true;
-	        }
-	    }
-	    return false;
 	}
 }
