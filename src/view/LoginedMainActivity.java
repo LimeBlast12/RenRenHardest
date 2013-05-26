@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.Button;
 
 import com.renren.api.connect.android.Renren;
+
 import edu.nju.renrenhardest.R;
 
 public class LoginedMainActivity extends Activity {
@@ -33,7 +34,7 @@ public class LoginedMainActivity extends Activity {
 		if (!renren.isSessionKeyValid()) {//未登录	
 			Log.i("LoginedActivity", "not logined");
 			startMainActivity();
-		}
+		} 
 		initButtons();
 	}
 	
@@ -115,6 +116,5 @@ public class LoginedMainActivity extends Activity {
 		Intent intent = new Intent(this, GameMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
-	}
-	
+	}	
 }

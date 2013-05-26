@@ -59,7 +59,6 @@ public class LoadMyImagesService extends Service {
 		if (renren != null) {
 			Log.i("loadMyImages", "renren is not null");
 			AlbumGetRequestParam albumGetRequestParam = new AlbumGetRequestParam();
-
 			albumGetRequestParam.setUid(renren.getCurrentUid());
 
 			// 调用SDK异步接口获取相册
@@ -84,13 +83,11 @@ public class LoadMyImagesService extends Service {
 						@Override
 						public void onRenrenError(RenrenError renrenError) {
 							// TODO Auto-generated method stub
-
 						}
 
 						@Override
 						public void onFault(Throwable fault) {
 							// TODO Auto-generated method stub
-
 						}
 					});
 		}
@@ -107,16 +104,6 @@ public class LoadMyImagesService extends Service {
 		new AsyncRenren(renren).getPhotos(photoGetRequestParam,
 				new AbstractRequestListener<PhotoGetResponseBean>() {
 					@Override
-					public void onRenrenError(final RenrenError renrenError) {
-						
-					}
-
-					@Override
-					public void onFault(final Throwable fault) {
-						
-					}
-
-					@Override
 					public void onComplete(final PhotoGetResponseBean bean) {
 						// 查询完成，结束进度框，然后显示结果
 						/* 这里处理PhotoGetResponseBean */
@@ -130,18 +117,28 @@ public class LoadMyImagesService extends Service {
 
 						setMyImages(urls);
 					}
+
+					@Override
+					public void onRenrenError(final RenrenError renrenError) {
+						// TODO Auto-generated method stub
+					}
+
+					@Override
+					public void onFault(final Throwable fault) {
+						// TODO Auto-generated method stub
+					}
 				});
 	}
-	
+
 	private void setMyImages(String[] urls) {
 		List<Map<String, Object>> myImages = new ArrayList<Map<String, Object>>();
-        
-		for (String url: urls) {
-			Map<String, Object> map = new HashMap<String, Object>();	    
-	        map.put("image", url);
-	        myImages.add(map);
+
+		for (String url : urls) {
+			Map<String, Object> map = new HashMap<String, Object>();
+			map.put("image", url);
+			myImages.add(map);
 		}
-		
+
 		MyImagesModel model = MyImagesModel.getInstance();
 		model.setMyImages(myImages);
 	}

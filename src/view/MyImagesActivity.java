@@ -97,10 +97,13 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 	}
 	
 	private void loadMyImages() {
-		Intent intent = new Intent(MyImagesActivity.this, LoadMyImagesService.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-	    startService(intent);
-	    Log.i("MyImagesActivity", "start LoadMyImagesService");
+		if (myImagesModel.isDone()) {//已有数据
+			startUpdateUiThread();
+		} else {
+			Intent intent = new Intent(MyImagesActivity.this, LoadMyImagesService.class);
+			intent.putExtra(Renren.RENREN_LABEL, renren);
+			startService(intent);
+		}
 	    helper.showWaitingDialog(MyImagesActivity.this);
 	}
 	
@@ -108,15 +111,19 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 	public void doSomething() {
 		Log.i("MyImagesActivity", "do something");
 		if (myImagesModel.isDone()) {
-			new Thread(){  
-	            public void run(){          
-	            	/*触发更新UI的线程启动*/
-	                handler.post(runnableUi);   
-	            }                     
-	        }.start();   
+			startUpdateUiThread();
 		} else {
 			Log.i("MyImagesActivity", "images is null");
 		}
+	}
+	
+	private void startUpdateUiThread() {		
+		new Thread(){  
+            public void run(){          
+            	/*触发更新UI的线程启动*/
+                handler.post(runnableUi);   
+            }                     
+        }.start();   
 	}
 
 }
