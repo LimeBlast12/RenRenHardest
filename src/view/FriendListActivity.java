@@ -100,7 +100,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		gridView.setPadding(margin, 0, margin, 0);
 	
 		MyStaggeredAdapter adapter = new MyStaggeredAdapter(
-				FriendListActivity.this, data, R.layout.grid_item_with_text,
+				FriendListActivity.this, data, R.layout.grid_item,
 				new String[] { "name", "image" }, new int[] { R.id.ItemText,
 						R.id.ItemImage });
 

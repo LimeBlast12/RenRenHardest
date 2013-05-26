@@ -89,7 +89,7 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 	
 		MyStaggeredAdapter adapter = new MyStaggeredAdapter(
 				MyImagesActivity.this, data, R.layout.grid_item,
-				new String[] {"image" }, new int[] {R.id.ItemImageOnly });
+				new String[] {"image" }, new int[] {R.id.ItemImage });
 		
 		gridView.setAdapter(adapter);
 		helper.dismissProgress();

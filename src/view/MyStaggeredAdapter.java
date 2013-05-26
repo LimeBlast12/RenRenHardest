@@ -30,7 +30,7 @@ public class MyStaggeredAdapter extends SimpleAdapter {
 
 		if (convertView == null) {
 			LayoutInflater layoutInflator = LayoutInflater.from(context);
-			convertView = layoutInflator.inflate(R.layout.grid_item_with_text,
+			convertView = layoutInflator.inflate(R.layout.grid_item,
 					null);
 			holder = new ViewHolder();
 			holder.imageView = (ScaleImageView) convertView.findViewById(R.id.ItemImage);
@@ -44,7 +44,11 @@ public class MyStaggeredAdapter extends SimpleAdapter {
 		String url = (String)item.get("image");
 		String name = (String)item.get("name");
 		mLoader.DisplayImage(url, holder.imageView);
-		holder.textView.setText(name);
+		if (name != null) {
+			holder.textView.setText(name);
+		} else {
+			holder.textView.setVisibility(View.GONE);
+		}
 
 		return convertView;
 	}
