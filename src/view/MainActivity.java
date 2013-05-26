@@ -67,6 +67,7 @@ public class MainActivity extends Activity {
 		Intent intent = new Intent(this, LoginedMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);
+		this.finish();//关闭当前界面，避免按返回键时出错
 	}
 
 	/**

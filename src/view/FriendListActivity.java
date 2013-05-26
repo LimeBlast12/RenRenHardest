@@ -33,21 +33,6 @@ public class FriendListActivity extends Activity implements ModelListener {
 		}
 	};
 
-//	private ServiceConnection sConnection = new ServiceConnection() {
-//		public void onServiceConnected(ComponentName className, IBinder binder) {
-//			service = ((LoadFriendsService.MyBinder) binder).getService();
-//			Log.i("ServiceConnection", "connected");
-//			friendListModel = FriendListModel.getInstance();
-//			friendListModel.register(FriendListActivity.this);
-//		}
-//
-//		@Override
-//		public void onServiceDisconnected(ComponentName arg0) {
-//			service = null;
-//			Log.i("ServiceConnection", "disconnected");
-//		}
-//	};
-
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -67,12 +52,27 @@ public class FriendListActivity extends Activity implements ModelListener {
         friendListModel.register(FriendListActivity.this);
 		loadFriends();
 	}
+	
+	@Override
+	public void onStop() {
+		Log.i("FriendListActivity", "stop");
+		helper.dismissProgress();	
+		super.onStop();
+	}
 
 	@Override
+	public void onPause() {
+		Log.i("FriendListActivity", "pause");
+		helper.dismissProgress();
+		super.onPause();
+	}
+	
+	@Override
 	public void onDestroy() {
-		super.onDestroy();
+		Log.i("FriendListActivity", "destroy");
 		// 不销毁ProgressDialog会出现view not attached to window manager异常
 		helper.dismissProgress();
+		super.onDestroy();
 	}
 
 	@Override
