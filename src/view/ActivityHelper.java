@@ -44,6 +44,7 @@ public class ActivityHelper {
 	 */
 	public void showProgress(Context context, String title, String message) {
 		progressDialog = ProgressDialog.show(context, title, message);
+		progressDialog.setCancelable(true);
 	}
 
 	/**
