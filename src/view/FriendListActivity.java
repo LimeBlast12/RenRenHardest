@@ -29,7 +29,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 	private Runnable runnableUi = new Runnable() {
 		@Override
 		public void run() {
-			showData(friendListModel.getFriendList());
+			showData(friendListModel.getRandomFriendList(20));
 		}
 	};
 
