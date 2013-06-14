@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Map;
 
 import model.FriendListModel;
-
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;

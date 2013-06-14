@@ -48,10 +48,14 @@ public class FriendListModel extends AbstractModel {
 
 		this.randomFriendList = new ArrayList<Map<String, Object>>();
 		int size = this.friendList.size();
-		for (int i = 0; i < num; i++) {
+		int i = 0;
+		while (i < num) {
 			int location = (int) (Math.random() * size);
 			Map<String, Object> friend = this.friendList.get(location);
-			randomFriendList.add(friend);
+			if (!randomFriendList.contains(friend)) {
+				randomFriendList.add(friend);
+				i++;
+			}
 		}
 		
 		return this.randomFriendList;
