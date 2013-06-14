@@ -1,5 +1,6 @@
 package view;
 
+import helper.NetworkChecker;
 import service.LoadFriendsService;
 import service.LoadMyImagesService;
 import android.app.Activity;
@@ -23,6 +24,7 @@ public class MainActivity extends Activity {
 	private static final String APP_ID = "235450";
 	private Renren renren;
 	private Handler handler;
+	private NetworkChecker checker;
 	private ActivityHelper helper;
 	private Button oAuthButton;
 
@@ -34,6 +36,7 @@ public class MainActivity extends Activity {
 		helper = ActivityHelper.getInstance();
 		helper.setRenren(renren);
 		handler = new Handler();
+		checker = new NetworkChecker(MainActivity.this);
 		initButtons();
 		if (renren.isSessionKeyValid()) {//已经登录
 			loadFriends();
@@ -133,7 +136,13 @@ public class MainActivity extends Activity {
 	private void loadFriends() {
 		Intent intent = new Intent(this, LoadFriendsService.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startService(intent);
+		if (checker.isConnectingToInternet()) {
+			Log.i("FriendListActivity", "network enable");
+			startService(intent);
+			helper.showWaitingDialog(MainActivity.this);
+		} else {
+			Log.i("FriendListActivity", "network unable");
+		}
 	}
 	
 	private void loadMyImages() {

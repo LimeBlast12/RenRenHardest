@@ -10,7 +10,6 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import model.FriendListModel;
-
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
