@@ -1,17 +1,24 @@
 package service;
 
+import helper.NetworkCheck;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.MyImagesModel;
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.renren.api.connect.android.AsyncRenren;
 import com.renren.api.connect.android.Renren;
@@ -27,17 +34,48 @@ import com.renren.api.connect.android.photos.PhotoGetResponseBean;
 public class LoadMyImagesService extends Service {
 	private final IBinder binder = new MyBinder();
 
+	private NetworkCheck networkCheck = new NetworkCheck(LoadMyImagesService.this);
+	private Handler handler;
+	private boolean isTaskSheduled = false;
+	private Timer timer;
+	private final static long TASK_START_TIME = 0;
+	private final static long TASK_INTERVAl_TIME = 10000;
+	private TimerTask task = new TimerTask(){
+
+		@Override
+		public void run() {
+			handler.post(new Runnable(){
+
+				@Override
+				public void run() {
+					if(!networkCheck.isConnectingToInternet()){
+						Toast.makeText(getApplicationContext(),"No network", Toast.LENGTH_SHORT).show();
+					}
+					
+				}});
+		}
+		
+	};
+	
+	
 	@Override
 	public void onCreate() {
 		Log.i("LoadMyImagesService", "onCreate");
 		super.onCreate();
+		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
+		timer = new Timer("loadmyimagesservice");	//当前线程名为loadmyimagesservice
 	}
 
 	@SuppressLint({ "InlinedApi", "NewApi" })
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("LoadMyImagesService", "onStartCommand");
-		loadMyAlbums(intent);
+		if(isTaskSheduled==false){
+			timer.scheduleAtFixedRate(task,TASK_START_TIME,TASK_INTERVAl_TIME);  //0秒后,每个10000ms启动计时器
+			isTaskSheduled=true;
+		}
+		if(networkCheck.isConnectingToInternet())
+			loadMyAlbums(intent);
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -141,5 +179,11 @@ public class LoadMyImagesService extends Service {
 
 		MyImagesModel model = MyImagesModel.getInstance();
 		model.setMyImages(myImages);
+	}
+	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		timer.cancel();
 	}
 }

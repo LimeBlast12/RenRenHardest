@@ -1,9 +1,13 @@
 package service;
 
+import helper.NetworkCheck;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import model.FriendListModel;
 
@@ -11,8 +15,11 @@ import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Intent;
 import android.os.Binder;
+import android.os.Handler;
 import android.os.IBinder;
+import android.os.Looper;
 import android.util.Log;
+import android.widget.Toast;
 
 import com.renren.api.connect.android.AsyncRenren;
 import com.renren.api.connect.android.Renren;
@@ -24,18 +31,49 @@ import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Frie
 
 public class LoadFriendsService extends Service {
 	private final IBinder binder = new MyBinder();
+	private NetworkCheck networkCheck  = new NetworkCheck(LoadFriendsService.this);
+	
+	private boolean isTaskSheduled = false;
+    private Handler handler;
+	private Timer timer;
+	private final static long TASK_START_TIME = 0;
+	private final static long TASK_INTERVAl_TIME = 10000;
+	private TimerTask task = new TimerTask(){
+		
+		@Override
+		public void run() {
+			handler.post(new Runnable(){
+
+				@Override
+				public void run() {
+					if(!networkCheck.isConnectingToInternet()){
+						Toast.makeText(getApplicationContext(),"No network", Toast.LENGTH_SHORT).show();
+					}
+				}
+				
+			});
+		}
+		
+	};
 	
 	@Override
 	public void onCreate() {
 		Log.i("LoadFriendsService", "onCreate");
 		super.onCreate();
+		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
+		timer = new Timer("loadfriendsservice");   // 当前线程名为loadfriendsservice
 	}
 	
 	@SuppressLint("InlinedApi")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startedId) {
 		Log.i("LoadFriendsService", "onStartCommand");
-		loadFriends(intent);
+		if(isTaskSheduled==false){
+			timer.scheduleAtFixedRate(task,TASK_START_TIME,TASK_INTERVAl_TIME);  //0秒后,每个10000ms启动计时器
+			isTaskSheduled=true;
+		}
+		if(networkCheck.isConnectingToInternet())
+			loadFriends(intent);
 		return Service.START_REDELIVER_INTENT;
 	}
 	
@@ -98,4 +136,9 @@ public class LoadFriendsService extends Service {
 		}
 	}
 
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		timer.cancel();
+	}
 }
