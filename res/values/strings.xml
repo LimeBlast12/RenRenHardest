@@ -22,5 +22,7 @@
     <string name="title_activity_game_main">GameMainActivity</string>
     <string name="title_activity_dannni_main">DannniMainActivity</string>
     <string name="title_activity_game_over">GameOverActivity</string>
+    <string name="shake_tips">摇一摇，换一组好友</string>
+    <string name="start_game">开玩！</string>
 
 </resources>

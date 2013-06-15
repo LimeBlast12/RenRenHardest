@@ -51,7 +51,7 @@ public class LoginedMainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				startFriendListActivity();
+				startRandomFriendsActivity();
 			}
 		});
 
@@ -60,7 +60,7 @@ public class LoginedMainActivity extends Activity {
 
 			@Override
 			public void onClick(View v) {
-				startMyPhotoFragmentActivity();
+				startMyImagesActivity();
 			}
 		});
 		
@@ -88,10 +88,28 @@ public class LoginedMainActivity extends Activity {
 	}
 
 	/**
-	 * 展示好友列表的界面
+	 * 展示随机好友列表的界面
 	 */
-	private void startFriendListActivity() {
+	private void startRandomFriendsActivity() {
 		Intent intent = new Intent(this, RandomFriendsActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
+	/**
+	 * 展示所有好友列表的界面
+	 */
+	private void startAllFriendsActivity() {
+		Intent intent = new Intent(this, AllFriendsActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
+	/**
+	 * 展示所有自己头像的界面
+	 */
+	private void startMyImagesActivity() {
+		Intent intent = new Intent(this, MyImagesActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
 	}
@@ -104,12 +122,6 @@ public class LoginedMainActivity extends Activity {
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
-	}
-	
-	private void startMyPhotoFragmentActivity() {
-		Intent intent = new Intent(this, MyImagesActivity.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startActivity(intent);
 	}
 	
 	private void startGameMainActivity(){
