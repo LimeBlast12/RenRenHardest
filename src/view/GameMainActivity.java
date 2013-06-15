@@ -14,8 +14,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -52,7 +50,6 @@ public class GameMainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		System.out.println("onCreate");
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true); //添加后退键
 		setContentView(R.layout.game_mainview);
 		initButtons();
 		/*initTextViews*/
@@ -99,29 +96,6 @@ public class GameMainActivity extends Activity {
 		count = 0;
 		System.out.println("onStop");
 	}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.game_main, menu);
-		return true;
-	}
-	
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent parentActivityIntent = new Intent(GameMainActivity.this,
-					LoginedMainActivity.class);
-			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-					| Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(parentActivityIntent);
-			finish();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
-	}
-
 	
 	private void initButtons() {
 		mButton_filter_grey = (Button) findViewById(R.id.filter_grey);

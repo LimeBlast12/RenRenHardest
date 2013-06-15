@@ -69,7 +69,7 @@ public class LoginedMainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				startGameMainActivity();
+				startRandomFriendsActivity();
 			}
 		});
 
@@ -123,10 +123,5 @@ public class LoginedMainActivity extends Activity {
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
 	}
-	
-	private void startGameMainActivity(){
-		Intent intent = new Intent(this, GameMainActivity.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startActivity(intent);
-	}	
+		
 }

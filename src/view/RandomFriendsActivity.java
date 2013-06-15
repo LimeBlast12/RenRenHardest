@@ -19,7 +19,8 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 
 import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
@@ -42,12 +43,12 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 			showData(friendListModel.getRandomFriends(30));
 		}
 	};
+	private Button startButton;
 
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
 
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
@@ -64,6 +65,14 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		}
 
 		setContentView(R.layout.random_friends_layout);
+		
+		startButton = (Button)findViewById(R.id.startButton);
+		startButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				startGameMainActivity();
+			}
+		});
 
 		friendListModel = FriendListModel.getInstance();
 		friendListModel.register(RandomFriendsActivity.this);
@@ -105,22 +114,16 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 			// 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率
 		}
 	}
-
-	@Override
-	public boolean onOptionsItemSelected(MenuItem item) {
-		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent parentActivityIntent = new Intent(
-					RandomFriendsActivity.this, LoginedMainActivity.class);
-			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-					| Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(parentActivityIntent);
-			finish();
-			return true;
-		}
-		return super.onOptionsItemSelected(item);
+	
+	/**
+	 * 启动游戏界面
+	 */
+	private void startGameMainActivity(){
+		Intent intent = new Intent(this, GameMainActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
 	}
-
+	
 	private void showData(List<Map<String, Object>> data) {
 		Log.i("RandomFriendsActivity", "show data");
 		StaggeredGridView gridView = (StaggeredGridView) this
