@@ -27,25 +27,26 @@ public class FriendListModel extends AbstractModel {
 		notifyListeners();
 	}
 
-	public List<Map<String, Object>> getFriendList() {
+	public List<Map<String, Object>> getAllFriends() {
 		Log.i("FriendListModel", "getFriendList");
 		if (friendList == null) {
 			Log.i("FriendListModel getter", "null");
 		}
 		return this.friendList;
 	}
-
+	
 	/**
-	 * 随机获取一组好友
-	 * @param num 好有个数
-	 * @return 随机的一组好友
+	 * 获取一组随机生成的好友
+	 * @param num 好友个数
+	 * @return 随机生成的一组好友
 	 */
-	public List<Map<String, Object>> getRandomFriendList(int num) {
+	public List<Map<String, Object>> getRandomFriends(int num) {
 		Log.i("FriendListModel", "getRandomFriendList");
-		if (this.friendList == null) {
+		if (friendList == null) {
+			Log.i("FriendListModel getter", "null");
 			return null;
 		}
-
+		
 		this.randomFriendList = new ArrayList<Map<String, Object>>();
 		int size = this.friendList.size();
 		int i = 0;
@@ -58,7 +59,16 @@ public class FriendListModel extends AbstractModel {
 			}
 		}
 		
-		return this.randomFriendList;
+		return randomFriendList;
+	}
+	
+	/**
+	 * 获取当前的一组随机好友
+	 * @return 当前的一组随机好友
+	 */
+	public List<Map<String, Object>> getCurrentFriends() {
+		Log.i("FriendListModel", "getCurrentFriendList");
+		return randomFriendList;
 	}
 
 }

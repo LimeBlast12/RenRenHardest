@@ -91,7 +91,7 @@ public class LoginedMainActivity extends Activity {
 	 * 展示好友列表的界面
 	 */
 	private void startFriendListActivity() {
-		Intent intent = new Intent(this, FriendListActivity.class);
+		Intent intent = new Intent(this, RandomFriendsActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
 	}

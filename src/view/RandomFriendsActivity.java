@@ -7,10 +7,17 @@ import model.FriendListModel;
 import model.ModelListener;
 import service.LoadFriendsService;
 import android.annotation.SuppressLint;
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Intent;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Vibrator;
 import android.util.Log;
 import android.view.MenuItem;
 
@@ -19,7 +26,13 @@ import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
 
-public class FriendListActivity extends Activity implements ModelListener {
+@SuppressLint("NewApi")
+public class RandomFriendsActivity extends Activity implements ModelListener, SensorEventListener {
+	//Sensor管理器
+    private SensorManager mSensorManager = null;
+    //震动
+    private Vibrator mVibrator = null;
+    
 	private ActivityHelper helper;
 	private Renren renren;
 	private FriendListModel friendListModel;
@@ -29,7 +42,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 	private Runnable runnableUi = new Runnable() {
 		@Override
 		public void run() {
-			showData(friendListModel.getRandomFriendList(30));
+			showData(friendListModel.getRandomFriends(30));
 		}
 	};
 
@@ -38,7 +51,13 @@ public class FriendListActivity extends Activity implements ModelListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		
+		mSensorManager = (SensorManager)getSystemService(SENSOR_SERVICE);
+        mVibrator = (Vibrator)getSystemService(VIBRATOR_SERVICE);
+		
 		helper = ActivityHelper.getInstance();
+		handler = new Handler();
+		
 		Intent intent = getIntent();
 		renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		if (renren != null) {
@@ -46,40 +65,53 @@ public class FriendListActivity extends Activity implements ModelListener {
 		} else {
 			renren = helper.getRenren();
 		}	
+		
 		setContentView(R.layout.staggered_grid_view);
-		handler = new Handler();
+		
 		friendListModel = FriendListModel.getInstance();
-        friendListModel.register(FriendListActivity.this);
+        friendListModel.register(RandomFriendsActivity.this);
 		loadFriends();
 	}
 	
 	@Override
 	public void onStop() {
-		Log.i("FriendListActivity", "stop");
+		Log.i("RandomFriendsActivity", "stop");
 		helper.dismissProgress();	
+		mSensorManager.unregisterListener(this);
 		super.onStop();
 	}
 
 	@Override
 	public void onPause() {
-		Log.i("FriendListActivity", "pause");
+		Log.i("RandomFriendsActivity", "pause");
 		helper.dismissProgress();
+		mSensorManager.unregisterListener(this);
 		super.onPause();
 	}
 	
 	@Override
 	public void onDestroy() {
-		Log.i("FriendListActivity", "destroy");
+		Log.i("RandomFriendsActivity", "destroy");
 		// 不销毁ProgressDialog会出现view not attached to window manager异常
 		helper.dismissProgress();
 		super.onDestroy();
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		Log.i("RandomFriendsActivity", "resume");
+		if (mSensorManager != null) {// 注册监听器 
+            mSensorManager.registerListener(this, mSensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_NORMAL); 
+            // 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率 
+        } 
 	}
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case android.R.id.home:
-			Intent parentActivityIntent = new Intent(FriendListActivity.this,
+			Intent parentActivityIntent = new Intent(RandomFriendsActivity.this,
 					LoginedMainActivity.class);
 			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
 					| Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -91,7 +123,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 	}
 
 	private void showData(List<Map<String, Object>> data) {
-		Log.i("FriendListActivity", "show data");
+		Log.i("RandomFriendsActivity", "show data");
 		StaggeredGridView gridView = (StaggeredGridView) this
 				.findViewById(R.id.staggeredGridView1);
 
@@ -100,7 +132,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		gridView.setPadding(margin, 0, margin, 0);
 	
 		MyStaggeredAdapter adapter = new MyStaggeredAdapter(
-				FriendListActivity.this, data, R.layout.grid_item,
+				RandomFriendsActivity.this, data, R.layout.grid_item,
 				new String[] { "name", "image" }, new int[] { R.id.ItemText,
 						R.id.ItemImage });
 
@@ -113,7 +145,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		if (friendListModel.isDone()) {//已有数据
 			startUpdateUiThread();
 		} else {
-			Intent intent = new Intent(FriendListActivity.this, LoadFriendsService.class);
+			Intent intent = new Intent(RandomFriendsActivity.this, LoadFriendsService.class);
 			intent.putExtra(Renren.RENREN_LABEL, renren);
 			startService(intent);
 		}
@@ -122,12 +154,44 @@ public class FriendListActivity extends Activity implements ModelListener {
 	/*当FriendListModel的数据更新时调用*/
 	@Override
 	public void doSomething() {
-		Log.i("FriendListActivity", "do something");
+		Log.i("RandomFriendsActivity", "do something");
 		if (friendListModel.isDone()) {
 			startUpdateUiThread();
 		} else {
-			Log.i("FriendListActivity", "friend list is null");
+			Log.i("RandomFriendsActivity", "friend list is null");
 		}
+	}
+
+	@Override
+	public void onAccuracyChanged(Sensor arg0, int arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void onSensorChanged(SensorEvent event) {
+		if (isShaking(event)) {
+			Log.i("RandomFriendsActivity", "is shaking");
+			//helper.showTip(this, "shaking");
+			startUpdateUiThread();
+		}		
+	}
+	
+	@TargetApi(Build.VERSION_CODES.CUPCAKE)
+	@SuppressLint("NewApi")
+	private boolean isShaking(SensorEvent event) {
+		float[] values = event.values; 
+        float x = values[0]; // x轴方向的重力加速度，向右为正 
+        float y = values[1]; // y轴方向的重力加速度，向前为正 
+        float z = values[2]; // z轴方向的重力加速度，向上为正  
+        // 一般在这三个方向的重力加速度达到40就达到了摇晃手机的状态。 
+        int medumValue = 19;// 三星 i9250怎么晃都不会超过20，没办法，只设置19了 
+        if (Math.abs(x) > medumValue || Math.abs(y) > medumValue || Math.abs(z) > medumValue) { 
+            mVibrator.vibrate(100); //使手机震动
+            return true; 
+        } 
+        
+        return false;
 	}
 	
 	private void startUpdateUiThread() {		

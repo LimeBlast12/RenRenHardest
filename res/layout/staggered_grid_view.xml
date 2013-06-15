@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/black"
-    tools:context=".FriendListActivity" >
+    tools:context=".RandomFriendsActivity" >
 
     <com.origamilabs.library.views.StaggeredGridView
         android:id="@+id/staggeredGridView1"

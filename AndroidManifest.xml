@@ -11,6 +11,8 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />    
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_INTERNAL_STORAGE" />
+    <!-- 震动 -->
+    <uses-permission android:name="android.permission.VIBRATE"/>
     <!-- renren sdk 需要的权限 ，必须在AndroidManifest.xml中声明 -->
     <uses-permission android:name="android.permission.INTERNET" />
     
@@ -36,7 +38,8 @@
 			android:name="com.renren.api.connect.android.AuthorizationHelper$BlockActivity"
 			android:theme="@android:style/Theme.Dialog"></activity>			
 		
-        <activity android:name="view.FriendListActivity" ></activity>
+        <activity android:name="view.RandomFriendsActivity" ></activity>
+        <activity android:name="view.AllFriendsActivity" ></activity>
         <activity android:name="view.MyImagesActivity" ></activity>
         <activity android:name="view.LoginedMainActivity" ></activity>
         <activity android:name="view.GameMainActivity"></activity>

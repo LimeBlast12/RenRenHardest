@@ -97,7 +97,7 @@ public class LoadFriendsServiceTest extends ServiceTestCase<LoadFriendsService> 
 						}
 						
 						if (model.isDone()) {
-							assertNotNull(model.getFriendList());
+							assertNotNull(model.getAllFriends());
 							break;
 						}
 						
