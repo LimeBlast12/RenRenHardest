@@ -1,6 +1,6 @@
 package service;
 
-import helper.NetworkCheck;
+import helper.NetworkChecker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,7 +30,7 @@ import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Frie
 
 public class LoadFriendsService extends Service {
 	private final IBinder binder = new MyBinder();
-	private NetworkCheck networkCheck  = new NetworkCheck(LoadFriendsService.this);
+	private NetworkChecker networkCheck  = new NetworkChecker(LoadFriendsService.this);
 	
 	private boolean isTaskSheduled = false;
     private Handler handler;

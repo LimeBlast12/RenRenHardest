@@ -1,6 +1,6 @@
 package service;
 
-import helper.NetworkCheck;
+import helper.NetworkChecker;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -34,7 +34,7 @@ import com.renren.api.connect.android.photos.PhotoGetResponseBean;
 public class LoadMyImagesService extends Service {
 	private final IBinder binder = new MyBinder();
 
-	private NetworkCheck networkCheck = new NetworkCheck(LoadMyImagesService.this);
+	private NetworkChecker networkCheck = new NetworkChecker(LoadMyImagesService.this);
 	private Handler handler;
 	private boolean isTaskSheduled = false;
 	private Timer timer;
@@ -48,10 +48,9 @@ public class LoadMyImagesService extends Service {
 
 				@Override
 				public void run() {
-					if(!networkCheck.isConnectingToInternet()){
+					if(!networkCheck.isConnectingToInternet()){						
 						Toast.makeText(getApplicationContext(),"No network", Toast.LENGTH_SHORT).show();
 					}
-					
 				}});
 		}
 		
@@ -74,8 +73,12 @@ public class LoadMyImagesService extends Service {
 			timer.scheduleAtFixedRate(task,TASK_START_TIME,TASK_INTERVAl_TIME);  //0秒后,每个10000ms启动计时器
 			isTaskSheduled=true;
 		}
-		if(networkCheck.isConnectingToInternet())
+		if(networkCheck.isConnectingToInternet()) {
+			Log.i("LoadMyImagesService", "network able");
 			loadMyAlbums(intent);
+		} else {
+			Log.i("LoadMyImagesService", "network unable");
+		}
 		return super.onStartCommand(intent, flags, startId);
 	}
 
