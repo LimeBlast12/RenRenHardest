@@ -34,46 +34,46 @@ import com.renren.api.connect.android.photos.PhotoGetResponseBean;
 public class LoadMyImagesService extends Service {
 	private final IBinder binder = new MyBinder();
 
-	private NetworkChecker networkCheck = new NetworkChecker(LoadMyImagesService.this);
+	private NetworkChecker networkChecker = new NetworkChecker(
+			LoadMyImagesService.this);
 	private Handler handler;
 	private boolean isTaskSheduled = false;
 	private Timer timer;
 	private final static long TASK_START_TIME = 0;
 	private final static long TASK_INTERVAl_TIME = 10000;
-	private TimerTask task = new TimerTask(){
 
+	private TimerTask task = new TimerTask() {
 		@Override
 		public void run() {
-			handler.post(new Runnable(){
-
+			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					if(!networkCheck.isConnectingToInternet()){						
-						Toast.makeText(getApplicationContext(),"No network", Toast.LENGTH_SHORT).show();
+					if (!networkChecker.isConnectingToInternet()) {
+						Toast.makeText(getApplicationContext(),
+								"哎呀，网络有点不给力喔...", Toast.LENGTH_SHORT).show();
 					}
-				}});
+				}
+			});
 		}
-		
 	};
-	
-	
+
 	@Override
 	public void onCreate() {
 		Log.i("LoadMyImagesService", "onCreate");
 		super.onCreate();
 		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
-		timer = new Timer("loadmyimagesservice");	//当前线程名为loadmyimagesservice
+		timer = new Timer("loadmyimagesservice"); // 当前线程名为loadmyimagesservice
 	}
 
 	@SuppressLint({ "InlinedApi", "NewApi" })
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("LoadMyImagesService", "onStartCommand");
-		if(isTaskSheduled==false){
-			timer.scheduleAtFixedRate(task,TASK_START_TIME,TASK_INTERVAl_TIME);  //0秒后,每个10000ms启动计时器
-			isTaskSheduled=true;
+		if (isTaskSheduled == false) {
+			timer.scheduleAtFixedRate(task, TASK_START_TIME, TASK_INTERVAl_TIME); // 0秒后,每个10000ms启动计时器
+			isTaskSheduled = true;
 		}
-		if(networkCheck.isConnectingToInternet()) {
+		if (networkChecker.isConnectingToInternet()) {
 			Log.i("LoadMyImagesService", "network able");
 			loadMyAlbums(intent);
 		} else {
@@ -183,7 +183,7 @@ public class LoadMyImagesService extends Service {
 		MyImagesModel model = MyImagesModel.getInstance();
 		model.setMyImages(myImages);
 	}
-	
+
 	@Override
 	public void onDestroy() {
 		super.onDestroy();

@@ -30,59 +30,62 @@ import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Frie
 
 public class LoadFriendsService extends Service {
 	private final IBinder binder = new MyBinder();
-	private NetworkChecker networkCheck  = new NetworkChecker(LoadFriendsService.this);
-	
+	private NetworkChecker networkChecker = new NetworkChecker(
+			LoadFriendsService.this);
+
 	private boolean isTaskSheduled = false;
-    private Handler handler;
+	private Handler handler;
 	private Timer timer;
 	private final static long TASK_START_TIME = 0;
 	private final static long TASK_INTERVAl_TIME = 10000;
-	private TimerTask task = new TimerTask(){
-		
+
+	private TimerTask task = new TimerTask() {
 		@Override
 		public void run() {
-			handler.post(new Runnable(){
-
+			handler.post(new Runnable() {
 				@Override
 				public void run() {
-					if(!networkCheck.isConnectingToInternet()){
-						Toast.makeText(getApplicationContext(),"No network", Toast.LENGTH_SHORT).show();
+					if (!networkChecker.isConnectingToInternet()) {
+						Toast.makeText(getApplicationContext(),
+								"哎呀，网络有点不给力喔...", Toast.LENGTH_SHORT).show();
 					}
 				}
-				
 			});
 		}
-		
 	};
-	
+
 	@Override
 	public void onCreate() {
 		Log.i("LoadFriendsService", "onCreate");
 		super.onCreate();
 		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
-		timer = new Timer("loadfriendsservice");   // 当前线程名为loadfriendsservice
+		timer = new Timer("loadfriendsservice"); // 当前线程名为loadfriendsservice
 	}
-	
+
 	@SuppressLint("InlinedApi")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startedId) {
 		Log.i("LoadFriendsService", "onStartCommand");
-		if(isTaskSheduled==false){
-			timer.scheduleAtFixedRate(task,TASK_START_TIME,TASK_INTERVAl_TIME);  //0秒后,每个10000ms启动计时器
-			isTaskSheduled=true;
+		if (isTaskSheduled == false) {
+			timer.scheduleAtFixedRate(task, TASK_START_TIME, TASK_INTERVAl_TIME); // 0秒后,每个10000ms启动计时器
+			isTaskSheduled = true;
 		}
-		if(networkCheck.isConnectingToInternet())
+		if (networkChecker.isConnectingToInternet()) {
+			Log.i("LoadFriendsService", "network able");
 			loadFriends(intent);
+		} else {
+			Log.i("LoadMyFriendsService", "network unable");
+		}
 		return Service.START_REDELIVER_INTENT;
 	}
-	
+
 	@Override
 	public IBinder onBind(Intent intent) {
 		Log.i("LoadFriendsService", "onBind");
-		loadFriends(intent);		
+		loadFriends(intent);
 		return binder;
 	}
-	
+
 	private void loadFriends(Intent intent) {
 		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		Log.i("loadFriends", "begin");
@@ -94,8 +97,8 @@ public class LoadFriendsService extends Service {
 
 				@Override
 				public void onComplete(final FriendsGetFriendsResponseBean bean) {
-					Log.i("FriendListService","complete");
-					setData(bean.getFriendList());				
+					Log.i("FriendListService", "complete");
+					setData(bean.getFriendList());
 				}
 
 				@Override
@@ -105,30 +108,30 @@ public class LoadFriendsService extends Service {
 
 				@Override
 				public void onFault(Throwable fault) {
-					// TODO Auto-generated method stub		
+					// TODO Auto-generated method stub
 				}
 
 			};
-			asyncRenren.getFriends(param, listener);	
+			asyncRenren.getFriends(param, listener);
 		}
-		
+
 	}
-	
+
 	private void setData(List<Friend> friendList) {
-		List<Map<String, Object>>data = new ArrayList<Map<String, Object>>();
-        
-		for (Friend friend: friendList) {
+		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
+
+		for (Friend friend : friendList) {
 			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("name", friend.getName());	    
-	        map.put("image", friend.getHeadurl());
-	        map.put("uid", friend.getUid());
-	        data.add(map);
+			map.put("name", friend.getName());
+			map.put("image", friend.getHeadurl());
+			map.put("uid", friend.getUid());
+			data.add(map);
 		}
-		
+
 		FriendListModel model = FriendListModel.getInstance();
 		model.setFriendList(data);
 	}
-	
+
 	public class MyBinder extends Binder {
 		public LoadFriendsService getService() {
 			return LoadFriendsService.this;

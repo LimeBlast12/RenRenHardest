@@ -1,7 +1,5 @@
 package view;
 
-import helper.NetworkChecker;
-
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +21,6 @@ import edu.nju.renrenhardest.R;
 
 public class FriendListActivity extends Activity implements ModelListener {
 	private ActivityHelper helper;
-	private NetworkChecker checker;
 	private Renren renren;
 	private FriendListModel friendListModel;
 	/*使用handler来避免更新UI的线程安全问题*/
@@ -51,7 +48,6 @@ public class FriendListActivity extends Activity implements ModelListener {
 		}	
 		setContentView(R.layout.staggered_grid_view);
 		handler = new Handler();
-		checker = new NetworkChecker(FriendListActivity.this);
 		friendListModel = FriendListModel.getInstance();
         friendListModel.register(FriendListActivity.this);
 		loadFriends();
@@ -119,13 +115,7 @@ public class FriendListActivity extends Activity implements ModelListener {
 		} else {
 			Intent intent = new Intent(FriendListActivity.this, LoadFriendsService.class);
 			intent.putExtra(Renren.RENREN_LABEL, renren);
-			if (checker.isConnectingToInternet()) {
-				Log.i("FriendListActivity", "network enable");
-				startService(intent);
-				helper.showWaitingDialog(FriendListActivity.this);
-			} else {
-				Log.i("FriendListActivity", "network unable");
-			}		
+			startService(intent);
 		}
 	}
 
