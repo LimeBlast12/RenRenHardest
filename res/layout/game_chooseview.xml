@@ -19,7 +19,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
-            android:text="@string/choose_self_portrait"
+            android:text="@string/choose_scores"
             android:textStyle="bold"
             android:textSize="25sp" />
         
@@ -29,7 +29,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="20dip"
-            android:text="@string/choose_friend_portrait"
+            android:text="@string/choose_settings"
             android:textStyle="bold"
             android:textSize="25sp" />
         

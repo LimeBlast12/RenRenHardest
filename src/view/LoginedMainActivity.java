@@ -17,8 +17,8 @@ import edu.nju.renrenhardest.R;
 public class LoginedMainActivity extends Activity {
 	private Renren renren;
 	private ActivityHelper helper;
-	private Button seeFriendsButton;
-	private Button seeMyselfButton;
+	private Button scoresButton;
+	private Button settingsButton;
 	private Button startGameButton;
 	private Button logoutButton;
 
@@ -50,21 +50,21 @@ public class LoginedMainActivity extends Activity {
 	}
 
 	private void initButtons() {
-		seeFriendsButton = (Button) findViewById(R.id.friend_portrait);
-		seeFriendsButton.setOnClickListener(new View.OnClickListener() {
+		scoresButton = (Button) findViewById(R.id.friend_portrait);
+		scoresButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				startRandomFriendsActivity();
+				startScoresActivity();
 			}
 		});
 
-		seeMyselfButton = (Button) findViewById(R.id.self_portrait);
-		seeMyselfButton.setOnClickListener(new View.OnClickListener() {
+		settingsButton = (Button) findViewById(R.id.self_portrait);
+		settingsButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
-				startMyImagesActivity();
+				startSettingsActivity();
 			}
 		});
 		
@@ -89,6 +89,24 @@ public class LoginedMainActivity extends Activity {
 				startMainActivity();
 			}
 		});
+	}
+
+	/**
+	 * 展示成绩单界面
+	 */
+	private void startScoresActivity() {
+		Intent intent = new Intent(this, ScoresActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
+	/**
+	 * 展示游戏设置界面
+	 */
+	private void startSettingsActivity() {
+		Intent intent = new Intent(this, SettingsActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
 	}
 
 	/**

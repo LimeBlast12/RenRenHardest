@@ -44,6 +44,8 @@
         <activity android:name="view.LoginedMainActivity" ></activity>
         <activity android:name="view.GameMainActivity"></activity>
         <activity android:name="view.GameOverActivity"></activity>
+        <activity android:name="view.ScoresActivity"></activity>
+        <activity android:name="view.SettingsActivity"></activity>
         
         <service android:name="service.LoadFriendsService"></service>
         <service android:name="service.LoadMyImagesService"></service>

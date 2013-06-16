@@ -9,8 +9,8 @@
     <string name="friend">好友</string>
     <string name="number">No.1</string>
     <string name="time">10</string>
-    <string name="choose_self_portrait">自己的头像</string>
-    <string name="choose_friend_portrait">好友的头像</string>
+    <string name="choose_settings">游戏设置</string>
+    <string name="choose_scores">成绩单</string>
     <string name="choose_start_game">开始游戏</string>
     <string name="game_over">Game Over</string>
     <string name="exit_app">退出程序</string>
