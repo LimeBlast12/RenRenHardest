@@ -38,6 +38,8 @@
 			android:name="com.renren.api.connect.android.AuthorizationHelper$BlockActivity"
 			android:theme="@android:style/Theme.Dialog"></activity>			
 		
+		
+		<activity android:name="view.TutorialsActivity" ></activity>
         <activity android:name="view.RandomFriendsActivity" ></activity>
         <activity android:name="view.AllFriendsActivity" ></activity>
         <activity android:name="view.MyImagesActivity" ></activity>

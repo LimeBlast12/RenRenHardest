@@ -44,7 +44,8 @@ public class MainActivity extends Activity {
 			loadFriends();
 			loadMyImages();
 			Log.i("MainActivity", "logined");
-			startLoginedMainActivity();
+		//	startLoginedMainActivity();
+			startTutorialsActivity();
 		}
 	}
 
@@ -70,6 +71,18 @@ public class MainActivity extends Activity {
 	private void startLoginedMainActivity() {
 		Log.i("MainActivity", "start LoginedActivity");
 		Intent intent = new Intent(this, LoginedMainActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);		
+		startActivity(intent);
+		this.finish();//关闭当前界面，避免按返回键时出错
+	}
+	
+	
+	/**
+	 * 展示游戏教程滑动分页界面
+	 */
+	private void startTutorialsActivity() {
+		Log.i("MainActivity", "start TutorialsActivity");
+		Intent intent = new Intent(this, TutorialsActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
