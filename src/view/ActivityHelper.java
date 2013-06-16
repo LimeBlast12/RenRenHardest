@@ -116,4 +116,5 @@ public class ActivityHelper {
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		activity.startActivity(intent);
 	}
+	
 }

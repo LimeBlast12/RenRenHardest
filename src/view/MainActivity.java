@@ -28,6 +28,7 @@ public class MainActivity extends Activity {
 	private Handler handler;
 	private ActivityHelper helper;
 	private Button oAuthButton;
+   
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -169,6 +170,5 @@ public class MainActivity extends Activity {
 				return super.onOptionsItemSelected(item);
 		}
 	}
-
 
 }

@@ -1,13 +1,16 @@
 package view;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 
 import com.renren.api.connect.android.Renren;
@@ -21,6 +24,7 @@ public class LoginedMainActivity extends Activity {
 	private Button settingsButton;
 	private Button startGameButton;
 	private Button logoutButton;
+	private long mExitTime;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -162,4 +166,30 @@ public class LoginedMainActivity extends Activity {
 		}
 		
 	}
+	/**
+	 * 连续两次按返回键退出程序
+	 */
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+          if (keyCode == KeyEvent.KEYCODE_BACK) {
+                  if ((System.currentTimeMillis() - mExitTime) > 2000) {
+                	  // System.currentTimeMillis()无论何时调用，肯定大于2000
+                          helper.showTip(this, "再按一次退出程序");
+                          mExitTime = System.currentTimeMillis();
+
+                  } else {
+                          finish();
+                  }
+                  return true;
+          }
+          return super.onKeyDown(keyCode, event);
+	}
+	
+	/**
+	 * 屏蔽Home键，但是好像屏蔽不了,待处理...
+	 */
+    @SuppressLint("NewApi")
+	public void onAttachedToWindow() {  
+         this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);     
+         super.onAttachedToWindow();    
+    }
 }
