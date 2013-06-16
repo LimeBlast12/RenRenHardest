@@ -4,6 +4,9 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -123,5 +126,32 @@ public class LoginedMainActivity extends Activity {
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu,menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item){
 		
+		switch(item.getItemId()){
+			case R.id.item_allMyImages:
+				startMyImagesActivity();
+				break;
+			case R.id.item_allMyFriendsImages:
+				startAllFriendsActivity();
+				break;
+			case R.id.item_gameRule:
+				helper.showTip(LoginedMainActivity.this,"gameRule");
+				break;
+			case R.id.item_quitGame:
+				helper.showTip(LoginedMainActivity.this,"quitGame");
+				break;
+			default:
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
 }

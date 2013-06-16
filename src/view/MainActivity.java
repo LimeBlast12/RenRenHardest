@@ -7,6 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 
@@ -142,5 +145,34 @@ public class MainActivity extends Activity {
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startService(intent);
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.unlogin_menu,menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item){
+		
+		switch(item.getItemId()){
+			case R.id.item_allMyImages:
+				
+				break;
+			case R.id.item_allMyFriendsImages:
+			
+				break;
+			case R.id.item_gameRule:
+				
+				break;
+			case R.id.item_quitGame:
+				
+				break;
+			default:
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 
 }

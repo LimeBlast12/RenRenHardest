@@ -4,6 +4,9 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.renren.api.connect.android.Renren;
 
@@ -27,5 +30,30 @@ public class GameOverActivity extends Activity {
 		startActivity(intent);
 		return;
 	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.game_over_menu,menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item){
+		
+		switch(item.getItemId()){
+			case R.id.item_allMyImages:
+				break;
+			case R.id.item_allMyFriendsImages:
+				break;
+			case R.id.item_gameRule:
+				break;
+			case R.id.item_quitGame:
+				break;
+			default:
+				break;
+		}
+		return super.onOptionsItemSelected(item);
+	}
+
 
 }
