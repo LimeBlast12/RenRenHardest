@@ -31,6 +31,8 @@ public class GameMainActivity extends Activity {
 	private Button mButton_filter_grey = null;
 	private Button mButton_filter_old = null;
 	private Button mButton_friend = null;
+	private ActivityHelper helper;
+	
 	/*用于计时，有些变量只能是静态变量且不应修改，有些如count切忌设为静态变量*/
 	private static final int total_time = 10; //表示一轮游戏的总时间
 	private static final int delay = 1000;  //1s
@@ -51,6 +53,8 @@ public class GameMainActivity extends Activity {
 		System.out.println("onCreate");
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_mainview);
+		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		initButtons();
 		/*initTextViews*/
 		mTextView_time = (TextView)findViewById(R.id.time_left);

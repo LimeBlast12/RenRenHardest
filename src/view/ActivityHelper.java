@@ -1,5 +1,9 @@
 package view;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.widget.Toast;
@@ -9,6 +13,8 @@ import com.renren.api.connect.android.Renren;
 public class ActivityHelper {
 	private static ActivityHelper helper;
 
+	private List<Activity> activityList = new LinkedList<Activity>();
+	
 	public static ActivityHelper getInstance() {
 		return (helper == null) ? (helper = new ActivityHelper()) : helper;
 	}
@@ -68,4 +74,27 @@ public class ActivityHelper {
 	public void showTip(Context context, String message) {
 		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
 	}
+	
+	/**
+	 * 添加Activity到容器中  
+	 * 
+	 * @param activity
+	 */
+    public void addActivity(Activity activity)  
+    {  
+    	activityList.add(activity);  
+    }  
+	
+	/**
+	 * 遍历所有Activity并finish  
+	 * 
+	 */
+    public void exit()  
+    {   
+	    for(Activity activity:activityList)  
+	    {  
+	    	activity.finish();  
+	    }  
+	    System.exit(0);  
+    }
 }

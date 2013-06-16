@@ -14,12 +14,15 @@ import edu.nju.renrenhardest.R;
 
 public class GameOverActivity extends Activity {
 	private Renren renren;
+	private ActivityHelper helper;
 	
 	@SuppressLint("NewApi")
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_over);
+		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 	}
 	
 	/*当按后退键时，不会返回游戏主界面而是返回选择界面*/
@@ -45,13 +48,18 @@ public class GameOverActivity extends Activity {
 			case R.id.item_allMyImages:
 				startMyImagesActivity();
 				return true;
+				
 			case R.id.item_allMyFriendsImages:
 				startAllFriendsActivity();
 				return true;
+				
 			case R.id.item_gameRule:
 				return true;
+				
 			case R.id.item_quitGame:
+				helper.exit();
 				return true;
+				
 			default:
 				return super.onOptionsItemSelected(item);
 		}

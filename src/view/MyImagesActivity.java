@@ -49,6 +49,7 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		Intent intent = getIntent();
 		renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		if (renren != null) {

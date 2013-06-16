@@ -20,11 +20,13 @@ public class GameScorerActivity extends Activity{
 	private static final int NORMAL_TIMES = 600;
 	private static final int HARD_TIMES = 700;
 	// SABCDEF等级是怎么回事？ 
+	private ActivityHelper helper;
 	
 	private long myScores = 1;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		
+		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		myScores = score();
 		Intent intent1 = new Intent();
 		intent1.putExtra("result",myScores);

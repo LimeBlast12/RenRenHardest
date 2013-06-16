@@ -35,6 +35,7 @@ public class MainActivity extends Activity {
 		setContentView(R.layout.main);	
 		renren = new Renren(API_KEY, SECRET_KEY, APP_ID, this);
 		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		helper.setRenren(renren);
 		handler = new Handler();
 		initButtons();
@@ -156,17 +157,17 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item){
 		
 		switch(item.getItemId()){
-		case R.id.item_allMyImages:
-			return true;
-		case R.id.item_allMyFriendsImages:
-			return true;
-		case R.id.item_gameRule:
-			return true;
-		case R.id.item_quitGame:
-			return true;
-		default:
-			return super.onOptionsItemSelected(item);
-	}
+		
+			case R.id.item_gameRule:
+				return true;
+				
+			case R.id.item_quitGame:
+				helper.exit();
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);
+		}
 	}
 
 

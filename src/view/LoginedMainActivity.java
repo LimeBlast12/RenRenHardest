@@ -27,6 +27,7 @@ public class LoginedMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
 		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		Intent intent = getIntent();
 		renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		if (renren != null) {
@@ -138,18 +139,23 @@ public class LoginedMainActivity extends Activity {
 		
 
 		switch(item.getItemId()){
+		
 			case R.id.item_allMyImages:
 				startMyImagesActivity();
 				return true;
+				
 			case R.id.item_allMyFriendsImages:
 				startAllFriendsActivity();
 				return true;
+				
 			case R.id.item_gameRule:
 				helper.showTip(LoginedMainActivity.this,"gameRule");
 				return true;
+				
 			case R.id.item_quitGame:
-				helper.showTip(LoginedMainActivity.this,"gameRule");
+				helper.exit();
 				return true;
+				
 			default:
 				return super.onOptionsItemSelected(item);
 		}

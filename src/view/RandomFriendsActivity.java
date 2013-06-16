@@ -54,6 +54,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
 
 		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		handler = new Handler();
 
 		Intent intent = getIntent();
