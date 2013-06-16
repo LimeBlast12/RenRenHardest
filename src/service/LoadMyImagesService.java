@@ -36,49 +36,19 @@ public class LoadMyImagesService extends Service {
 
 	private NetworkChecker networkChecker = new NetworkChecker(
 			LoadMyImagesService.this);
-	private Handler handler;
-	private boolean isTaskSheduled = false;
-	private Timer timer;
-	private final static long TASK_START_TIME = 0;
-	private final static long TASK_INTERVAl_TIME = 10000;
-
-	private TimerTask task = new TimerTask() {
-		@Override
-		public void run() {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					if (!networkChecker.isConnectingToInternet()) {
-						Toast.makeText(getApplicationContext(),
-								"哎呀，网络有点不给力喔...", Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
-		}
-	};
 
 	@Override
 	public void onCreate() {
 		Log.i("LoadMyImagesService", "onCreate");
 		super.onCreate();
-		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
-		timer = new Timer("loadmyimagesservice"); // 当前线程名为loadmyimagesservice
+		networkChecker.init(this);
 	}
 
 	@SuppressLint({ "InlinedApi", "NewApi" })
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId) {
 		Log.i("LoadMyImagesService", "onStartCommand");
-		if (isTaskSheduled == false) {
-			timer.scheduleAtFixedRate(task, TASK_START_TIME, TASK_INTERVAl_TIME); // 0秒后,每个10000ms启动计时器
-			isTaskSheduled = true;
-		}
-		if (networkChecker.isConnectingToInternet()) {
-			Log.i("LoadMyImagesService", "network able");
-			loadMyAlbums(intent);
-		} else {
-			Log.i("LoadMyImagesService", "network unable");
-		}
+		networkChecker.checkAndShowTip(this,intent);
 		return super.onStartCommand(intent, flags, startId);
 	}
 
@@ -94,7 +64,7 @@ public class LoadMyImagesService extends Service {
 		}
 	}
 
-	private void loadMyAlbums(Intent intent) {
+	public void loadMyAlbums(Intent intent) {
 		final Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		Log.i("loadMyImages", "begin");
 		if (renren != null) {
@@ -187,6 +157,6 @@ public class LoadMyImagesService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		timer.cancel();
+		networkChecker.getTimer().cancel();
 	}
 }

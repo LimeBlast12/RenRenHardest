@@ -33,49 +33,19 @@ public class LoadFriendsService extends Service {
 	private NetworkChecker networkChecker = new NetworkChecker(
 			LoadFriendsService.this);
 
-	private boolean isTaskSheduled = false;
-	private Handler handler;
-	private Timer timer;
-	private final static long TASK_START_TIME = 0;
-	private final static long TASK_INTERVAl_TIME = 10000;
-
-	private TimerTask task = new TimerTask() {
-		@Override
-		public void run() {
-			handler.post(new Runnable() {
-				@Override
-				public void run() {
-					if (!networkChecker.isConnectingToInternet()) {
-						Toast.makeText(getApplicationContext(),
-								"哎呀，网络有点不给力喔...", Toast.LENGTH_SHORT).show();
-					}
-				}
-			});
-		}
-	};
-
+	
 	@Override
 	public void onCreate() {
 		Log.i("LoadFriendsService", "onCreate");
 		super.onCreate();
-		handler = new Handler(Looper.getMainLooper()); // 为当前线程获得Looper
-		timer = new Timer("loadfriendsservice"); // 当前线程名为loadfriendsservice
+		networkChecker.init(this);
 	}
 
 	@SuppressLint("InlinedApi")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startedId) {
 		Log.i("LoadFriendsService", "onStartCommand");
-		if (isTaskSheduled == false) {
-			timer.scheduleAtFixedRate(task, TASK_START_TIME, TASK_INTERVAl_TIME); // 0秒后,每个10000ms启动计时器
-			isTaskSheduled = true;
-		}
-		if (networkChecker.isConnectingToInternet()) {
-			Log.i("LoadFriendsService", "network able");
-			loadFriends(intent);
-		} else {
-			Log.i("LoadMyFriendsService", "network unable");
-		}
+		networkChecker.checkAndShowTip(this,intent);
 		return Service.START_REDELIVER_INTENT;
 	}
 
@@ -86,7 +56,7 @@ public class LoadFriendsService extends Service {
 		return binder;
 	}
 
-	private void loadFriends(Intent intent) {
+	public void loadFriends(Intent intent) {
 		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		Log.i("loadFriends", "begin");
 		if (renren != null) {
@@ -141,6 +111,6 @@ public class LoadFriendsService extends Service {
 	@Override
 	public void onDestroy() {
 		super.onDestroy();
-		timer.cancel();
+		networkChecker.getTimer().cancel();
 	}
 }
