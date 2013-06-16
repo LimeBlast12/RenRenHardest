@@ -20,8 +20,10 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	            R.drawable.t4, R.drawable.t5 };  
 	private ViewFlipper viewFlipper = null;
 	private GestureDetector gestureDetector = null; 
-	private int viewCount = 5;
-	
+	private int viewCount = 4;
+	private String enterFrom;   // 进入新手教程的事件来源
+	private Intent intent; 
+	 
 	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		
@@ -37,7 +39,8 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	private void init() {
 		viewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);    
         gestureDetector = new GestureDetector(this);  // 生成GestureDetector对象，用于检测手势事件
-     
+        intent = getIntent();
+        enterFrom = "main";
         for (int i = 0; i < imageID.length; i++)  
         {    
             ImageView image = new ImageView(this);  
@@ -71,8 +74,15 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
                   R.anim.push_left_out));
           this.viewFlipper.showNext(); 
           viewCount--;
+          
           if(viewCount==0){
-          	StartMainWhenAnimEnd();
+        	// 从overflow进入教程
+        	if(intent.getStringExtra("enterFrom").equals("overflow"))
+        		viewFlipper.stopFlipping();
+     
+        	// 第一次使用从main进入教程
+        	else if(intent.getStringExtra(enterFrom).equals("main"))
+        		StartMainWhenAnimEnd();
           }
           
 	}
@@ -82,15 +92,18 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	 */ 
 	private void animationRtoL(){
           
-          this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_right_in));  
-          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_right_out));  
-          this.viewFlipper.showPrevious(); 
-          viewCount++;
-          if(viewCount==0){
-          	StartMainWhenAnimEnd();
-          } 
+		  // 从overflow进入教程
+		  if(intent.getStringExtra("enterFrom").equals("overflow")){
+	          this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
+	                  R.anim.push_right_in));  
+	          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
+	                  R.anim.push_right_out));  
+	          this.viewFlipper.showPrevious(); 
+		  }
+		  // 第一次使用从main进入教程
+		  else{
+			  
+		  }
 	}
 	
 	 
@@ -122,7 +135,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
             return true;  
         }      
         else if (motionEvent1.getX() - motionEvent2.getX() < -120){  
-        //	animationRtoL();  // 从右向左滑动   
+        	animationRtoL();  // 从右向左滑动   
             return true;  
         } 
         return true;  

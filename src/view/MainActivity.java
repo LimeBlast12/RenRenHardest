@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 	private void startTutorialsActivity() {
 		Log.i("MainActivity", "start TutorialsActivity");
 		Intent intent = new Intent(this, TutorialsActivity.class);
+		intent.putExtra("enterFrom","main");
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
@@ -174,6 +175,7 @@ public class MainActivity extends Activity {
 		switch(item.getItemId()){
 		
 			case R.id.item_gameRule:
+				helper.showGameRule(this);
 				return true;
 				
 			case R.id.item_quitGame:

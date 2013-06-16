@@ -54,6 +54,7 @@ public class GameOverActivity extends Activity {
 				return true;
 				
 			case R.id.item_gameRule:
+				helper.showGameRule(this);
 				return true;
 				
 			case R.id.item_quitGame:
