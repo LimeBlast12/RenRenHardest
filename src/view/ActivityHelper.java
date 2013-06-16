@@ -117,4 +117,11 @@ public class ActivityHelper {
 		activity.startActivity(intent);
 	}
 	
+	
+	public void showGameRule(Activity activity) {
+		Intent intent = new Intent(activity, TutorialsActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		intent.putExtra("enterFrom","overflow");
+		activity.startActivity(intent);
+	}
 }

@@ -154,7 +154,7 @@ public class LoginedMainActivity extends Activity {
 				return true;
 				
 			case R.id.item_gameRule:
-				helper.showTip(LoginedMainActivity.this,"gameRule");
+				helper.showGameRule(this);
 				return true;
 				
 			case R.id.item_quitGame:
