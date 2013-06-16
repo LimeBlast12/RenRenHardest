@@ -28,5 +28,7 @@
     <string name="allMyFriendsImages">好友所有的头像</string>
     <string name="gameRule">游戏规则</string>
     <string name="quitGame">退出游戏</string>
+    <string name="music">音乐</string>
+    <string name="sound_effect">音效</string>
 
 </resources>

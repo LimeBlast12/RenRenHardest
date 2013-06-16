@@ -54,7 +54,7 @@ public class LoginedMainActivity extends Activity {
 	}
 
 	private void initButtons() {
-		scoresButton = (Button) findViewById(R.id.friend_portrait);
+		scoresButton = (Button) findViewById(R.id.choose_scores);
 		scoresButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -63,7 +63,7 @@ public class LoginedMainActivity extends Activity {
 			}
 		});
 
-		settingsButton = (Button) findViewById(R.id.self_portrait);
+		settingsButton = (Button) findViewById(R.id.choose_settings);
 		settingsButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
@@ -108,8 +108,9 @@ public class LoginedMainActivity extends Activity {
 	 * 展示游戏设置界面
 	 */
 	private void startSettingsActivity() {
+		Log.i("LoginedMainActivity", "start settings activity");
 		Intent intent = new Intent(this, SettingsActivity.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
+		//intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
 	}
 
