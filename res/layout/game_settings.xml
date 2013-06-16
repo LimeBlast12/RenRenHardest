@@ -1,35 +1,91 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@drawable/background">
-
-     <TextView
-         android:id="@+id/musicLabel"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"    
-         android:layout_alignTop="@id/musicButton"
-         android:layout_alignBottom="@id/musicButton"
-         android:layout_centerHorizontal="true"
-         android:text="@string/music"
-         android:gravity="center"
-         android:layout_marginLeft="10dp"/>
-
-     <ToggleButton
-         android:id="@+id/musicButton"
-         android:layout_width="wrap_content"
-         android:layout_height="wrap_content"
-         android:layout_alignParentTop="true"
-         android:layout_toRightOf="@+id/musicLabel"
-         android:layout_marginLeft="20dp" /> 
-    
-</RelativeLayout>
--->
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical"
-    android:background="@drawable/background" >
+    android:background="@drawable/background"
+    android:orientation="vertical" >
+
+    <RelativeLayout
+        android:id="@+id/setting_music"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="70dp" >
+
+        <TextView
+            android:id="@+id/music_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/music_button"
+            android:layout_alignTop="@+id/music_button"
+            android:gravity="center"
+            android:text="@string/music"
+            android:textSize="8pt" />
+
+        <ToggleButton
+            android:id="@+id/music_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/music_label"
+            android:background="@color/blue" />
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:id="@+id/setting_sound_effect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp" >
+
+        <TextView
+            android:id="@+id/sound_effect_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/sound_effect_button"
+            android:layout_alignTop="@+id/sound_effect_button"
+            android:gravity="center"
+            android:text="@string/sound_effect"
+            android:textSize="8pt" />
+
+        <ToggleButton
+            android:id="@+id/sound_effect_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/sound_effect_label" 
+            android:background="@color/yellow" />
+    </RelativeLayout>
+    
+    <RelativeLayout 
+        android:id="@+id/setting_game_difficulty"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp" >
+        
+        <TextView
+            android:id="@+id/difficulty_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignBottom="@+id/difficulty_button"
+            android:layout_alignTop="@+id/difficulty_button"
+            android:gravity="center"
+            android:text="@string/sound_effect"
+            android:textSize="8pt" />
+
+        <Button
+            android:id="@+id/difficulty_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_marginLeft="20dp"
+            android:layout_toRightOf="@+id/difficulty_label" 
+            android:background="@color/red"
+            android:text="简单" />
+        
+    </RelativeLayout>
 
 </LinearLayout>
