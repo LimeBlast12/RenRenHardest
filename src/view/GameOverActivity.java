@@ -27,6 +27,7 @@ public class GameOverActivity extends Activity {
 	public void onBackPressed() {
 		Intent intent = new Intent(this, LoginedMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //by lys 避免startActivity创建新的LoginedMainActivity实例
 		startActivity(intent);
 		return;
 	}
@@ -42,18 +43,37 @@ public class GameOverActivity extends Activity {
 		
 		switch(item.getItemId()){
 			case R.id.item_allMyImages:
-				break;
+				startMyImagesActivity();
+				return true;
 			case R.id.item_allMyFriendsImages:
-				break;
+				startAllFriendsActivity();
+				return true;
 			case R.id.item_gameRule:
-				break;
+				return true;
 			case R.id.item_quitGame:
-				break;
+				return true;
 			default:
-				break;
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+		
 	}
-
-
+	
+	/**
+	 * 展示所有好友列表的界面
+	 */
+	private void startAllFriendsActivity() {
+		Intent intent = new Intent(this, AllFriendsActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
+	/**
+	 * 展示所有自己头像的界面
+	 */
+	private void startMyImagesActivity() {
+		Intent intent = new Intent(this, MyImagesActivity.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startActivity(intent);
+	}
+	
 }

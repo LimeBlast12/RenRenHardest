@@ -136,22 +136,23 @@ public class LoginedMainActivity extends Activity {
 	
 	public boolean onOptionsItemSelected(MenuItem item){
 		
+
 		switch(item.getItemId()){
 			case R.id.item_allMyImages:
 				startMyImagesActivity();
-				break;
+				return true;
 			case R.id.item_allMyFriendsImages:
 				startAllFriendsActivity();
-				break;
+				return true;
 			case R.id.item_gameRule:
 				helper.showTip(LoginedMainActivity.this,"gameRule");
-				break;
+				return true;
 			case R.id.item_quitGame:
-				helper.showTip(LoginedMainActivity.this,"quitGame");
-				break;
+				helper.showTip(LoginedMainActivity.this,"gameRule");
+				return true;
 			default:
-				break;
+				return super.onOptionsItemSelected(item);
 		}
-		return super.onOptionsItemSelected(item);
+		
 	}
 }

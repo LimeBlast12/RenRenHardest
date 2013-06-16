@@ -156,22 +156,17 @@ public class MainActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item){
 		
 		switch(item.getItemId()){
-			case R.id.item_allMyImages:
-				
-				break;
-			case R.id.item_allMyFriendsImages:
-			
-				break;
-			case R.id.item_gameRule:
-				
-				break;
-			case R.id.item_quitGame:
-				
-				break;
-			default:
-				break;
-		}
-		return super.onOptionsItemSelected(item);
+		case R.id.item_allMyImages:
+			return true;
+		case R.id.item_allMyFriendsImages:
+			return true;
+		case R.id.item_gameRule:
+			return true;
+		case R.id.item_quitGame:
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
+	}
 	}
 
 
