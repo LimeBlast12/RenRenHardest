@@ -27,6 +27,14 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
+		init();
+		
+	}
+	
+	/*
+	 * 初始化
+	 */
+	private void init() {
 		viewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);    
         gestureDetector = new GestureDetector(this);  // 生成GestureDetector对象，用于检测手势事件
      
@@ -39,8 +47,63 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
                     LayoutParams.FILL_PARENT, LayoutParams.FILL_PARENT));  
         }  
         
-       
+	}
+
+
+	/*
+	 *响应Touch事件
+	 */
+	 @Override  
+	public boolean onTouchEvent(MotionEvent event)  
+	{  
+	    return this.gestureDetector.onTouchEvent(event);  
+	}  
+	 
+	 
+	/*
+	 * 设置从左向右滑的动画效果,若教程结束,调用进入主界面的方法
+	 */ 
+	private void animationLtoR(){
 		
+		  this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
+                  R.anim.push_left_in));  
+          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
+                  R.anim.push_left_out));
+          this.viewFlipper.showNext(); 
+          viewCount--;
+          if(viewCount==0){
+          	StartMainWhenAnimEnd();
+          }
+          
+	}
+	
+	/*
+	 * 设置从左向右滑的动画效果,若教程结束,调用进入主界面的方法
+	 */ 
+	private void animationRtoL(){
+          
+          this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
+                  R.anim.push_right_in));  
+          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
+                  R.anim.push_right_out));  
+          this.viewFlipper.showPrevious(); 
+          viewCount++;
+          if(viewCount==0){
+          	StartMainWhenAnimEnd();
+          } 
+	}
+	
+	 
+	/*
+	 * 新手教程动画结束后,进入主界面
+	 */
+	private void StartMainWhenAnimEnd(){
+		
+		Log.i("TutorialsActivity", "start LoginedActivity");
+		Intent intent = new Intent(TutorialsActivity.this, LoginedMainActivity.class);
+		startActivity(intent);
+		TutorialsActivity.this.finish();//关闭当前界面，避免按返回键时出错
+				
 	}
 
 	@Override
@@ -90,55 +153,4 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		return false;
 	}
 	
-	 @Override  
-	public boolean onTouchEvent(MotionEvent event)  
-	{  
-	    return this.gestureDetector.onTouchEvent(event);  
-	}  
-	 
-	/*
-	 * 设置从左向右滑的动画效果,若教程结束,调用进入主界面的方法
-	 */ 
-	private void animationLtoR(){
-		
-		  this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_left_in));  
-          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_left_out));
-          this.viewFlipper.showNext(); 
-          viewCount--;
-          if(viewCount==0){
-          	StartMainWhenAnimEnd();
-          }
-          
-	}
-	
-	/*
-	 * 设置从左向右滑的动画效果,若教程结束,调用进入主界面的方法
-	 */ 
-	private void animationRtoL(){
-          
-          this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_right_in));  
-          this.viewFlipper.setOutAnimation(AnimationUtils.loadAnimation(this,  
-                  R.anim.push_right_out));  
-          this.viewFlipper.showPrevious(); 
-          viewCount++;
-          if(viewCount==0){
-          	StartMainWhenAnimEnd();
-          } 
-	}
-	
-	 
-	/*
-	 * 新手教程动画结束后,进入主界面
-	 */
-	private void StartMainWhenAnimEnd(){
-		
-		Log.i("TutorialsActivity", "start LoginedActivity");
-		Intent intent = new Intent(TutorialsActivity.this, LoginedMainActivity.class);
-		startActivity(intent);
-		TutorialsActivity.this.finish();//关闭当前界面，避免按返回键时出错
-				
-	}
 }

@@ -44,8 +44,8 @@ public class MainActivity extends Activity {
 			loadFriends();
 			loadMyImages();
 			Log.i("MainActivity", "logined");
-		//	startLoginedMainActivity();
-			startTutorialsActivity();
+			startLoginedMainActivity();
+			
 		}
 	}
 
@@ -99,7 +99,8 @@ public class MainActivity extends Activity {
 				Log.d("test", values.toString());
 				loadFriends();
 				loadMyImages();
-				startLoginedMainActivity();
+				//startLoginedMainActivity();
+				startTutorialsActivity();
 			}
 
 			@Override
