@@ -118,23 +118,6 @@ public class LoginedMainActivity extends Activity {
 		startActivity(intent);
 	}
 	
-	/**
-	 * 展示所有好友列表的界面
-	 */
-	private void startAllFriendsActivity() {
-		Intent intent = new Intent(this, AllFriendsActivity.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startActivity(intent);
-	}
-	
-	/**
-	 * 展示所有自己头像的界面
-	 */
-	private void startMyImagesActivity() {
-		Intent intent = new Intent(this, MyImagesActivity.class);
-		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startActivity(intent);
-	}
 	
 	/**
 	 * 展示未登录的主界面
@@ -159,11 +142,11 @@ public class LoginedMainActivity extends Activity {
 		switch(item.getItemId()){
 		
 			case R.id.item_allMyImages:
-				startMyImagesActivity();
+				helper.startMyImagesActivity(this);
 				return true;
 				
 			case R.id.item_allMyFriendsImages:
-				startAllFriendsActivity();
+				helper.startAllFriendsActivity(this);
 				return true;
 				
 			case R.id.item_gameRule:
