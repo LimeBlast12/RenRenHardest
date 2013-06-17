@@ -68,12 +68,33 @@ public class ActivityHelper {
 	}
 
 	/**
-	 * 显示Toast提示
+	 * 显示短时间Toast提示，大概1秒
 	 * 
-	 * @param message
+	 * @param context 要显示提示的界面
+	 * @param message 要提示的内容
 	 */
-	public void showTip(Context context, String message) {
+	public void showShortTip(Context context, String message) {
 		Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+	}
+	
+	/**
+	 * 显示长时间Toast提示，大概3秒
+	 * 
+	 * @param context 要显示提示的界面
+	 * @param message 要提示的内容	 
+	 */
+	public void showLongTip(Context context, String message) {
+		Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+	}
+	
+	/**
+	 * 显示长时间Toast提示，大概3秒
+	 * 
+	 * @param context 要显示提示的界面
+	 * @param stringId 要提示的内容的资源id	 
+	 */
+	public void showLongTip(Context context, int stringId) {
+		Toast.makeText(context, stringId, Toast.LENGTH_LONG).show();
 	}
 	
 	/**

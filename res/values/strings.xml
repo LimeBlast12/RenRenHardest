@@ -12,7 +12,7 @@
     <!-- Logined Main Activity -->
     <string name="choose_settings">游戏设置</string>
     <string name="choose_scores">成  绩  单</string>
-    <string name="choose_start_game">开始游戏</string>
+    <string name="choose_start_game">进入游戏</string>
     <string name="exit_app">退出程序</string>
     <string name="auth_failed">验证失败</string>
     <string name="logout">退出登录</string>
@@ -23,8 +23,8 @@
     <string name="title_activity_dannni_main">DannniMainActivity</string>
     <string name="title_activity_game_over">GameOverActivity</string>
     <!-- Random Frinds Activity -->
-    <string name="shake_tips">Tips:摇一摇，可以换一组好友</string>
-    <string name="start_game">开玩!</string>
+    <string name="shake_tips">好友头像不好认？摇一摇手机吧！</string>
+    <string name="start_game">开始</string>
     <!-- Action Bar Overflow -->
     <string name="allMyImages">我的头像</string>
     <string name="allMyFriendsImages">好友头像</string>

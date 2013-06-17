@@ -111,7 +111,7 @@ public class MainActivity extends Activity {
 
 					@Override
 					public void run() {
-						helper.showTip(MainActivity.this, MainActivity.this
+						helper.showShortTip(MainActivity.this, MainActivity.this
 										.getString(R.string.auth_failed));						
 					}
 				});
