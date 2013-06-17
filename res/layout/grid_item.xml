@@ -7,7 +7,8 @@
         android:id="@+id/ItemImage"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:src="@null" />
+        android:src="@null"
+        android:background="@drawable/griditem_back" />
 
     <TextView
         android:id="@+id/ItemText"
