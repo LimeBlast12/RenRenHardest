@@ -73,7 +73,7 @@
             android:layout_alignBottom="@+id/difficulty_button"
             android:layout_alignTop="@+id/difficulty_button"
             android:gravity="center"
-            android:text="@string/sound_effect"
+            android:text="@string/difficulty"
             android:textSize="8pt" />
 
         <Button
