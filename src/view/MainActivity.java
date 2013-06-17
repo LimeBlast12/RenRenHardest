@@ -28,7 +28,6 @@ public class MainActivity extends Activity {
 	private Handler handler;
 	private ActivityHelper helper;
 	private Button oAuthButton;
-   
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -55,6 +54,7 @@ public class MainActivity extends Activity {
 		renren.init(this);
 		if (renren.isSessionKeyValid()) {//已经登录
 			startLoginedMainActivity();
+			//startTutorialsActivity();
 		} 
 	}
 	
@@ -83,6 +83,7 @@ public class MainActivity extends Activity {
 	private void startTutorialsActivity() {
 		Log.i("MainActivity", "start TutorialsActivity");
 		Intent intent = new Intent(this, TutorialsActivity.class);
+		String enterFrom = null;
 		intent.putExtra("enterFrom","main");
 		intent.putExtra(Renren.RENREN_LABEL, renren);		
 		startActivity(intent);

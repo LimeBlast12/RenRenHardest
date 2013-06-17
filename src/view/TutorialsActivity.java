@@ -20,8 +20,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	            R.drawable.t4, R.drawable.t5 };  
 	private ViewFlipper viewFlipper = null;
 	private GestureDetector gestureDetector = null; 
-	private int viewCount = 4;
-	private String enterFrom;   // 进入新手教程的事件来源
+	private int viewCount = 5;
 	private Intent intent; 
 	 
 	@SuppressWarnings("deprecation")
@@ -40,7 +39,6 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		viewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);    
         gestureDetector = new GestureDetector(this);  // 生成GestureDetector对象，用于检测手势事件
         intent = getIntent();
-        enterFrom = "main";
         for (int i = 0; i < imageID.length; i++)  
         {    
             ImageView image = new ImageView(this);  
@@ -81,7 +79,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
         		viewFlipper.stopFlipping();
      
         	// 第一次使用从main进入教程
-        	else if(intent.getStringExtra(enterFrom).equals("main"))
+        	else if(intent.getStringExtra("enterFrom").equals("main"))
         		StartMainWhenAnimEnd();
           }
           

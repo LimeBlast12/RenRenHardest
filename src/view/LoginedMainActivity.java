@@ -178,7 +178,7 @@ public class LoginedMainActivity extends Activity {
                           mExitTime = System.currentTimeMillis();
 
                   } else {
-                          finish();
+                         helper.exit();
                   }
                   return true;
           }

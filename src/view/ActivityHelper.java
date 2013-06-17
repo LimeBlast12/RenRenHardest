@@ -97,6 +97,7 @@ public class ActivityHelper {
 	    	activity.finish();  
 	    }  
 	    System.exit(0);  
+	
     }
     
     /**
