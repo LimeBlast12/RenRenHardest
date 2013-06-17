@@ -3,8 +3,8 @@ package model;
 public class ImageDisplay {
 	
 	private String url;
-	private int owner;
-	private int filter_type;
+	private int owner;	//0代表自己，1代表好友
+	private int filter_type;	//数字对应的滤镜见BitmapFilter类中的常量定义
 	
 	public ImageDisplay(){
 		
