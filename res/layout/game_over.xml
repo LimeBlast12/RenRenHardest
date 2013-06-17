@@ -8,10 +8,54 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dip"
+        android:layout_marginTop="50dip"
+        android:text="@string/new_record"
+        android:textSize="20sp" />
+    
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="150dip"
-        android:text="@string/game_over"
-        android:textSize="40sp"
-        android:textStyle="bold" />
+        android:layout_marginTop="40dip"
+        android:text="@string/final_score"
+        android:textSize="70sp"
+        android:textStyle="bold|italic" />
+    
+    <ImageView
+        android:id="@+id/star"
+        android:src="@drawable/star2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:layout_marginTop="10dip"
+        android:contentDescription="@string/app_name" />
+    
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dip"
+        android:layout_gravity="center"
+        android:orientation="horizontal" >
+        
+        <Button
+            android:id="@+id/replay"
+            android:background="@color/blue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/replay"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+        
+        <Button
+            android:id="@+id/return_menu"
+            android:background="@color/red"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dip"
+            android:text="@string/return_menu"
+            android:textStyle="bold"
+            android:textSize="25sp" />
+    </LinearLayout>
 
 </LinearLayout>

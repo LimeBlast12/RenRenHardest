@@ -12,7 +12,6 @@
     <string name="choose_settings">游戏设置</string>
     <string name="choose_scores">成绩单</string>
     <string name="choose_start_game">开始游戏</string>
-    <string name="game_over">Game Over</string>
     <string name="exit_app">退出程序</string>
     <string name="auth_failed">验证失败</string>
     <string name="logout">退出登录</string>
@@ -30,5 +29,10 @@
     <string name="quitGame">退出游戏</string>
     <string name="music">音乐</string>
     <string name="sound_effect">音效</string>
+    <!-- Game Over -->
+    <string name="new_record">新记录诞生啦！</string>
+   	<string name="final_score">100</string>
+   	<string name="replay">重玩</string>
+   	<string name="return_menu">返回</string>
 
 </resources>
