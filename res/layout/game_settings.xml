@@ -84,7 +84,7 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/difficulty_label" 
             android:background="@color/red"
-            android:text="简单" />
+            android:text="@string/difficulty_simple" />
         
     </RelativeLayout>
 

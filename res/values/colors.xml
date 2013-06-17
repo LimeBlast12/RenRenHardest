@@ -8,6 +8,9 @@
     <color name="SandyBrown">#F4A460</color>
     <color name="NavajoWhite">#FFDEAD</color>
     <color name="red">#FF4444</color>
+    <color name="dark_red">#FD1717</color>
     <color name="yellow">#FFBB33</color>
+    <color name="dark_yellow">#FEAA02</color>
     <color name="blue">#33B5E5</color>
+    <color name="dark_blue">#20A2D2</color>
 </resources>
