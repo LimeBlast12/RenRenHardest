@@ -19,8 +19,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Vibrator;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 
 import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
@@ -30,20 +31,20 @@ import edu.nju.renrenhardest.R;
 @SuppressLint("NewApi")
 public class RandomFriendsActivity extends Activity implements ModelListener,
 		SensorEventListener {
-	private SensorManager mSensorManager = null;  // Sensor管理器
+	private final int COUNT_FRIENDS = 30;// 一组好友个数
+	private SensorManager mSensorManager = null; // Sensor管理器
 	private Vibrator mVibrator = null; // 震动
 	private ActivityHelper helper;
 	private Renren renren;
 	private FriendListModel friendListModel;
-	private Handler handler = null; //使用handler来避免更新UI的线程安全问题
+	private Handler handler = null; // 使用handler来避免更新UI的线程安全问题
 	/* 实际用于更新UI的线程 */
 	private Runnable runnableUi = new Runnable() {
 		@Override
 		public void run() {
-			showData(friendListModel.getRandomFriends(30));
+			showData(friendListModel.getRandomFriends(COUNT_FRIENDS));
 		}
 	};
-	private Button startButton;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -66,18 +67,12 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		}
 
 		setContentView(R.layout.random_friends_layout);
-		
-		startButton = (Button)findViewById(R.id.startButton);
-		startButton.setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				startGameMainActivity();
-			}
-		});
 
 		friendListModel = FriendListModel.getInstance();
 		friendListModel.register(RandomFriendsActivity.this);
 		loadFriends();
+		
+		helper.showLongTip(this, R.string.shake_tips);
 	}
 
 	@Override
@@ -115,16 +110,16 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 			// 第一个参数是Listener，第二个参数是所得传感器类型，第三个参数值获取传感器信息的频率
 		}
 	}
-	
+
 	/**
 	 * 启动游戏界面
 	 */
-	private void startGameMainActivity(){
+	private void startGameMainActivity() {
 		Intent intent = new Intent(this, GameMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
 	}
-	
+
 	private void showData(List<Map<String, Object>> data) {
 		Log.i("RandomFriendsActivity", "show data");
 		StaggeredGridView gridView = (StaggeredGridView) this
@@ -163,6 +158,24 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 			startUpdateUiThread();
 		} else {
 			Log.i("RandomFriendsActivity", "friend list is null");
+		}
+	}
+
+	/* 定义Action Bar的菜单项 */
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.game_prepare_menu, menu);
+		return true;
+	}
+
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.start_game:
+			startGameMainActivity();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
 	}
 

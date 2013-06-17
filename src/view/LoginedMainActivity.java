@@ -87,7 +87,7 @@ public class LoginedMainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				renren.logout(LoginedMainActivity.this);
-				helper.showTip(LoginedMainActivity.this,
+				helper.showShortTip(LoginedMainActivity.this,
 						LoginedMainActivity.this
 								.getString(R.string.logout_success));
 				startMainActivity();
@@ -174,7 +174,7 @@ public class LoginedMainActivity extends Activity {
           if (keyCode == KeyEvent.KEYCODE_BACK) {
                   if ((System.currentTimeMillis() - mExitTime) > 2000) {
                 	  // System.currentTimeMillis()无论何时调用，肯定大于2000
-                          helper.showTip(this, "再按一次退出程序");
+                          helper.showShortTip(this, "再按一次退出程序");
                           mExitTime = System.currentTimeMillis();
 
                   } else {

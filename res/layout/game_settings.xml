@@ -29,7 +29,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/music_label"
-            android:background="@color/blue" />
+            android:background="@drawable/button_blue" />
     </RelativeLayout>
     
     <RelativeLayout
@@ -56,7 +56,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/sound_effect_label" 
-            android:background="@color/yellow" />
+            android:background="@drawable/button_yellow" />
     </RelativeLayout>
     
     <RelativeLayout 
@@ -83,7 +83,7 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/difficulty_label" 
-            android:background="@color/red"
+            android:background="@drawable/button_red"
             android:text="@string/difficulty_simple" />
         
     </RelativeLayout>
