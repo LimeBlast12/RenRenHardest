@@ -23,8 +23,8 @@
     <string name="title_activity_game_over">GameOverActivity</string>
     <string name="shake_tips">Tips:摇一摇，可以换一组好友</string>
     <string name="start_game">开玩!</string>
-    <string name="allMyImages">我所有的头像</string>
-    <string name="allMyFriendsImages">好友所有的头像</string>
+    <string name="allMyImages">我的头像</string>
+    <string name="allMyFriendsImages">好友头像</string>
     <string name="gameRule">游戏规则</string>
     <string name="quitGame">退出游戏</string>
     <string name="music">音乐</string>
