@@ -79,16 +79,36 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
-		case android.R.id.home:
-			Intent parentActivityIntent = new Intent(AllFriendsActivity.this,
-					LoginedMainActivity.class);
-			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
-					| Intent.FLAG_ACTIVITY_NEW_TASK);
-			startActivity(parentActivityIntent);
-			finish();
-			return true;
+			case android.R.id.home:
+				Intent parentActivityIntent = new Intent(AllFriendsActivity.this,
+						LoginedMainActivity.class);
+				parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+						| Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(parentActivityIntent);
+				finish();
+				return true;
+
+			case R.id.item_allMyImages:
+				helper.startMyImagesActivity(this);
+				return true;
+				
+			case R.id.item_allMyFriendsImages:
+				helper.startAllFriendsActivity(this);
+				return true;
+				
+			case R.id.item_gameRule:
+				helper.showGameRule(this);
+				return true;
+				
+			case R.id.item_quitGame:
+				helper.exit();
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);	
+			
 		}
-		return super.onOptionsItemSelected(item);
+		
 	}
 
 	private void showData(List<Map<String, Object>> data) {

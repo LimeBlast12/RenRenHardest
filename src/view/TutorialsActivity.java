@@ -6,6 +6,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.ViewGroup.LayoutParams;
@@ -20,6 +23,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	            R.drawable.t4, R.drawable.t5 };  
 	private ViewFlipper viewFlipper = null;
 	private GestureDetector gestureDetector = null; 
+	private ActivityHelper helper;
 	private int viewCount = 5;
 	private Intent intent; 
 	 
@@ -36,6 +40,8 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	 * 初始化
 	 */
 	private void init() {
+		helper = ActivityHelper.getInstance();
+		helper.addActivity(this);
 		viewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);    
         gestureDetector = new GestureDetector(this);  // 生成GestureDetector对象，用于检测手势事件
         intent = getIntent();
@@ -162,6 +168,40 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	public boolean onSingleTapUp(MotionEvent arg0) {
 		// TODO Auto-generated method stub
 		return false;
+	}
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu){
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.main_menu,menu);
+		return true;
+	}
+	
+	public boolean onOptionsItemSelected(MenuItem item){
+		
+
+		switch(item.getItemId()){
+		
+			case R.id.item_allMyImages:
+				helper.startMyImagesActivity(this);
+				return true;
+				
+			case R.id.item_allMyFriendsImages:
+				helper.startAllFriendsActivity(this);
+				return true;
+				
+			case R.id.item_gameRule:
+				helper.showGameRule(this);
+				return true;
+				
+			case R.id.item_quitGame:
+				helper.exit();
+				return true;
+				
+			default:
+				return super.onOptionsItemSelected(item);
+		}
+		
 	}
 	
 }
