@@ -1,13 +1,11 @@
 package game;
 
 import java.util.List;
-import java.util.Map;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import android.graphics.Bitmap;
-
 import model.ImageDisplay;
+import android.graphics.Bitmap;
 
 /**
  * 代表游戏的类，封装了当前游戏的一些状态信息，以及与其他部分通信需要用到的某些引用
@@ -15,13 +13,17 @@ import model.ImageDisplay;
  *
  */
 public class Game {
+	public static final int DIFFICULTY_SIMPLE = 1;
+	public static final int DIFFICULTY_MIDDLE = 2;
+	public static final int DIFFICULTY_HARD = 3;
+	
 	private static Game instance=null;
 	private StateMachine stateMachine;
 	private MyThread theThread;
 	
 	/*游戏状态信息*/
 	private int timeLeft;	//剩余时间
-	private int level;		//游戏难度级别
+	private int difficulty = DIFFICULTY_SIMPLE;		//游戏难度级别,初始值为简单
 	private int totalPic_own;	//自己的头像数量
 	private int totalPic_friends;	//好友头像数量
 	private int rightPic_own;		//答对的自己头像数
@@ -186,11 +188,11 @@ public class Game {
 		this.maxImageCount = maxImageCount;
 	}
 
-	public int getLevel() {
-		return level;
+	public int getDifficulty() {
+		return difficulty;
 	}
 
-	public void setLevel(int level) {
-		this.level = level;
+	public void setDifficulty(int difficulty) {
+		this.difficulty = difficulty;
 	}
 }
