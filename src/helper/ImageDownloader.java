@@ -15,7 +15,7 @@ import android.util.Log;
 
 /**
  * 简易图片下载器，不带缓存，不依赖于上下文，根据url下载图片，输出Bitmap
- * @author njusoftware
+ * @author daisy
  *
  */
 public class ImageDownloader {
