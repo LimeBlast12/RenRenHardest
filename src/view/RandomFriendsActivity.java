@@ -100,6 +100,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		Log.i("RandomFriendsActivity", "destroy");
 		// 不销毁ProgressDialog会出现view not attached to window manager异常
 		helper.dismissProgress();
+		friendListModel.remove(RandomFriendsActivity.this);
 		super.onDestroy();
 	}
 

@@ -76,6 +76,7 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 		Log.i("FriendListActivity", "destroy");
 		// 不销毁ProgressDialog会出现view not attached to window manager异常
 		helper.dismissProgress();
+		friendListModel.remove(AllFriendsActivity.this);
 		super.onDestroy();
 	}
 	

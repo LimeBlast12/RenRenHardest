@@ -67,6 +67,13 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 		loadMyImages();
 	}
 	
+	@Override
+	public void onDestroy() {
+		super.onDestroy();
+		Log.i("MyImagesActivity", "on destroy");
+		myImagesModel.remove(MyImagesActivity.this);
+	}
+	
 	/*无论何种机型都显示overflow*/
 	@SuppressLint("NewApi")
 	private void getOverflowMenu() {
