@@ -7,6 +7,8 @@ import java.util.Timer;
 import java.util.TimerTask;
 
 import model.ImageDisplay;
+import model.ModelListener;
+import model.SingleImageModel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -22,8 +24,12 @@ import android.widget.TextView;
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
-
-public class GameMainActivity extends Activity {
+/**
+ * 游戏主界面，最终将与游戏逻辑脱离。
+ * @author DanniWang
+ *
+ */
+public class GameMainActivity extends Activity implements ModelListener{
 	private Renren renren;
 	private ImageView mImageView = null;
 	private TextView mTextView_number = null;
@@ -42,10 +48,12 @@ public class GameMainActivity extends Activity {
 	private Timer mTimer = null;
 	private TimerTask mTimerTask = null;
 	private Handler mHandler = null;
-	/*用于更换图片*/
+	/*用于更换图片
 	private ArrayList<ImageDisplay> imageList; //ImageDisplay是一个包含三项图片信息的对象
 	private int current_index = 1; //表示当前遍历到的图片index,因为刚进入游戏已经展示第0张图片，故设为1
-	ImageLoader imageLoader = null;
+*/	ImageLoader imageLoader = null;
+	/*6.18新添*/
+	private SingleImageModel sim;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -59,7 +67,7 @@ public class GameMainActivity extends Activity {
 		/*initTextViews*/
 		mTextView_time = (TextView)findViewById(R.id.time_left);
 		mTextView_number = (TextView)findViewById(R.id.image_number);
-		/*初始化imageList，这里先写死*/
+		/*初始化imageList，这里先写死
 		imageList = new ArrayList<ImageDisplay>();
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20120617/1240/h_large_aXvi_092e0000015a1376.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn221/20120411/0920/h_large_xDMR_5630000481282f76.jpg",0,0));
@@ -70,11 +78,15 @@ public class GameMainActivity extends Activity {
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn521/20120316/2300/h_large_Ozk8_563d00019bca2f76.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120315/2325/h_large_1Fli_5f4c00017f242f75.jpg",0,0));
 		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn421/20120315/2320/h_large_aMGY_5f3d00017e712f75.jpg",0,0));
-		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120229/2150/h_large_hyxy_7a94000784202f75.jpg",0,0));
+		imageList.add(new ImageDisplay("http://hdn.xnimg.cn/photos/hdn121/20120229/2150/h_large_hyxy_7a94000784202f75.jpg",0,0));*/
 		/*初始化imageView,imageLoader*/
 		mImageView = (ImageView)findViewById(R.id.iv);
-		setImage(0);
+//		setImage(0);
 		/*计时开始*/
+		
+		
+		/*6.18新添*/
+		sim.register(this);
 		timer();
 	}
 	
@@ -102,7 +114,7 @@ public class GameMainActivity extends Activity {
 	}
 	
 	private void initButtons() {
-		mButton_filter_grey = (Button) findViewById(R.id.filter_grey);
+		/*mButton_filter_grey = (Button) findViewById(R.id.filter_grey);
 		mButton_filter_grey.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -124,29 +136,29 @@ public class GameMainActivity extends Activity {
 			public void onClick(View v) {
 				change_image_and_number();
 			}
-		});
+		});*/
 	}
 	
-	/*change_image与更换图片有关*/
+	/*change_image与更换图片有关
 	private void change_image_and_number(){
-		/*这里的5是一组图片的总数*/
+		这里的5是一组图片的总数
 		if(current_index<10){
-			/*先改变图片*/
+			先改变图片
 			setImage(current_index);
-	        /*再改变数字*/
+	        再改变数字
 	        int number = current_index+1;
 			mTextView_number.setText("No."+String.valueOf(number));
 			
 	        current_index++;
 		}
-	}
+	}*/
 	
-	public void setImage(int index){
+	/*public void setImage(int index){
 		imageLoader = new ImageLoader(GameMainActivity.this);
 		Bitmap originalBitmap = imageLoader.getBitmap(imageList.get(index).getUrl());
 		mImageView = (ImageView)findViewById(R.id.iv);
 		mImageView.setImageBitmap(originalBitmap);
-	}
+	}*/
 	
 	/*timer, sendMessage, updateTextView这3个方法都与计时有关*/
 	private void timer(){
@@ -209,5 +221,13 @@ public class GameMainActivity extends Activity {
 		Intent intent = new Intent(GameMainActivity.this, GameOverActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
+	}
+
+	/*6.18新添*/
+	@Override
+	public void doSomething() {
+		// TODO Auto-generated method stub
+		mImageView = (ImageView)findViewById(R.id.iv);
+		mImageView.setImageBitmap(sim.getImage());
 	}
 }
