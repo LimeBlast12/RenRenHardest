@@ -29,9 +29,9 @@ public class GameMainActivityTest extends
 		mActivity = getActivity();
 		mTextView_number = (TextView) mActivity.findViewById(R.id.image_number);
 		mTextView_time = (TextView) mActivity.findViewById(R.id.time_left);
-		mButton_filter_grey = (Button) mActivity.findViewById(R.id.filter_grey);
-		mButton_filter_old = (Button) mActivity.findViewById(R.id.filter_old);
-		mButton_friend = (Button) mActivity.findViewById(R.id.friend);
+		mButton_filter_grey = (Button) mActivity.findViewById(R.id.filter_button0);
+		mButton_filter_old = (Button) mActivity.findViewById(R.id.filter_button1);
+		mButton_friend = (Button) mActivity.findViewById(R.id.game_friend_button);
 	}
 
 	@SuppressLint("NewApi")

@@ -1,18 +1,17 @@
 package view;
 
+import game.Game;
 import helper.ImageLoader;
+import imagefilter.BitmapFilter;
 
-import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
-import model.ImageDisplay;
 import model.ModelListener;
 import model.SingleImageModel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -34,10 +33,11 @@ public class GameMainActivity extends Activity implements ModelListener{
 	private ImageView mImageView = null;
 	private TextView mTextView_number = null;
 	private TextView mTextView_time = null;
-	private Button mButton_filter_grey = null;
-	private Button mButton_filter_old = null;
-	private Button mButton_friend = null;
+	private Button filter_buttons[] = new Button[2];//现版本游戏设定两个filter，0代表左，1代表右
+	private Button game_friend_button = null;	
 	private ActivityHelper helper;
+	private Game game = Game.getInstance();
+	private final int COUNT_FILTER_TYPE = 2;
 	
 	/*用于计时，有些变量只能是静态变量且不应修改，有些如count切忌设为静态变量*/
 	private static final int total_time = 10; //表示一轮游戏的总时间
@@ -113,30 +113,46 @@ public class GameMainActivity extends Activity implements ModelListener{
 		System.out.println("onStop");
 	}
 	
-	private void initButtons() {
-		/*mButton_filter_grey = (Button) findViewById(R.id.filter_grey);
-		mButton_filter_grey.setOnClickListener(new View.OnClickListener() {
+	private void initButtons() {		
+		final int filterType[] = new int[COUNT_FILTER_TYPE];	
+		for (int i = 0; i < COUNT_FILTER_TYPE; i++) {
+			filterType[i] = game.getUsingFilter(i);
+			switch (filterType[i]) {
+			case BitmapFilter.GRAY_STYLE:
+				filter_buttons[i].setText(R.string.filter_grey);
+				break;
+			case BitmapFilter.OLD_STYLE:
+				filter_buttons[i].setText(R.string.filter_old);
+				break;
+			default:
+				filter_buttons[i].setText(R.string.filter_old);
+				break;
+			}
+		}
+		
+		filter_buttons[0] = (Button) findViewById(R.id.filter_button0);
+		filter_buttons[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				change_image_and_number();
+				game.pickFilter(filterType[0]);
 			}
 		});
 		
-		mButton_filter_old = (Button) findViewById(R.id.filter_old);
-		mButton_filter_old.setOnClickListener(new View.OnClickListener() {
+		filter_buttons[1] = (Button) findViewById(R.id.filter_button1);
+		filter_buttons[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				change_image_and_number();
+				game.pickFilter(filterType[1]);
 			}
 		});
 		
-		mButton_friend = (Button) findViewById(R.id.friend);
-		mButton_friend.setOnClickListener(new View.OnClickListener() {
+		game_friend_button = (Button) findViewById(R.id.game_friend_button);
+		game_friend_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				change_image_and_number();
+				game.pickFriend();
 			}
-		});*/
+		});
 	}
 	
 	/*change_image与更换图片有关
