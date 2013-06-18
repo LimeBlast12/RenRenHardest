@@ -25,7 +25,7 @@ public class GameScorer {
 			long numOfRightImages,long numOfWrongImages,int gameLevel){
 		
 		setParaAndScore(numOfMyImages,numOfMyFriendsImages,numOfRightImages,numOfWrongImages,gameLevel);
-		return 3000; // 先写死为3000
+		return 3000; // 先写死为3000，待处理
 	}
 	
 	
