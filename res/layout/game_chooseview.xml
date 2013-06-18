@@ -45,14 +45,14 @@
         
         <Button
             android:id="@+id/logout"
-            android:background="@color/DarkGray"
-            android:layout_width="90dip"
-            android:layout_height="30dip"
+            android:background="@drawable/button_gray"
+            android:layout_width="wrap_content"
+            android:layout_height="40dip"
             android:layout_marginTop="30dip"
             android:layout_gravity="right"
             android:text="@string/logout"
             android:textStyle="bold"
-            android:textSize="18sp" />
+            android:textSize="16sp" />
         
     </LinearLayout>
 

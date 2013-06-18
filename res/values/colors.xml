@@ -15,4 +15,6 @@
     <color name="dark_yellow">#FEAA02</color>
     <color name="blue">#33B5E5</color>
     <color name="dark_blue">#20A2D2</color>
+    <color name="gray">#A9A9A9</color>
+    <color name="dark_gray">#808080</color>
 </resources>
