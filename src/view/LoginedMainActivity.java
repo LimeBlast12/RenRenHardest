@@ -192,8 +192,8 @@ public class LoginedMainActivity extends Activity {
 	 */
 	public boolean onKeyDown(int keyCode, KeyEvent event) {
           if (keyCode == KeyEvent.KEYCODE_BACK) {
-                  if ((System.currentTimeMillis() - mExitTime) > 2000) {
-                	  // System.currentTimeMillis()无论何时调用，肯定大于2000
+                  if ((System.currentTimeMillis() - mExitTime) > 3000) {
+                	  // System.currentTimeMillis()无论何时调用，肯定大于3000
                           helper.showShortTip(this, "再按一次退出程序");
                           mExitTime = System.currentTimeMillis();
 
