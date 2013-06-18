@@ -1,6 +1,9 @@
 package view;
 
+import java.lang.reflect.Field;
+
 import edu.nju.renrenhardest.R;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,6 +12,7 @@ import android.view.GestureDetector;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 import android.view.GestureDetector.OnGestureListener;
 import android.view.MotionEvent;
 import android.view.ViewGroup.LayoutParams;
@@ -32,6 +36,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
+		getOverflowMenu();
 		init();
 		
 	}
@@ -169,6 +174,22 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
+	/*无论何种机型都显示overflow*/
+	@SuppressLint("NewApi")
+	private void getOverflowMenu() {
+
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){

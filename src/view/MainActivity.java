@@ -1,7 +1,10 @@
 package view;
 
+import java.lang.reflect.Field;
+
 import service.LoadFriendsService;
 import service.LoadMyImagesService;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -11,6 +14,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.widget.Button;
 
 import com.renren.api.connect.android.Renren;
@@ -33,6 +37,7 @@ public class MainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);	
+		getOverflowMenu();
 		renren = new Renren(API_KEY, SECRET_KEY, APP_ID, this);
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
@@ -163,6 +168,22 @@ public class MainActivity extends Activity {
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startService(intent);
 	}
+	
+	/*无论何种机型都显示overflow*/
+	@SuppressLint("NewApi")
+	private void getOverflowMenu() {
+
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){

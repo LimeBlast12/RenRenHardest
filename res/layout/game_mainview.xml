@@ -4,6 +4,13 @@
     android:layout_height="match_parent"
     android:background="@drawable/background" >
     
+    <Button
+        android:id="@+id/pause"
+        android:background="@drawable/pause"
+        android:layout_width="48dip"
+        android:layout_height="48dip"
+        android:layout_alignParentRight="true" />
+    
     <ImageView
         android:id="@+id/iv"
         android:src="@drawable/rainbow"

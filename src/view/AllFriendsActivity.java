@@ -1,5 +1,6 @@
 package view;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 
 import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
@@ -48,6 +50,7 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 			renren = helper.getRenren();
 		}	
 		setContentView(R.layout.staggered_grid_view);
+		getOverflowMenu();
 		handler = new Handler();
 		friendListModel = FriendListModel.getInstance();
         friendListModel.register(AllFriendsActivity.this);
@@ -75,6 +78,22 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 		helper.dismissProgress();
 		super.onDestroy();
 	}
+	
+	/*无论何种机型都显示overflow*/
+	@SuppressLint("NewApi")
+	private void getOverflowMenu() {
+
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {

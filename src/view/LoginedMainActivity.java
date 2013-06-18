@@ -1,5 +1,7 @@
 package view;
 
+import java.lang.reflect.Field;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
@@ -10,6 +12,7 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewConfiguration;
 import android.view.WindowManager;
 import android.widget.Button;
 
@@ -30,6 +33,7 @@ public class LoginedMainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
+		getOverflowMenu();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		Intent intent = getIntent();
@@ -133,6 +137,22 @@ public class LoginedMainActivity extends Activity {
 		startActivity(intent);
 		this.finish();//关闭当前界面，避免按返回键时出错
 	}
+	
+	/*无论何种机型都显示overflow*/
+	@SuppressLint("NewApi")
+	private void getOverflowMenu() {
+
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu){

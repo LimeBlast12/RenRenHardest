@@ -1,5 +1,6 @@
 package view;
 
+import java.lang.reflect.Field;
 import java.util.List;
 import java.util.Map;
 
@@ -22,6 +23,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
+import android.view.ViewConfiguration;
 
 import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
@@ -67,6 +69,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		}
 
 		setContentView(R.layout.random_friends_layout);
+		getOverflowMenu();
 
 		friendListModel = FriendListModel.getInstance();
 		friendListModel.register(RandomFriendsActivity.this);
@@ -160,6 +163,22 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 			Log.i("RandomFriendsActivity", "friend list is null");
 		}
 	}
+	
+	/*无论何种机型都显示overflow*/
+	@SuppressLint("NewApi")
+	private void getOverflowMenu() {
+
+        try {
+           ViewConfiguration config = ViewConfiguration.get(this);
+           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
+           if(menuKeyField != null) {
+               menuKeyField.setAccessible(true);
+               menuKeyField.setBoolean(config, false);
+           }
+       } catch (Exception e) {
+           e.printStackTrace();
+       }
+   }
 
 	/* 定义Action Bar的菜单项 */
 	@Override
