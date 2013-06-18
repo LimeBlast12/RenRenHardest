@@ -2,6 +2,7 @@ package view;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -29,8 +30,8 @@ public class SettingsActivity extends Activity {
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 	}
-	
-	private void initButtons() {		
+
+	private void initButtons() {
 		difficultyButton = (Button) findViewById(R.id.difficulty_button);
 		final Game game = Game.getInstance();
 		final int difficulty = game.getDifficulty();
@@ -48,17 +49,17 @@ public class SettingsActivity extends Activity {
 					newDifficulty = Game.DIFFICULTY_HARD;
 					break;
 				case Game.DIFFICULTY_SIMPLE:
-					newDifficulty = Game.DIFFICULTY_MIDDLE;			
+					newDifficulty = Game.DIFFICULTY_MIDDLE;
 					break;
-				default:					
-					break;			
+				default:
+					break;
 				}
 				game.setDifficulty(newDifficulty);
 				setDifficultyButton(newDifficulty);
-			}			
+			}
 		});
 	}
-	
+
 	private void setDifficultyButton(int difficulty) {
 		switch (difficulty) {
 		case Game.DIFFICULTY_HARD:
@@ -71,7 +72,7 @@ public class SettingsActivity extends Activity {
 			difficultyButton.setText(R.string.difficulty_simple);
 			break;
 		default:
-			break;			
+			break;
 		}
 	}
 
@@ -84,6 +85,15 @@ public class SettingsActivity extends Activity {
 
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			Intent parentActivityIntent = new Intent(SettingsActivity.this,
+					LoginedMainActivity.class);
+			parentActivityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP
+					| Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(parentActivityIntent);
+			finish();
+			return true;
+
 		case R.id.item_allMyImages:
 			helper.startMyImagesActivity(this);
 			return true;
