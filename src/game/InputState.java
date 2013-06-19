@@ -11,6 +11,9 @@ public class InputState extends State{
 	public void execute(Game theGame) {
 		// TODO Auto-generated method stub
 		//接受用户输入，并判断结果，更新Game中相关数据
+		if(theGame.isInputed()){
+			
+		}
 	}
 
 	@Override

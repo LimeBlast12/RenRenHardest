@@ -1,5 +1,7 @@
 package game;
 
+import imagefilter.BitmapFilter;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -22,8 +24,27 @@ public class PreProcessState extends State {
 	
 	@Override
 	public void execute(Game theGame) {
-		initPictureList(theGame);
-		theGame.setMaxImageCount(images.size());
+		initPictureList(theGame);	//准备好随机的照片
+		initFilter(theGame);		//根据难度准备好滤镜
+	}
+	
+	private void initFilter(Game theGame) {
+		switch (theGame.getDifficulty()) {
+		case Game.DIFFICULTY_SIMPLE:
+			theGame.setLeftBtnFilterType(BitmapFilter.ECLOSION_STYLE);
+			theGame.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
+			break;
+		case Game.DIFFICULTY_MIDDLE:
+			theGame.setLeftBtnFilterType(BitmapFilter.OLD_STYLE);
+			theGame.setRightBtnFilterType(BitmapFilter.GRAY_STYLE);
+			break;
+		case Game.DIFFICULTY_HARD:
+			theGame.setLeftBtnFilterType(BitmapFilter.SOFTNESS_STYLE);
+			theGame.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
+			break;
+		default:
+			break;
+		}
 	}
 	
 	private void initPictureList(Game theGame){
@@ -31,6 +52,7 @@ public class PreProcessState extends State {
 		myImages = MyImagesModel.getInstance().getMyImages();
 		randomSelectImage();
 		theGame.setImageList(images);
+		theGame.setMaxImageCount(images.size());
 	}
 	
 	private void randomSelectImage(){

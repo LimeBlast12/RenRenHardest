@@ -1,5 +1,7 @@
 package game;
 
+import imagefilter.BitmapFilter;
+
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -31,11 +33,15 @@ public class Game {
 	private int currentImageIndx;	//当前是第几张图了
 	private int maxImageCount;		//游戏中最多有多少张图（自己的&好友的）
 	
+	private boolean inputed;	//这一轮用户是否已经输入
+	private boolean clickedFriends;	//用户是否按了“好友”按钮
+	private int leftBtnFilterType;	//左边按钮对应的滤镜
+	private int rightBtnFilterType;	//右边按钮对应的滤镜
+	
 	private Bitmap currentBitmap;
 	
 	private List<ImageDisplay> imageList;
 	
-	/*游戏其他部分的引用*/
 	TimerTask updateTimeTask = new TimerTask() {  
         @Override
         public void run(){
@@ -45,6 +51,8 @@ public class Game {
 	
 	private Game() {
 		stateMachine = new StateMachine(this);
+		leftBtnFilterType = BitmapFilter.ECLOSION_STYLE;	//给一个默认值
+		rightBtnFilterType = BitmapFilter.OIL_STYLE;
 	}
 	
 	public static Game getInstance(){
@@ -82,6 +90,33 @@ public class Game {
 	private void updateTime(){
 		timeLeft--;
 		// TODO 更新界面
+	}
+	
+	/**
+	 * 若用户选择了滤镜，则此方法会被界面调用
+	 * @param index	滤镜对应的数值
+	 */
+	public void pickFilter(int index) {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 若用户点击了“好友”按钮，则此方法会被界面调用
+	 */
+	public void pickFriend() {
+		// TODO Auto-generated method stub
+		
+	}
+	
+	/**
+	 * 获取当前难度下使用的滤镜
+	 * @param index	0代表左边按钮的滤镜，1代表右边按钮的滤镜
+	 * @return	滤镜对应的数值
+	 */
+	public int getUsingFilter(int index) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 	
 	private void startStateMachine(){
@@ -194,5 +229,37 @@ public class Game {
 
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+	}
+
+	public int getLeftBtnFilterType() {
+		return leftBtnFilterType;
+	}
+
+	public void setLeftBtnFilterType(int leftBtnFilterType) {
+		this.leftBtnFilterType = leftBtnFilterType;
+	}
+
+	public int getRightBtnFilterType() {
+		return rightBtnFilterType;
+	}
+
+	public void setRightBtnFilterType(int rightBtnFilterType) {
+		this.rightBtnFilterType = rightBtnFilterType;
+	}
+
+	public boolean isInputed() {
+		return inputed;
+	}
+
+	public void setInputed(boolean inputed) {
+		this.inputed = inputed;
+	}
+
+	public boolean isClickedFriends() {
+		return clickedFriends;
+	}
+
+	public void setClickedFriends(boolean clickedFriends) {
+		this.clickedFriends = clickedFriends;
 	}
 }
