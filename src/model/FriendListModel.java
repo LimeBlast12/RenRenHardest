@@ -10,6 +10,7 @@ public class FriendListModel extends AbstractModel {
 	private List<Map<String, Object>> friendList;
 	private List<Map<String, Object>> randomFriendList;
 	private static FriendListModel thisRef;
+	private final String message = "UPDATE_FRIENDS";
 
 	private FriendListModel() {
 	}
@@ -25,6 +26,10 @@ public class FriendListModel extends AbstractModel {
 			Log.i("FriendListModel setter", "null");
 		}
 		notifyListeners();
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 
 	public List<Map<String, Object>> getAllFriends() {

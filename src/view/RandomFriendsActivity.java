@@ -157,12 +157,14 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 
 	/* 当FriendListModel的数据更新时调用 */
 	@Override
-	public void doSomething() {
-		Log.i("RandomFriendsActivity", "do something");
-		if (friendListModel.isDone()) {
-			startUpdateUiThread();
-		} else {
-			Log.i("RandomFriendsActivity", "friend list is null");
+	public void doSomething(String message) {
+		if (message.equals(friendListModel.getMessage())) {
+			Log.i("RandomFriendsActivity", "do something");
+			if (friendListModel.isDone()) {
+				startUpdateUiThread();
+			} else {
+				Log.i("RandomFriendsActivity", "friend list is null");
+			}
 		}
 	}
 	

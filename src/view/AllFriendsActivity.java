@@ -162,12 +162,14 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 
 	/*当FriendListModel的数据更新时调用*/
 	@Override
-	public void doSomething() {
-		Log.i("FriendListActivity", "do something");
-		if (friendListModel.isDone()) {
-			startUpdateUiThread();
-		} else {
-			Log.i("FriendListActivity", "friend list is null");
+	public void doSomething(String message) {
+		if (message.equals(friendListModel.getMessage())) {
+			Log.i("FriendListActivity", "do something");
+			if (friendListModel.isDone()) {
+				startUpdateUiThread();
+			} else {
+				Log.i("FriendListActivity", "friend list is null");
+			}
 		}
 	}
 	
