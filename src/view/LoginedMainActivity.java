@@ -1,8 +1,7 @@
 package view;
 
-import java.lang.reflect.Field;
 
-import service.LoadFriendsService;
+import java.lang.reflect.Field;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;

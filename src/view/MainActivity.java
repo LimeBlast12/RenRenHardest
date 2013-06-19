@@ -1,5 +1,7 @@
 package view;
 
+import helper.SoundPlayer;
+
 import java.lang.reflect.Field;
 
 import service.LoadFriendsService;
@@ -35,6 +37,12 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		/*初始化音乐和音效管理器，播放游戏背景音乐*/
+		if(SoundPlayer.getMusic() == null){
+			SoundPlayer.init(getApplicationContext());
+			SoundPlayer.startMusic();
+		}
+		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);	
 		getOverflowMenu();
