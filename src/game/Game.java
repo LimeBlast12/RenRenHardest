@@ -8,6 +8,7 @@ import java.util.TimerTask;
 
 import model.ImageDisplay;
 import android.graphics.Bitmap;
+import android.util.Log;
 
 /**
  * 代表游戏的类，封装了当前游戏的一些状态信息，以及与其他部分通信需要用到的某些引用
@@ -37,17 +38,13 @@ public class Game {
 	private boolean clickedFriends;	//用户是否按了“好友”按钮
 	private int leftBtnFilterType;	//左边按钮对应的滤镜
 	private int rightBtnFilterType;	//右边按钮对应的滤镜
+	private int inputFilterType;	//用户输入的滤镜类型，-1表示未输入
 	
 	private Bitmap currentBitmap;
 	
 	private List<ImageDisplay> imageList;
 	
-	TimerTask updateTimeTask = new TimerTask() {  
-        @Override
-        public void run(){
-        	updateTime();
-        }
-    };
+	TimerTask updateTimeTask;
 	
 	private Game() {
 		stateMachine = new StateMachine(this);
@@ -63,19 +60,54 @@ public class Game {
 	}
 	
 	public void start(){
-		initGameState();
+		resetGameState();
 		startTimeUpdate();
 		startStateMachine();
 	}
 	
-	private void initGameState(){
+	public void resetGameState(){
 		this.setTimeLeft(10);	//10秒钟一局
 		this.setRightPic_own(0);
 		this.setRightPic_friends(0);
-		this.setCurrentImageIndx(0);
+		this.setCurrentImageIndx(-1);	//使得在ChangePictureState中第一次调用+1后刚好等于初始的0
+		
+		this.setClickedFriends(false);
+		this.setInputed(false);
+		this.setCurrentBitmap(null);
+		this.setInputFilterType(-1);
+		if(updateTimeTask!=null){
+			updateTimeTask.cancel();
+		}
+	}
+	
+	public void increaseCurImgIndx(){
+		this.currentImageIndx += 1;
+		if(this.currentImageIndx >= this.maxImageCount){
+			this.currentImageIndx = 0;
+		}
+	}
+	
+	/**
+	 * 答对的自己头像数+1
+	 */
+	public void increaseMyRightImg(){
+		this.rightPic_own += 1;
+	}
+	
+	/**
+	 * 答对的好友头像数+1
+	 */
+	public void increaseFriendRightImg(){
+		this.rightPic_friends +=1 ;
 	}
 	
 	private void startTimeUpdate(){
+		updateTimeTask = new TimerTask() {  
+	        @Override
+	        public void run(){
+	        	updateTime();
+	        }
+	    };
 		Timer timer = new Timer();
 		timer.schedule(updateTimeTask, 1000, 1000);
 	}
@@ -84,29 +116,55 @@ public class Game {
 		stateMachine.changeState(newState);
 	}
 	
+	public String getCurrentImageUrl(){
+		return this.getCurrentImageDisplay().getUrl();
+	}
+	
+	public int getCurrentFilterType(){
+		return this.getCurrentImageDisplay().getFilter_type();
+	}
+	
+	public boolean isCurrentMyImage(){
+		return this.getCurrentImageDisplay().getOwner()==0;
+	}
+	
+	public ImageDisplay getCurrentImageDisplay(){
+		return this.imageList.get(currentImageIndx);
+	}
+	
 	/**
 	 * 更新时间，并更新界面显示
 	 */
 	private void updateTime(){
 		timeLeft--;
 		// TODO 更新界面
+		Log.i("Game updateTime", String.valueOf(timeLeft));
+	}
+	
+	public void stop(){
+		if(this.updateTimeTask!=null){
+			this.updateTimeTask.cancel();
+		}
+		if(this.theThread!=null){
+			theThread = null;
+		}
 	}
 	
 	/**
 	 * 若用户选择了滤镜，则此方法会被界面调用
-	 * @param index	滤镜对应的数值
+	 * @param filterType	滤镜对应的数值
 	 */
-	public void pickFilter(int index) {
-		// TODO Auto-generated method stub
-		
+	public void pickFilter(int filterType) {
+		this.inputed = true;
+		this.inputFilterType = filterType;
 	}
 	
 	/**
 	 * 若用户点击了“好友”按钮，则此方法会被界面调用
 	 */
 	public void pickFriend() {
-		// TODO Auto-generated method stub
-		
+		this.inputed = true;
+		this.clickedFriends = true;
 	}
 	
 	/**
@@ -115,8 +173,8 @@ public class Game {
 	 * @return	滤镜对应的数值
 	 */
 	public int getUsingFilter(int index) {
-		// TODO Auto-generated method stub
-		return 0;
+		int[] result = {leftBtnFilterType,rightBtnFilterType};
+		return result[index];
 	}
 	
 	private void startStateMachine(){
@@ -134,11 +192,13 @@ public class Game {
 	public class MyThread extends Thread {
 		@Override
 		public void run() {
-			stateMachine.update();
-			try {
-				sleep(500);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			while(theThread!=null){
+				stateMachine.update();
+				try {
+					sleep(100);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
 			}
 		}
 	}
@@ -261,5 +321,13 @@ public class Game {
 
 	public void setClickedFriends(boolean clickedFriends) {
 		this.clickedFriends = clickedFriends;
+	}
+
+	public int getInputFilterType() {
+		return inputFilterType;
+	}
+
+	public void setInputFilterType(int inputFilterType) {
+		this.inputFilterType = inputFilterType;
 	}
 }

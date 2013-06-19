@@ -1,5 +1,7 @@
 package game;
 
+import android.util.Log;
+
 /**
  * 
  * @author ZeroNing
@@ -9,6 +11,7 @@ public class CheckTimeState extends State {
 
 	@Override
 	public void execute(Game theGame) {
+		Log.i("State", "CheckTimeState");
 		if(theGame.getTimeLeft() <= 0){
 			theGame.changeState(new EndGameState());
 		}

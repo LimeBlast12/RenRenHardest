@@ -8,6 +8,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.util.Log;
+
 import model.FriendListModel;
 import model.ImageDisplay;
 import model.MyImagesModel;
@@ -24,10 +26,16 @@ public class PreProcessState extends State {
 	
 	@Override
 	public void execute(Game theGame) {
+		Log.i("State", "PreProcessState");
 		initPictureList(theGame);	//准备好随机的照片
 		initFilter(theGame);		//根据难度准备好滤镜
+		gotoChangePicState(theGame);
 	}
 	
+	private void gotoChangePicState(Game theGame) {
+		theGame.changeState(new ChangePictureState());
+	}
+
 	private void initFilter(Game theGame) {
 		switch (theGame.getDifficulty()) {
 		case Game.DIFFICULTY_SIMPLE:
