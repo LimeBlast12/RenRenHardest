@@ -12,6 +12,7 @@ import java.util.TimerTask;
 import model.FriendListModel;
 import android.annotation.SuppressLint;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
@@ -69,6 +70,7 @@ public class LoadFriendsService extends Service {
 				public void onComplete(final FriendsGetFriendsResponseBean bean) {
 					Log.i("FriendListService", "complete");
 					setData(bean.getFriendList());
+					stopSelf();
 				}
 
 				@Override
@@ -113,4 +115,13 @@ public class LoadFriendsService extends Service {
 		super.onDestroy();
 		networkChecker.getTimer().cancel();
 	}
+	
+	/*
+	 * 停止Service
+	 */
+	public static void stopservice(Context c){
+        Intent iService=new Intent(c,LoadFriendsService.class);
+        iService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        c.stopService(iService);
+    }
 }

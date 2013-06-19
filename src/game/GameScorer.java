@@ -1,4 +1,4 @@
-package view;
+package game;
 
 
 public class GameScorer {
@@ -13,9 +13,10 @@ public class GameScorer {
 	private static int gameLevel = EASY;
 	private static final int RIGHT_FACTOR = 10;
 	private static final int WRONG_FACTOR = 5;
-	private static final int EASY_TIMES = 500;
-	private static final int NORMAL_TIMES = 600;
-	private static final int HARD_TIMES = 700;
+	private static final int BASE_SCORE_EASY = 1000;
+	private static final int BASE_SCORE_NORMAL = 1500;
+	private static final int BASE_SCORE_HARD = 2000;
+	private static long myScore;
 
 	/*
 	 * 供主线程调用获取游戏得分
@@ -24,15 +25,15 @@ public class GameScorer {
 	public static long getScores(long numOfMyImages,long numOfMyFriendsImages,
 			long numOfRightImages,long numOfWrongImages,int gameLevel){
 		
-		setParaAndScore(numOfMyImages,numOfMyFriendsImages,numOfRightImages,numOfWrongImages,gameLevel);
-		return 3000; //  先写死为3000，待处理
+		setPara(numOfMyImages,numOfMyFriendsImages,numOfRightImages,numOfWrongImages,gameLevel);
+		return score(gameLevel);
 	}
 	
 	
 	/*
 	 * 设置计算游戏得分的各个参数
 	 */
-	private static void setParaAndScore(long numOfMyImages2,
+	private static void setPara(long numOfMyImages2,
 			long numOfMyFriendsImages2, long numOfRightImages2,
 			long numOfWrongImages2, int gameLevel2) {
 		
@@ -53,7 +54,6 @@ public class GameScorer {
 				break;
 				
 		}
-		score(gameLevel);
 		
 	}
 
@@ -79,21 +79,24 @@ public class GameScorer {
 	 * 游戏为难度时的计分方式
 	 */
 	private static long easyScore() {
-		return (numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR);
+		return BASE_SCORE_EASY+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 	
 	/*
 	 * 游戏为一般时的计分方式
 	 */
 	private static long normalScore() {
-		return (numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR);
+		return BASE_SCORE_NORMAL+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 
 	/*
 	 * 游戏为困难时的计分方式
 	 */
 	private static long hardScore() {
-		return (numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR);
+		return  BASE_SCORE_HARD+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 
 	
