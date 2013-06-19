@@ -10,6 +10,7 @@ import android.graphics.Bitmap;
 public class SingleImageModel extends AbstractModel {
 	private static SingleImageModel thisRef;
 	private Bitmap image;
+	private final String message = "UPDATE_SINGLE_IMAGE"; 
 
 	private SingleImageModel() {
 	}
@@ -21,6 +22,10 @@ public class SingleImageModel extends AbstractModel {
 	public void setImage(Bitmap image) {
 		this.image = image;
 		notifyListeners();
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 	
 	public Bitmap getImage() {

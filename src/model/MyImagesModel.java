@@ -8,6 +8,7 @@ import android.util.Log;
 public class MyImagesModel extends AbstractModel {
 	private List<Map<String, Object>> myImages;
 	private static MyImagesModel thisRef;
+	private final String message = "UPDATE_MY_IMAGES";
 	
 	private MyImagesModel() {}
 	
@@ -18,6 +19,10 @@ public class MyImagesModel extends AbstractModel {
 	public void setMyImages(List<Map<String, Object>> images) {
 		this.myImages = images;
 		notifyListeners();
+	}
+	
+	public String getMessage() {
+		return message;
 	}
 
 	public List<Map<String, Object>> getMyImages() {

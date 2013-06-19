@@ -1,5 +1,5 @@
 package model;
 
 public interface ModelListener {
-	void doSomething();
+	void doSomething(String message);
 }

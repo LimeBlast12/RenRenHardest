@@ -155,12 +155,14 @@ public class MyImagesActivity extends Activity implements ModelListener  {
 	}
 	
 	@Override
-	public void doSomething() {
-		Log.i("MyImagesActivity", "do something");
-		if (myImagesModel.isDone()) {
-			startUpdateUiThread();
-		} else {
-			Log.i("MyImagesActivity", "images is null");
+	public void doSomething(String message) {
+		if (message.equals(myImagesModel.getMessage())) {
+			Log.i("MyImagesActivity", "do something");
+			if (myImagesModel.isDone()) {
+				startUpdateUiThread();
+			} else {
+				Log.i("MyImagesActivity", "images is null");
+			}
 		}
 	}
 	

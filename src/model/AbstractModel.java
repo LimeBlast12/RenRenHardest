@@ -18,9 +18,11 @@ public abstract class AbstractModel {
 	protected void notifyListeners() {
 		done = true;
 		for (ModelListener listener : listeners) {
-			listener.doSomething();
+			listener.doSomething(getMessage());
 		}
 	}
+	
+	public abstract String getMessage();
 	
 	public boolean isDone() {
 		return done;

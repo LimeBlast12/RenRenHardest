@@ -251,9 +251,10 @@ public class GameMainActivity extends Activity implements ModelListener{
 
 	/*6.18新添*/
 	@Override
-	public void doSomething() {
-		// TODO Auto-generated method stub
-		mImageView = (ImageView)findViewById(R.id.iv);
-		mImageView.setImageBitmap(sim.getImage());
+	public void doSomething(String message) {
+		if (message.equals(sim.getMessage())) {//单张图片更新
+			mImageView = (ImageView)findViewById(R.id.iv);
+			mImageView.setImageBitmap(sim.getImage());
+		}
 	}
 }
