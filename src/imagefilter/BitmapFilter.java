@@ -10,6 +10,7 @@ public class BitmapFilter {
 	/**
 	 * 所有滤镜效果的id
 	 */
+	public static final int NONE_STYLE = 0;     // 原图
 	public static final int GRAY_STYLE = 1; 	// 黑白
 	public static final int BLOCK_STYLE = 2; 	// 版画
 	public static final int OLD_STYLE = 3; 		// 怀旧

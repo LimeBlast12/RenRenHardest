@@ -133,6 +133,7 @@ public class GameMainActivity extends Activity implements ModelListener{
 			case BitmapFilter.SOFTNESS_STYLE:
 				filter_buttons[i].setText(R.string.filter_softness);
 				break;
+			case BitmapFilter.NONE_STYLE:
 			default:
 				filter_buttons[i].setText(R.string.filter_none);
 				break;
