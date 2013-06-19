@@ -3,6 +3,10 @@ package view;
 import java.util.LinkedList;
 import java.util.List;
 
+import service.LoadFriendsService;
+import service.LoadMyImagesService;
+
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -13,7 +17,7 @@ import com.renren.api.connect.android.Renren;
 
 public class ActivityHelper {
 	private static ActivityHelper helper;
-
+	
 	private List<Activity> activityList = new LinkedList<Activity>();
 	
 	public static ActivityHelper getInstance() {
@@ -116,7 +120,9 @@ public class ActivityHelper {
 	    for(Activity activity:activityList)  
 	    {  
 	    	activity.finish();  
-	    }  
+	    }
+	    LoadFriendsService.stopservice(activityList.get(1));
+	    LoadMyImagesService.stopservice(activityList.get(1));
 	    System.exit(0);  
 	
     }

@@ -11,7 +11,9 @@ import java.util.TimerTask;
 
 import model.MyImagesModel;
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Service;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Binder;
 import android.os.Handler;
@@ -127,6 +129,7 @@ public class LoadMyImagesService extends Service {
 						}
 
 						setMyImages(urls);
+						stopSelf();
 					}
 
 					@Override
@@ -159,4 +162,13 @@ public class LoadMyImagesService extends Service {
 		super.onDestroy();
 		networkChecker.getTimer().cancel();
 	}
+
+	/*
+	 * 停止Service
+	 */
+	public static void stopservice(Context c){
+        Intent iService=new Intent(c,LoadMyImagesService.class);
+        iService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        c.stopService(iService);
+    }
 }
