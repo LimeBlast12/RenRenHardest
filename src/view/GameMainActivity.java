@@ -124,8 +124,17 @@ public class GameMainActivity extends Activity implements ModelListener{
 			case BitmapFilter.OLD_STYLE:
 				filter_buttons[i].setText(R.string.filter_old);
 				break;
+			case BitmapFilter.OIL_STYLE:
+				filter_buttons[i].setText(R.string.filter_oil);
+				break;
+			case BitmapFilter.ECLOSION_STYLE:
+				filter_buttons[i].setText(R.string.filter_eclosion);
+				break;
+			case BitmapFilter.SOFTNESS_STYLE:
+				filter_buttons[i].setText(R.string.filter_softness);
+				break;
 			default:
-				filter_buttons[i].setText(R.string.filter_old);
+				filter_buttons[i].setText(R.string.filter_none);
 				break;
 			}
 		}
