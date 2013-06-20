@@ -117,8 +117,8 @@ public class PreProcessState extends State {
 	
 	private int randomFilter(){	//随机选择一种滤镜
 		Random rdm = new Random(System.currentTimeMillis());
-		int result = Math.abs(rdm.nextInt())%FILTER_COUNT+1;
-		return result;
+		int result = Math.abs(rdm.nextInt())%FILTER_COUNT;
+		return filterArray[result];
 	}
 	
 	@Override
