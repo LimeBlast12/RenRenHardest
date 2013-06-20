@@ -11,12 +11,19 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.CompoundButton.OnCheckedChangeListener;
+import android.widget.ToggleButton;
 import edu.nju.renrenhardest.R;
 import game.Game;
+import helper.SoundPlayer;
 
 @SuppressLint("NewApi")
 public class SettingsActivity extends Activity {
 	private ActivityHelper helper;
+	/*Declare Android widget*/
+	private ToggleButton musicButton;
+	private ToggleButton soundEffectButton;
 	private Button difficultyButton;
 
 	@SuppressLint("NewApi")
@@ -32,10 +39,42 @@ public class SettingsActivity extends Activity {
 	}
 
 	private void initButtons() {
+		musicButton = (ToggleButton) findViewById(R.id.music_button);
+		soundEffectButton = (ToggleButton) findViewById(R.id.sound_effect_button);
 		difficultyButton = (Button) findViewById(R.id.difficulty_button);
+		
 		final Game game = Game.getInstance();
 		final int difficulty = game.getDifficulty();
 		setDifficultyButton(difficulty);
+		
+		musicButton.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+					//打开音乐
+					SoundPlayer.setMusicSt(true);
+				}else{
+					//关闭音乐
+					SoundPlayer.setMusicSt(false);
+				}
+			}		
+		});
+		
+		soundEffectButton.setOnCheckedChangeListener(new OnCheckedChangeListener(){
+			@Override
+			public void onCheckedChanged(CompoundButton buttonView,
+					boolean isChecked) {
+				// TODO Auto-generated method stub
+				if(isChecked){
+					
+				}else{
+					
+				}
+			}		
+		});
+		
 		difficultyButton.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {

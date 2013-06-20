@@ -98,10 +98,11 @@ public class SoundPlayer {
 	 */
 	public static void setMusicSt(boolean musicSt) {
 		SoundPlayer.musicSt = musicSt;
-		if (musicSt)
+		if (musicSt){
 			music.start();
-		else
-			music.stop();
+		}else{
+			music.pause();
+		}	
 	}
 
 	/**

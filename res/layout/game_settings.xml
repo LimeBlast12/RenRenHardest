@@ -20,7 +20,8 @@
             android:layout_alignTop="@+id/music_button"
             android:gravity="center"
             android:text="@string/music"
-            android:textSize="8pt" />
+            android:textSize="8pt"
+            android:textStyle="bold" />
 
         <ToggleButton
             android:id="@+id/music_button"
@@ -29,7 +30,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/music_label"
-            android:background="@drawable/button_blue" />
+            android:background="@drawable/button_blue"
+            android:checked="true" />
     </RelativeLayout>
     
     <RelativeLayout
@@ -47,7 +49,8 @@
             android:layout_alignTop="@+id/sound_effect_button"
             android:gravity="center"
             android:text="@string/sound_effect"
-            android:textSize="8pt" />
+            android:textSize="8pt"
+            android:textStyle="bold" />
 
         <ToggleButton
             android:id="@+id/sound_effect_button"
@@ -56,7 +59,8 @@
             android:layout_alignParentTop="true"
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/sound_effect_label" 
-            android:background="@drawable/button_yellow" />
+            android:background="@drawable/button_yellow"
+            android:checked="true" />
     </RelativeLayout>
     
     <RelativeLayout 
@@ -74,7 +78,8 @@
             android:layout_alignTop="@+id/difficulty_button"
             android:gravity="center"
             android:text="@string/difficulty"
-            android:textSize="8pt" />
+            android:textSize="8pt"
+            android:textStyle="bold" />
 
         <Button
             android:id="@+id/difficulty_button"
