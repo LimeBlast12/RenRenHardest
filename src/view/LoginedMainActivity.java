@@ -2,6 +2,7 @@ package view;
 
 
 import helper.SoundPlayer;
+import helper.ValueStorer;
 
 import java.lang.reflect.Field;
 
@@ -26,6 +27,7 @@ import edu.nju.renrenhardest.R;
 public class LoginedMainActivity extends Activity {
 	private Renren renren;
 	private ActivityHelper helper;
+	private ValueStorer storer;
 	private Button scoresButton;
 	private Button settingsButton;
 	private Button startGameButton;
@@ -34,11 +36,8 @@ public class LoginedMainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		/*初始化音乐和音效管理器，播放游戏背景音乐，默认进入该页面就播放BGM*/
-		if(SoundPlayer.getMusic() == null){
-			SoundPlayer.init(getApplicationContext());
-			SoundPlayer.setMusicSt(true);
-		}
+		/*初始化音乐和音效管理器*/
+		initSoundPlayer();
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
@@ -106,6 +105,18 @@ public class LoginedMainActivity extends Activity {
 				startMainActivity();
 			}
 		});
+	}
+	
+	public void initSoundPlayer(){
+		/*初始化音乐和音效管理器，根据存储的设置来判断是否播放BGM*/
+		storer = ValueStorer.getInstance();
+		boolean musicSt = storer.readMusicSetting(getApplicationContext(), SettingsActivity.PREFS_NAME);
+		if(SoundPlayer.getMusic() == null){
+			SoundPlayer.init(getApplicationContext());
+			if(musicSt){
+				SoundPlayer.setMusicSt(true);
+			}	
+		}
 	}
 
 	/**

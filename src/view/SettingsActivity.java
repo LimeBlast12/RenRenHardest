@@ -17,10 +17,14 @@ import android.widget.ToggleButton;
 import edu.nju.renrenhardest.R;
 import game.Game;
 import helper.SoundPlayer;
+import helper.ValueStorer;
 
 @SuppressLint("NewApi")
 public class SettingsActivity extends Activity {
+	public static final String PREFS_NAME = "SettingFile";
+	
 	private ActivityHelper helper;
+	private ValueStorer storer;
 	/*Declare Android widget*/
 	private ToggleButton musicButton;
 	private ToggleButton soundEffectButton;
@@ -33,15 +37,19 @@ public class SettingsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		setContentView(R.layout.game_settings);
+		storer = ValueStorer.getInstance();
 		initButtons();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
+		
 	}
 
 	private void initButtons() {
 		musicButton = (ToggleButton) findViewById(R.id.music_button);
 		soundEffectButton = (ToggleButton) findViewById(R.id.sound_effect_button);
 		difficultyButton = (Button) findViewById(R.id.difficulty_button);
+		
+		setMusicButton();
 		
 		final Game game = Game.getInstance();
 		final int difficulty = game.getDifficulty();
@@ -59,6 +67,9 @@ public class SettingsActivity extends Activity {
 					//关闭音乐
 					SoundPlayer.setMusicSt(false);
 				}
+				//更改音乐设置
+				storer.editMusicSetting(getApplicationContext(), PREFS_NAME, SoundPlayer.isMusicSt());
+				System.out.println(storer.readMusicSetting(getApplicationContext(), PREFS_NAME));
 			}		
 		});
 		
@@ -99,6 +110,15 @@ public class SettingsActivity extends Activity {
 		});
 	}
 
+	private void setMusicButton(){
+		boolean musicSt = storer.readMusicSetting(getApplicationContext(), PREFS_NAME);
+		if(musicSt){
+			musicButton.setChecked(true);
+		}else{
+			musicButton.setChecked(false);
+		}
+	}
+	
 	private void setDifficultyButton(int difficulty) {
 		switch (difficulty) {
 		case Game.DIFFICULTY_HARD:
