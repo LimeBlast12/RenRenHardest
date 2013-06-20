@@ -16,9 +16,9 @@ import android.util.Log;
  *
  */
 public class Game {
-	public static final int DIFFICULTY_SIMPLE = 1;
-	public static final int DIFFICULTY_MIDDLE = 2;
-	public static final int DIFFICULTY_HARD = 3;
+	public static final int DIFFICULTY_SIMPLE = 0;
+	public static final int DIFFICULTY_MIDDLE = 1;
+	public static final int DIFFICULTY_HARD = 2;
 	
 	private static Game instance=null;
 	private StateMachine stateMachine;
