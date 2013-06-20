@@ -72,8 +72,6 @@
 	        android:src="@drawable/renren_logo"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:minWidth="20dip"
-	        android:minHeight="20dip"
 	        android:contentDescription="@string/app_name" />
     	<TextView
     	    android:id="@+id/share_score"
