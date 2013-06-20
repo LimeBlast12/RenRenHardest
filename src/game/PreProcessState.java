@@ -49,6 +49,8 @@ public class PreProcessState extends State {
 		myImages = MyImagesModel.getInstance().getMyImages();
 		randomSelectImage();
 		theGame.setImageList(images);
+		theGame.setTotalPic_own(myImages.size());
+		theGame.setTotalPic_friends(friendImages.size());
 		theGame.setMaxImageCount(images.size());
 	}
 	
