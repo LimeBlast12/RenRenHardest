@@ -40,7 +40,7 @@ public class MainActivity extends Activity {
 		/*初始化音乐和音效管理器，播放游戏背景音乐*/
 		if(SoundPlayer.getMusic() == null){
 			SoundPlayer.init(getApplicationContext());
-			SoundPlayer.startMusic();
+			SoundPlayer.setMusicSt(true);
 		}
 		
 		super.onCreate(savedInstanceState);
