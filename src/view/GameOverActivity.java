@@ -10,14 +10,17 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.ViewConfiguration;
+import android.widget.TextView;
 
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
+import game.Game;
 
 public class GameOverActivity extends Activity {
 	private Renren renren;
 	private ActivityHelper helper;
+	private TextView mTextView_score;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -27,6 +30,14 @@ public class GameOverActivity extends Activity {
 		getOverflowMenu();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
+		
+		showScore();
+	}
+	
+	private void showScore() {
+		int score = Game.getInstance().getScore();
+		mTextView_score = (TextView) findViewById(R.id.score_final);
+		mTextView_score.setText(score+"");
 	}
 	
 	/*当按后退键时，不会返回游戏主界面而是返回选择界面*/
