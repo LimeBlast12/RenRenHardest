@@ -1,6 +1,8 @@
 package view;
 
 
+import helper.SoundPlayer;
+
 import java.lang.reflect.Field;
 
 import android.annotation.SuppressLint;
@@ -32,6 +34,12 @@ public class LoginedMainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
+		/*初始化音乐和音效管理器，播放游戏背景音乐，默认进入该页面就播放BGM*/
+		if(SoundPlayer.getMusic() == null){
+			SoundPlayer.init(getApplicationContext());
+			SoundPlayer.setMusicSt(true);
+		}
+		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
 		getOverflowMenu();

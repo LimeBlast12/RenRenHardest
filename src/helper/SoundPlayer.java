@@ -11,8 +11,9 @@ import android.media.SoundPool;
 
 /**
  * 音乐与音效管理器
+ * 
  * @author DanniWang
- *
+ * 
  */
 public class SoundPlayer {
 	private static MediaPlayer music = null;
@@ -76,6 +77,16 @@ public class SoundPlayer {
 	}
 
 	/**
+	 * 关闭音乐
+	 */
+	public static void stopMusic() {
+		if (music != null) {
+			music.release();
+			music = null;
+		}
+	}
+
+	/**
 	 * 切换一首音乐并播放
 	 */
 	public static void changeAndPlayMusic() {
@@ -98,11 +109,11 @@ public class SoundPlayer {
 	 */
 	public static void setMusicSt(boolean musicSt) {
 		SoundPlayer.musicSt = musicSt;
-		if (musicSt){
+		if (musicSt) {
 			music.start();
-		}else{
+		} else {
 			music.pause();
-		}	
+		}
 	}
 
 	/**
@@ -130,6 +141,11 @@ public class SoundPlayer {
 		playSound(R.raw.boom);
 	}
 
+	/**
+	 * getter setter
+	 * 
+	 * @return
+	 */
 	public static MediaPlayer getMusic() {
 		return music;
 	}
@@ -145,6 +161,5 @@ public class SoundPlayer {
 	public static void setSoundPool(SoundPool soundPool) {
 		SoundPlayer.soundPool = soundPool;
 	}
-	
-	
+
 }
