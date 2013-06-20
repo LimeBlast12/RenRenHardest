@@ -10,9 +10,9 @@ public class GameScorer {
 	private static final int RIGHT_FACTOR = 10;				// 答对时相乘的系数
 	private static final int WRONG_FACTOR = 5;				// 答错时相乘的系数
 	private static int difficulty;
-	private static final int BASE_SCORE_EASY = 1000;		// 游戏难度为简单时基础得分 
-	private static final int BASE_SCORE_NORMAL = 1500;		// 游戏难度为一般时基础得分
-	private static final int BASE_SCORE_HARD = 2000;		// 游戏难度为困难时基础得分
+	private static final double FACTOR_SCORE_EASY = 2.3;		// 游戏难度为简单时相乘的系数 
+	private static final double FACTOR_SCORE_NORMAL = 2.6;		// 游戏难度为一般时相乘的系数
+	private static final double FACTOR_SCORE_HARD = 2.9;		// 游戏难度为困难时相乘的系数
 	public static final int DIFFICULTY_SIMPLE = 0;
 	public static final int DIFFICULTY_MIDDLE = 1;
 	public static final int DIFFICULTY_HARD = 2;
@@ -80,7 +80,7 @@ public class GameScorer {
 	 * 游戏为难度时的计分方式
 	 */
 	private static int easyScore() {
-		return BASE_SCORE_EASY+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+		return (int)FACTOR_SCORE_EASY*(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
 				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 	
@@ -88,7 +88,7 @@ public class GameScorer {
 	 * 游戏为一般时的计分方式
 	 */
 	private static int normalScore() {
-		return BASE_SCORE_NORMAL+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+		return (int)FACTOR_SCORE_NORMAL*(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
 				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 
@@ -96,7 +96,7 @@ public class GameScorer {
 	 * 游戏为困难时的计分方式
 	 */
 	private static int hardScore() {
-		return  BASE_SCORE_HARD+(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
+		return  (int)FACTOR_SCORE_HARD*(numOfRightImages*RIGHT_FACTOR-numOfWrongImages*WRONG_FACTOR)*
 				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 
