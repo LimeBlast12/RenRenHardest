@@ -29,7 +29,6 @@ import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
-import game.Game;
 
 @SuppressLint("NewApi")
 public class RandomFriendsActivity extends Activity implements ModelListener,
@@ -195,9 +194,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.start_game:
-			/*Game game = Game.getInstance();
-			game.start();//开始游戏
-*/			startGameMainActivity();//跳转到游戏界面
+			startGameMainActivity();//跳转到游戏界面
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
@@ -207,14 +204,12 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 	@Override
 	public void onAccuracyChanged(Sensor arg0, int arg1) {
 		// TODO Auto-generated method stub
-
 	}
 
 	@Override
 	public void onSensorChanged(SensorEvent event) {
 		if (isShaking(event)) {
 			Log.i("RandomFriendsActivity", "is shaking");
-			// helper.showTip(this, "shaking");
 			startUpdateUiThread();
 		}
 	}

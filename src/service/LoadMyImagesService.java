@@ -125,7 +125,7 @@ public class LoadMyImagesService extends Service {
 						String urls[] = new String[bean.getPhotos().size()];
 						/* 将头像相册中的所有照片url加入urls */
 						for (int i = 0; i < photoBean.size(); i++) {
-							urls[i] = photoBean.get(i).getUrlHead();
+							urls[i] = photoBean.get(i).getUrlLarge();
 						}
 
 						setMyImages(urls);

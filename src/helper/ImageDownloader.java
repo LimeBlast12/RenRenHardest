@@ -45,7 +45,7 @@ public class ImageDownloader {
 				try {
 					inputStream = entity.getContent();
 					final Bitmap bitmap = BitmapFactory
-							.decodeStream(inputStream);
+							.decodeStream(inputStream);					
 					return bitmap;
 				} finally {
 					if (inputStream != null) {
