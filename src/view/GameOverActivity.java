@@ -36,7 +36,6 @@ public class GameOverActivity extends Activity {
 		helper.addActivity(this);
 		
 		initButtons();
-		
 		showScore();
 	}
 	
