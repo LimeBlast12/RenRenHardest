@@ -15,6 +15,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -36,8 +37,19 @@ public class GameMainActivity extends Activity implements ModelListener{
 	private Button filter_buttons[] = new Button[2];//现版本游戏设定两个filter，0代表左，1代表右
 	private Button game_friend_button = null;	
 	private ActivityHelper helper;
-	private Game game = Game.getInstance();
+	private Game game;
 	private final int COUNT_FILTER_TYPE = 2;
+	/*使用handler来避免更新UI的线程安全问题*/
+	private Handler handler = null;
+	/*实际用于更新UI的线程*/
+	private Runnable updateImageThread = new Runnable() {
+		@Override
+		public void run() {
+			//showImage(sim.getImage());
+			mImageView = (ImageView)findViewById(R.id.iv);
+			mImageView.setImageBitmap(sim.getImage());
+		}
+	};
 	
 	/*用于计时，有些变量只能是静态变量且不应修改，有些如count切忌设为静态变量*/
 	private static final int total_time = 10; //表示一轮游戏的总时间
@@ -63,6 +75,8 @@ public class GameMainActivity extends Activity implements ModelListener{
 		setContentView(R.layout.game_mainview);
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
+		handler = new Handler();
+		game = Game.getInstance();
 		initButtons();
 		/*initTextViews*/
 		mTextView_time = (TextView)findViewById(R.id.time_left);
@@ -86,7 +100,11 @@ public class GameMainActivity extends Activity implements ModelListener{
 		
 		
 		/*6.18新添*/
+		sim = SingleImageModel.getInstance();
 		sim.register(this);
+		
+		Game game = Game.getInstance();
+		game.start();//开始游戏
 		timer();
 	}
 	
@@ -113,7 +131,10 @@ public class GameMainActivity extends Activity implements ModelListener{
 		System.out.println("onStop");
 	}
 	
-	private void initButtons() {		
+	private void initButtons() {				
+		filter_buttons[0] = (Button) findViewById(R.id.filter_button0);
+		filter_buttons[1] = (Button) findViewById(R.id.filter_button1);
+		
 		final int filterType[] = new int[COUNT_FILTER_TYPE];	
 		for (int i = 0; i < COUNT_FILTER_TYPE; i++) {
 			filterType[i] = game.getUsingFilter(i);
@@ -140,7 +161,6 @@ public class GameMainActivity extends Activity implements ModelListener{
 			}
 		}
 		
-		filter_buttons[0] = (Button) findViewById(R.id.filter_button0);
 		filter_buttons[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -148,7 +168,7 @@ public class GameMainActivity extends Activity implements ModelListener{
 			}
 		});
 		
-		filter_buttons[1] = (Button) findViewById(R.id.filter_button1);
+		
 		filter_buttons[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -253,8 +273,16 @@ public class GameMainActivity extends Activity implements ModelListener{
 	@Override
 	public void doSomething(String message) {
 		if (message.equals(sim.getMessage())) {//单张图片更新
-			mImageView = (ImageView)findViewById(R.id.iv);
-			mImageView.setImageBitmap(sim.getImage());
+			startUpdateImageThread();
 		}
+	}
+	
+	private void startUpdateImageThread() {		
+		new Thread(){  
+            public void run(){          
+            	/*触发更新UI的线程启动*/
+                handler.post(updateImageThread);   
+            }                     
+        }.start();   
 	}
 }

@@ -195,9 +195,9 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.start_game:
-			Game game = Game.getInstance();
+			/*Game game = Game.getInstance();
 			game.start();//开始游戏
-			startGameMainActivity();//跳转到游戏界面
+*/			startGameMainActivity();//跳转到游戏界面
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
