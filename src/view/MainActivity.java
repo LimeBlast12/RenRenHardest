@@ -37,11 +37,8 @@ public class MainActivity extends Activity {
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		/*初始化音乐和音效管理器，播放游戏背景音乐*/
-		if(SoundPlayer.getMusic() == null){
-			SoundPlayer.init(getApplicationContext());
-			SoundPlayer.setMusicSt(true);
-		}
+		/*待登录界面不应播放BGM，因为这里没有游戏设置的入口，无法关闭音乐会让用户觉得无法控制*/
+		SoundPlayer.stopMusic();
 		
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main);	
