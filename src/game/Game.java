@@ -306,6 +306,10 @@ public class Game {
 		return difficulty;
 	}
 
+	/**
+	 * 设置难度值，并且根据难度值更新两个按钮的滤镜值
+	 * @param difficulty
+	 */
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
 		switch (this.difficulty) {
