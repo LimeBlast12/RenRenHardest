@@ -102,6 +102,8 @@ public class PreProcessState extends State {
         
         images = new ArrayList<ImageDisplay>();
         int boundary = myImages.size();
+        Random rdm = new Random(System.currentTimeMillis());
+		
         for(int i=0;i<imageCount;i++){
         	ImageDisplay tmp = new ImageDisplay();
         	if(randomIndexes[i]>=boundary){
@@ -110,15 +112,10 @@ public class PreProcessState extends State {
         		tmp.setOwner(0);
         	}
         	tmp.setUrl((String) mixedImages.get(randomIndexes[i]).get("image"));
-        	tmp.setFilter_type(randomFilter());
+        	int result = Math.abs(rdm.nextInt())%FILTER_COUNT;
+        	tmp.setFilter_type(filterArray[result]);
         	images.add(tmp);
         }
-	}
-	
-	private int randomFilter(){	//随机选择一种滤镜
-		Random rdm = new Random(System.currentTimeMillis());
-		int result = Math.abs(rdm.nextInt())%FILTER_COUNT;
-		return filterArray[result];
 	}
 	
 	@Override

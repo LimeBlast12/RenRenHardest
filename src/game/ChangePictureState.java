@@ -35,6 +35,13 @@ public class ChangePictureState extends State{
 	private void applyFilter(Game theGame){
 		Bitmap oldBitmap = theGame.getCurrentBitmap();
 		Bitmap newBitmap = BitmapFilter.changeStyle(oldBitmap, theGame.getCurrentFilterType());
+//		String s = String.valueOf(theGame.getCurrentFilterType());
+//		Log.i("Filter", s);
+//		if(theGame.isCurrentMyImage()){
+//			Log.i("Filter", "myImage");
+//		}else{
+//			Log.i("Filter", "friend's");
+//		}
 		theGame.setCurrentBitmap(newBitmap);
 	}
 	
