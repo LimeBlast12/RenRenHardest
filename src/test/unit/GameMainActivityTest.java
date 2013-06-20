@@ -27,7 +27,7 @@ public class GameMainActivityTest extends
 		super.setUp();
 		setActivityInitialTouchMode(false);
 		mActivity = getActivity();
-		mTextView_number = (TextView) mActivity.findViewById(R.id.image_number);
+		//mTextView_number = (TextView) mActivity.findViewById(R.id.image_number);
 		mTextView_time = (TextView) mActivity.findViewById(R.id.time_left);
 		mButton_filter_grey = (Button) mActivity.findViewById(R.id.filter_button0);
 		mButton_filter_old = (Button) mActivity.findViewById(R.id.filter_button1);

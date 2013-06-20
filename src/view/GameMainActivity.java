@@ -3,10 +3,6 @@ package view;
 import edu.nju.renrenhardest.R;
 import game.Game;
 import imagefilter.BitmapFilter;
-
-import java.util.Timer;
-import java.util.TimerTask;
-
 import model.GameStatusModel;
 import model.ModelListener;
 import model.SingleImageModel;
@@ -17,10 +13,10 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.renren.api.connect.android.Renren;
 
@@ -33,8 +29,9 @@ import com.renren.api.connect.android.Renren;
 public class GameMainActivity extends Activity implements ModelListener {
 	private Renren renren;
 	private ImageView mImageView = null;
-	// private TextView mTextView_number = null;
-	// private TextView mTextView_time = null;
+	private TextView mTextView_score = null;
+	//private TextView mTextView_number = null;
+	private TextView mTextView_time = null;
 	private final int COUNT_FILTER_TYPE = 2;
 	private Button filter_buttons[] = new Button[COUNT_FILTER_TYPE];// 现版本游戏设定两个filter，0代表左，1代表右
 	private Button game_friend_button = null;
@@ -46,16 +43,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 	private SingleImageModel singleImageModel;
 	private GameStatusModel gameStatusModel;
-
-	/* 用于计时，有些变量只能是静态变量且不应修改，有些如count切忌设为静态变量 */
-	private static final int total_time = 10; // 表示一轮游戏的总时间
-	private static final int delay = 1000; // 1s
-	private static final int period = 1000; // 1s
-	private static final int UPDATE_TEXTVIEW = 0;
-	private int count = 0; // 从开始到当前的秒数
-	private Timer mTimer = null;
-	private TimerTask mTimerTask = null;
-	private Handler mHandler = null;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -69,9 +56,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 		game = Game.getInstance();// 一定要在initButtons之前
 
 		initButtons();
-		/* initTextViews */
-		// mTextView_time = (TextView)findViewById(R.id.time_left);
-		// mTextView_number = (TextView)findViewById(R.id.image_number);
+		initTextViews();
+		
 		mImageView = (ImageView) findViewById(R.id.iv);
 
 		initModels();
@@ -99,7 +85,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 	public void onStop() {
 		super.onStop();
-		count = 0;
 		System.out.println("onStop");
 	}
 
@@ -110,7 +95,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 			@Override
 			public void handleMessage(Message msg) {//覆盖handleMessage方法  
 				int score = msg.getData().getInt("score");
-				//startGameOverView();
+				updateScore(score);
 			}
 		};
 		
@@ -118,6 +103,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 			@Override
 			public void handleMessage(Message msg) {//覆盖handleMessage方法  
 				int time = msg.getData().getInt("time");
+				updateTime(time);
 			}
 		};
 		
@@ -191,64 +177,13 @@ public class GameMainActivity extends Activity implements ModelListener {
 			}
 		});
 	}
+	
+	private void initTextViews() {
+		mTextView_score = (TextView)findViewById(R.id.score_realtime);
+		mTextView_time = (TextView)findViewById(R.id.time_left);
+		//mTextView_number = (TextView)findViewById(R.id.image_number);
+	}
 
-	/* timer, sendMessage, updateTextView这3个方法都与计时有关 */
-	// private void timer(){
-	// mHandler = new Handler(){
-	// @Override
-	// public void handleMessage(Message msg) {
-	// switch (msg.what) {
-	// case UPDATE_TEXTVIEW:
-	// updateTextView_time();
-	// break;
-	// default:
-	// break;
-	// }
-	// }
-	// };
-	// /*start timer*/
-	// if (mTimer == null) {
-	// mTimer = new Timer();
-	// }
-	// if (mTimerTask == null) {
-	// mTimerTask = new TimerTask() {
-	// @Override
-	// public void run() {
-	// sendMessage(UPDATE_TEXTVIEW);
-	// do {
-	// try {
-	// Thread.sleep(1000);
-	// } catch (InterruptedException e) {
-	// }
-	// } while (count-total_time>=0);
-	// count ++;
-	// /*时间到了调至GameOver界面*/
-	// if(count==10){
-	// /*先要关闭Timer和TimerTask*/
-	// mTimer.cancel();
-	// mTimerTask.cancel();
-	// startGameOverView();
-	// }
-	// }
-	// };
-	// }
-	//
-	// if(mTimer != null && mTimerTask != null )
-	// mTimer.schedule(mTimerTask, delay, period);
-	// }
-	//
-	// public void sendMessage(int id){
-	// if (mHandler != null) {
-	// Message message = Message.obtain(mHandler, id);
-	// mHandler.sendMessage(message);
-	// }
-	// }
-	//
-	// private void updateTextView_time(){
-	// int time_left = total_time-count;
-	// mTextView_time.setText(String.valueOf(time_left));
-	// }
-	//
 	public void startGameOverView() {
 		Intent intent = new Intent(GameMainActivity.this,
 				GameOverActivity.class);
@@ -295,4 +230,23 @@ public class GameMainActivity extends Activity implements ModelListener {
 				(int) Math.round(height * newWidth * 1.0 / width), true);
 		mImageView.setImageBitmap(bitmap);
 	}
+	
+	/**
+	 * 更新分数
+	 * @param score 分数
+	 */
+	private void updateScore(int score) {
+		mTextView_score = (TextView) findViewById(R.id.score_realtime);
+		mTextView_score.setText("分数："+score);
+	}
+	
+	/**
+	 * 更新时间
+	 * @param time 时间
+	 */
+	private void updateTime(int time) {
+		mTextView_time = (TextView) findViewById(R.id.time_left);
+		mTextView_time.setText(time+"秒");
+	}
+	
 }
