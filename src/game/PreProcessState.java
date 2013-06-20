@@ -1,5 +1,6 @@
 package game;
 
+import helper.ImageDownloader;
 import imagefilter.BitmapFilter;
 
 import java.util.ArrayList;
@@ -8,6 +9,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
+import android.graphics.Bitmap;
 import android.util.Log;
 
 import model.FriendListModel;
@@ -31,7 +33,16 @@ public class PreProcessState extends State {
 		Log.i("State", "PreProcessState");
 		initFilter(theGame);		//根据难度准备好滤镜
 		initPictureList(theGame);	//准备好随机的照片
+		downloadAllPicture(theGame);
+		theGame.startTimer();
 		gotoChangePicState(theGame);
+	}
+	
+	private void downloadAllPicture(Game theGame){
+		for(ImageDisplay oneImage : images){
+			Bitmap bitmap = ImageDownloader.downloadBitmap(oneImage.getUrl());
+			oneImage.setImage(bitmap);
+		}
 	}
 	
 	private void gotoChangePicState(Game theGame) {

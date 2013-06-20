@@ -17,7 +17,7 @@ public class ChangePictureState extends State{
 	public void execute(Game theGame) {
 		Log.w("State", "ChangePictureState");
 		theGame.increaseCurImgIndx();
-		downloadImage(theGame);
+//		downloadImage(theGame);
 		applyFilter(theGame);
 		displayImage(theGame);
 		gotoInputState(theGame);
@@ -27,10 +27,10 @@ public class ChangePictureState extends State{
 		theGame.changeState(new InputState());
 	}
 	
-	private void downloadImage(Game theGame){
-		Bitmap newBitmap = ImageDownloader.downloadBitmap(theGame.getCurrentImageUrl());
-		theGame.setCurrentBitmap(newBitmap);
-	}
+//	private void downloadImage(Game theGame){
+//		Bitmap newBitmap = ImageDownloader.downloadBitmap(theGame.getCurrentImageUrl());
+//		theGame.setCurrentBitmap(newBitmap);
+//	}
 	
 	private void applyFilter(Game theGame){
 		Bitmap oldBitmap = theGame.getCurrentBitmap();

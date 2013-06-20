@@ -43,7 +43,7 @@ public class Game {
 	
 	private int score;		//当前分数
 	
-	private Bitmap currentBitmap;
+//	private Bitmap currentBitmap;
 	
 	private List<ImageDisplay> imageList;
 	
@@ -62,9 +62,15 @@ public class Game {
 		return instance;
 	}
 	
+	/**
+	 * 开始计时
+	 */
+	public void startTimer(){
+		startTimeUpdate();
+	}
+	
 	public void start(){
 		resetGameState();
-		startTimeUpdate();
 		startStateMachine();
 	}
 	
@@ -76,7 +82,6 @@ public class Game {
 		
 		this.setClickedFriends(false);
 		this.setInputed(false);
-		this.setCurrentBitmap(null);
 		this.setInputFilterType(-1);
 		if(updateTimeTask!=null){
 			updateTimeTask.cancel();
@@ -148,7 +153,11 @@ public class Game {
 	}
 	
 	public ImageDisplay getCurrentImageDisplay(){
-		return this.imageList.get(currentImageIndx);
+		if(imageList!=null){
+			return this.imageList.get(currentImageIndx);
+		}else{
+			return null;
+		}
 	}
 	
 	/**
@@ -287,11 +296,16 @@ public class Game {
 	}
 
 	public Bitmap getCurrentBitmap() {
-		return currentBitmap;
+		ImageDisplay curImageDisplay = this.getCurrentImageDisplay();
+		if(curImageDisplay!=null){
+			return curImageDisplay.getImage();
+		}else{
+			return null;
+		}
 	}
 
 	public void setCurrentBitmap(Bitmap currentBitmap) {
-		this.currentBitmap = currentBitmap;
+		this.getCurrentImageDisplay().setImage(currentBitmap);
 	}
 
 	public int getMaxImageCount() {
