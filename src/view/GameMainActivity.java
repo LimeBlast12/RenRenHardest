@@ -41,7 +41,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private ActivityHelper helper;
 	private Game game;
 	/* 使用handler来避免更新UI的线程安全问题 */
-	private Handler singleImageHandler, scoreHandler;
+	private Handler singleImageHandler;
+	private Handler scoreHandler, timeHandler, gameOverHandler;
 
 	private SingleImageModel singleImageModel;
 	private GameStatusModel gameStatusModel;
@@ -106,9 +107,24 @@ public class GameMainActivity extends Activity implements ModelListener {
 		singleImageHandler = new Handler();
 		
 		scoreHandler = new Handler() {
+			@Override
 			public void handleMessage(Message msg) {//覆盖handleMessage方法  
 				int score = msg.getData().getInt("score");
 				//startGameOverView();
+			}
+		};
+		
+		timeHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {//覆盖handleMessage方法  
+				int time = msg.getData().getInt("time");
+			}
+		};
+		
+		gameOverHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {//覆盖handleMessage方法  
+				startGameOverView();
 			}
 		};
 	}
@@ -119,6 +135,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 		gameStatusModel = GameStatusModel.getInstance();
 		gameStatusModel.addScoreListener(scoreHandler);
+		gameStatusModel.addTimeListener(timeHandler);
+		gameStatusModel.addGameOverListener(gameOverHandler);
 	}
 
 	private void initButtons() {
