@@ -123,7 +123,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 		
 		scoreHandler = new Handler() {
 			public void handleMessage(Message msg) {//覆盖handleMessage方法  
-			    Log.i("GameMainActivity score", msg.what+"");
+				int score = msg.getData().getInt("score");
+				startGameOverView();
 			}
 		};
 	}

@@ -3,8 +3,10 @@ package model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 
 public class GameStatusModel {
 	private List<Handler> scoreHandlers;
@@ -28,8 +30,13 @@ public class GameStatusModel {
 	}
 	
 	public void updateScore(int score) {
+		Log.i("GameStatusModel","updateScore");
 		for (Handler h: scoreHandlers) {
-			Message.obtain(h, score);	
+			Message msg = Message.obtain(h, SCORE_MSG);
+			Bundle data = new Bundle();
+			data.putInt("score", score);
+			msg.setData(data);
+			msg.sendToTarget();
 		}
 	}
 	
