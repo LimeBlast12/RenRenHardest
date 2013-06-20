@@ -16,7 +16,8 @@ public class EndGameState extends State {
 		//调用计分系统得到最终分数
 		//显示最终结果Activity
 		theGame.stop();
-		Log.i("EndGameState", "EndGameState");
+		Log.i("filter", "rightFriends : " + String.valueOf(theGame.getRightPic_friends()));
+		Log.i("filter", "rightMyImage : " + String.valueOf(theGame.getRightPic_own()));
 	}
 
 	@Override

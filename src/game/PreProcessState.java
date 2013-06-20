@@ -39,32 +39,9 @@ public class PreProcessState extends State {
 	}
 
 	private void initFilter(Game theGame) {
-		switch (theGame.getDifficulty()) {
-		case Game.DIFFICULTY_SIMPLE:
-			theGame.setLeftBtnFilterType(BitmapFilter.ECLOSION_STYLE);
-			theGame.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
-			filterArray = new int[2];
-			filterArray[0] = BitmapFilter.ECLOSION_STYLE;
-			filterArray[1] = BitmapFilter.OIL_STYLE;
-			break;
-		case Game.DIFFICULTY_MIDDLE:
-			theGame.setLeftBtnFilterType(BitmapFilter.OLD_STYLE);
-			theGame.setRightBtnFilterType(BitmapFilter.GRAY_STYLE);
-			filterArray = new int[2];
-			filterArray[0] = BitmapFilter.OLD_STYLE;
-			filterArray[1] = BitmapFilter.GRAY_STYLE;
-			break;
-		case Game.DIFFICULTY_HARD:
-			theGame.setLeftBtnFilterType(BitmapFilter.SOFTNESS_STYLE);
-			theGame.setRightBtnFilterType(BitmapFilter.NONE_STYLE);
-			filterArray = new int[2];
-			filterArray[0] = BitmapFilter.SOFTNESS_STYLE;
-			filterArray[1] = BitmapFilter.NONE_STYLE;
-			break;
-		default:
-			break;
-		}
-		
+		filterArray = new int[2];
+		filterArray[0] = theGame.getLeftBtnFilterType();
+		filterArray[1] = theGame.getRightBtnFilterType();
 	}
 	
 	private void initPictureList(Game theGame){

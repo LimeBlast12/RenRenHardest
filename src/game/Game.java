@@ -289,6 +289,22 @@ public class Game {
 
 	public void setDifficulty(int difficulty) {
 		this.difficulty = difficulty;
+		switch (this.difficulty) {
+		case Game.DIFFICULTY_SIMPLE:
+			this.setLeftBtnFilterType(BitmapFilter.ECLOSION_STYLE);
+			this.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
+			break;
+		case Game.DIFFICULTY_MIDDLE:
+			this.setLeftBtnFilterType(BitmapFilter.OLD_STYLE);
+			this.setRightBtnFilterType(BitmapFilter.GRAY_STYLE);
+			break;
+		case Game.DIFFICULTY_HARD:
+			this.setLeftBtnFilterType(BitmapFilter.SOFTNESS_STYLE);
+			this.setRightBtnFilterType(BitmapFilter.NONE_STYLE);
+			break;
+		default:
+			break;
+		}
 	}
 
 	public int getLeftBtnFilterType() {
