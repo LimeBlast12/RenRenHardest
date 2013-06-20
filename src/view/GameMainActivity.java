@@ -46,22 +46,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private SingleImageModel singleImageModel;
 	private GameStatusModel gameStatusModel;
 
-	/* 实际用于更新UI的线程 */
-	private Runnable updateImageThread = new Runnable() {
-		@Override
-		public void run() {
-			// 更换图片
-			mImageView = (ImageView) findViewById(R.id.iv);
-			Bitmap image = singleImageModel.getImage();
-			int width = image.getWidth();
-			int height = image.getHeight();
-			int newWidth = 300;
-			Bitmap bitmap = Bitmap.createScaledBitmap(image, newWidth,
-					(int) Math.round(height * newWidth * 1.0 / width), true);
-			mImageView.setImageBitmap(bitmap);
-		}
-	};
-
 	/* 用于计时，有些变量只能是静态变量且不应修改，有些如count切忌设为静态变量 */
 	private static final int total_time = 10; // 表示一轮游戏的总时间
 	private static final int delay = 1000; // 1s
@@ -124,7 +108,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 		scoreHandler = new Handler() {
 			public void handleMessage(Message msg) {//覆盖handleMessage方法  
 				int score = msg.getData().getInt("score");
-				startGameOverView();
+				//startGameOverView();
 			}
 		};
 	}
@@ -264,9 +248,33 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private void startUpdateImageThread() {
 		new Thread() {
 			public void run() {
+				/* 实际用于更新UI的线程 */
+				Runnable updateImageThread = new Runnable() {
+					@Override
+					public void run() {
+						// 更换图片
+						Bitmap image = singleImageModel.getImage();
+						updateImage(image);
+					}
+				};
+				
 				/* 触发更新UI的线程启动 */
 				singleImageHandler.post(updateImageThread);
 			}
 		}.start();
+	}
+	
+	/**
+	 * 更新图片
+	 * @param image 要猜的图片
+	 */
+	private void updateImage(Bitmap image) {
+		mImageView = (ImageView) findViewById(R.id.iv);
+		int width = image.getWidth();
+		int height = image.getHeight();
+		int newWidth = 300;
+		Bitmap bitmap = Bitmap.createScaledBitmap(image, newWidth,
+				(int) Math.round(height * newWidth * 1.0 / width), true);
+		mImageView.setImageBitmap(bitmap);
 	}
 }
