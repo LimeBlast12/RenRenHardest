@@ -1,6 +1,7 @@
 package view;
 
 import helper.SoundPlayer;
+import helper.ValueStorer;
 
 import java.lang.reflect.Field;
 
@@ -27,12 +28,15 @@ import com.renren.api.connect.android.view.RenrenAuthListener;
 import edu.nju.renrenhardest.R;
 
 public class MainActivity extends Activity {
+	public static final String PREFS_NAME = "FirstTimeFile";
+	
 	private static final String API_KEY = "aa72e895b6a84941bb4ef31c8a69c179";
 	private static final String SECRET_KEY = "322b904c74674d0ba333d5e4557dc7bf";
 	private static final String APP_ID = "235450";
 	private Renren renren;
 	private Handler handler;
 	private ActivityHelper helper;
+	private ValueStorer storer;
 	private Button oAuthButton;
 
 	@Override
@@ -48,6 +52,7 @@ public class MainActivity extends Activity {
 		helper.addActivity(this);
 		helper.setRenren(renren);
 		handler = new Handler();
+		storer = ValueStorer.getInstance();
 		initButtons();
 		if (renren.isSessionKeyValid()) {//已经登录
 			loadFriends();
@@ -111,8 +116,19 @@ public class MainActivity extends Activity {
 				Log.d("test", values.toString());
 				loadFriends();
 				loadMyImages();
-				//startLoginedMainActivity();
-				startTutorialsActivity();
+
+				/*这里判断是否第一次登录， by DanniWANG*/
+				boolean isFirstTime = storer.readFirstTimeSetting(getApplicationContext(), PREFS_NAME);
+				if(isFirstTime){
+					System.out.println("It is the first time to play.");
+					storer.editFirstTimeSetting(getApplicationContext(), PREFS_NAME, false);
+					//跳转去新手教程
+					startTutorialsActivity();
+				}else{
+					System.out.println("It is NOT the first time to play.");
+					//直接跳转至选择界面
+					startLoginedMainActivity();
+				}
 			}
 
 			@Override
