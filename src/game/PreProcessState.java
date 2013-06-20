@@ -23,6 +23,8 @@ public class PreProcessState extends State {
 	List<Map<String, Object>> friendImages;	//好友头像，List中每个Item是一张Map：{'name':好友名字,'image':该好友头像url}
 	List<Map<String, Object>> myImages;	//自己的头像，List中每个Item是一张Map：{'name':好友名字,'image':该好友头像url}
 	List<ImageDisplay> images;	//最后选出来作为游戏用图的
+	private int[] filterArray;
+	private static final int FILTER_COUNT = 2;	//每次游戏用到的滤镜数量
 	
 	@Override
 	public void execute(Game theGame) {
@@ -41,18 +43,28 @@ public class PreProcessState extends State {
 		case Game.DIFFICULTY_SIMPLE:
 			theGame.setLeftBtnFilterType(BitmapFilter.ECLOSION_STYLE);
 			theGame.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
+			filterArray = new int[2];
+			filterArray[0] = BitmapFilter.ECLOSION_STYLE;
+			filterArray[1] = BitmapFilter.OIL_STYLE;
 			break;
 		case Game.DIFFICULTY_MIDDLE:
 			theGame.setLeftBtnFilterType(BitmapFilter.OLD_STYLE);
 			theGame.setRightBtnFilterType(BitmapFilter.GRAY_STYLE);
+			filterArray = new int[2];
+			filterArray[0] = BitmapFilter.OLD_STYLE;
+			filterArray[1] = BitmapFilter.GRAY_STYLE;
 			break;
 		case Game.DIFFICULTY_HARD:
 			theGame.setLeftBtnFilterType(BitmapFilter.SOFTNESS_STYLE);
-			theGame.setRightBtnFilterType(BitmapFilter.OIL_STYLE);
+			theGame.setRightBtnFilterType(BitmapFilter.NONE_STYLE);
+			filterArray = new int[2];
+			filterArray[0] = BitmapFilter.SOFTNESS_STYLE;
+			filterArray[1] = BitmapFilter.NONE_STYLE;
 			break;
 		default:
 			break;
 		}
+		
 	}
 	
 	private void initPictureList(Game theGame){
@@ -105,7 +117,7 @@ public class PreProcessState extends State {
 	
 	private int randomFilter(){	//随机选择一种滤镜
 		Random rdm = new Random(System.currentTimeMillis());
-		int result = Math.abs(rdm.nextInt())%14+1;
+		int result = Math.abs(rdm.nextInt())%FILTER_COUNT+1;
 		return result;
 	}
 	
