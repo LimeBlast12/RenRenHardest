@@ -1,5 +1,6 @@
 package game;
 
+import model.GameStatusModel;
 import android.util.Log;
 
 /**
@@ -16,7 +17,9 @@ public class EndGameState extends State {
 		theGame.stop();
 		int rightCount = theGame.getRightPic_own() + theGame.getRightPic_friends();
 		int wrongCount = theGame.getCurrentImageIndx() + 1 - rightCount;
-		long score = GameScorer.getScores(theGame.getTotalPic_own(), theGame.getTotalPic_friends(), rightCount, wrongCount, theGame.getDifficulty());
+		int score = GameScorer.score(theGame.getTotalPic_own(), theGame.getTotalPic_friends(), rightCount, wrongCount, theGame.getDifficulty());
+		GameStatusModel.getInstance().updateScore(score);
+		
 		Log.i("filter", "MyImage : " + String.valueOf(theGame.getTotalPic_own()));
 		Log.i("filter", "Friends : " + String.valueOf(theGame.getTotalPic_friends()));
 		Log.i("filter", "rightFriends : " + String.valueOf(theGame.getRightPic_friends()));
