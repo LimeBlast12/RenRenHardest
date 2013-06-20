@@ -13,8 +13,9 @@ public class EndGameState extends State {
 	@Override
 	public void execute(Game theGame) {
 		Log.i("State", "EndGameState");
-		//显示最终结果Activity
 		theGame.stop();
+		theGame.updateScore();
+		GameStatusModel.getInstance().notifyGameOver();
 	}
 
 	@Override

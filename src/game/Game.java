@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import model.GameStatusModel;
 import model.ImageDisplay;
 import android.graphics.Bitmap;
 import android.util.Log;
@@ -39,6 +40,8 @@ public class Game {
 	private int leftBtnFilterType;	//左边按钮对应的滤镜
 	private int rightBtnFilterType;	//右边按钮对应的滤镜
 	private int inputFilterType;	//用户输入的滤镜类型，-1表示未输入
+	
+	private int score;		//当前分数
 	
 	private Bitmap currentBitmap;
 	
@@ -85,6 +88,22 @@ public class Game {
 		if(this.currentImageIndx >= this.maxImageCount){
 			this.currentImageIndx = 0;
 		}
+	}
+	
+	/**
+	 * 更新分数
+	 */
+	public void updateScore(){
+		int rightCount = this.getRightPic_own() + this.getRightPic_friends();
+		int wrongCount = this.getCurrentImageIndx() + 1 - rightCount;
+		int score = GameScorer.score(this.getTotalPic_own(), this.getTotalPic_friends(), rightCount, wrongCount, this.getDifficulty());
+		this.setScore(score);
+		Log.i("filter", "MyImage : " + String.valueOf(this.getTotalPic_own()));
+		Log.i("filter", "Friends : " + String.valueOf(this.getTotalPic_friends()));
+		Log.i("filter", "rightFriends : " + String.valueOf(this.getRightPic_friends()));
+		Log.i("filter", "rightMyImage : " + String.valueOf(this.getRightPic_own()));
+		Log.i("filter", "wrongs : " + String.valueOf(wrongCount));
+		Log.i("filter", "score : " + String.valueOf(score));
 	}
 	
 	/**
@@ -137,7 +156,7 @@ public class Game {
 	 */
 	private void updateTime(){
 		timeLeft--;
-		// TODO 更新界面
+		GameStatusModel.getInstance().updateTime(timeLeft);
 		Log.i("Game updateTime", String.valueOf(timeLeft));
 	}
 	
@@ -345,5 +364,13 @@ public class Game {
 
 	public void setInputFilterType(int inputFilterType) {
 		this.inputFilterType = inputFilterType;
+	}
+
+	public int getScore() {
+		return score;
+	}
+
+	public void setScore(int score) {
+		this.score = score;
 	}
 }
