@@ -114,7 +114,7 @@ public class GameStatusModel {
 	 */
 	public void notifyUploadFinish() {
 		Log.i("GameStatusModel","notify upload finish");
-		for (Handler h: gameStatusHandlers) {
+		for (Handler h: uploadFinishHandlers) {
 			Message msg = Message.obtain(h, UPLOAD_FINISH_MSG);
 			msg.sendToTarget();
 		}
