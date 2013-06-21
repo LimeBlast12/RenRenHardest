@@ -160,7 +160,7 @@ public class SettingsActivity extends Activity {
 			helper.startAllFriendsActivity(this);
 			return true;
 		case R.id.item_gameRule:
-			helper.showShortTip(SettingsActivity.this, "gameRule");
+			helper.showGameRule(this);
 			return true;
 		case R.id.item_quitGame:
 			helper.exit();

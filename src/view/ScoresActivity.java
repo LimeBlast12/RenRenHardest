@@ -50,7 +50,7 @@ public class ScoresActivity extends Activity {
 			helper.startAllFriendsActivity(this);
 			return true;
 		case R.id.item_gameRule:
-			helper.showShortTip(this, "gameRule");
+			helper.showGameRule(this);
 			return true;
 		case R.id.item_quitGame:
 			helper.exit();
