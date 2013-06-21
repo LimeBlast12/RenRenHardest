@@ -14,7 +14,6 @@ public class EndGameState extends State {
 	public void execute(Game theGame) {
 		Log.i("State", "EndGameState");
 		theGame.stop();
-		theGame.updateScore();
 		GameStatusModel.getInstance().notifyGameOver();
 	}
 
