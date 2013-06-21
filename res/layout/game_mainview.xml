@@ -36,7 +36,6 @@
             android:layout_alignParentLeft="true"
             android:layout_marginLeft="10dp"
             android:paddingLeft="15dip"
-            android:text="@string/number"
             android:textSize="25sp"
             android:textStyle="bold" />
         

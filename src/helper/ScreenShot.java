@@ -11,7 +11,6 @@ import android.view.View;
 public class ScreenShot {
 	// 获取指定Activity的截屏，保存到png文件
 	private static Bitmap takeScreenShot(Activity activity) {
-
 		// View是你需要截图的View
 		View view = activity.getWindow().getDecorView();
 		view.setDrawingCacheEnabled(true);

@@ -6,6 +6,7 @@ import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -25,7 +26,7 @@ public class GameOverActivity extends Activity {
 	private Renren renren;
 	private ActivityHelper helper;
 	private TextView mTextView_score;
-	private TextView mButton_share;
+	private Button mButton_share;
 	private Button mButton_replay, mButton_return;
 	
 	@SuppressLint("NewApi")
@@ -58,7 +59,7 @@ public class GameOverActivity extends Activity {
 			}
 		});
 
-		mButton_share = (TextView) findViewById(R.id.share_score);
+		mButton_share = (Button) findViewById(R.id.share_button);
 		mButton_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
