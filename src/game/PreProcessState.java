@@ -34,7 +34,6 @@ public class PreProcessState extends State {
 		initFilter(theGame);		//根据难度准备好滤镜
 		initPictureList(theGame);	//准备好随机的照片
 		downloadAllPicture(theGame);
-		theGame.startTimer();
 		gotoChangePicState(theGame);
 	}
 	

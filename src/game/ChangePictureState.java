@@ -20,6 +20,12 @@ public class ChangePictureState extends State{
 		theGame.increaseCurImgIndx();
 		applyFilter(theGame);
 		displayImage(theGame);
+		
+		if(!theGame.isStarted()){
+			GameStatusModel.getInstance().notifyGameDataReady();
+			theGame.startTimer();
+			theGame.setStarted(true);
+		}
 		gotoInputState(theGame);
 	}
 	
@@ -51,11 +57,7 @@ public class ChangePictureState extends State{
 
 	@Override
 	public void enter(Game theGame) {
-		if(!theGame.isStarted()){
-			GameStatusModel.getInstance().notifyGameDataReady();
-			theGame.startTimer();
-			theGame.setStarted(true);
-		}
+		// TODO Auto-generated method stub
 	}
 
 }
