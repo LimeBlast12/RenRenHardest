@@ -38,24 +38,24 @@ public class ScreenShot {
 	}
 
 	// 保存到sdcard
-//	private static void savePic(Bitmap b, String strFileName) {
-//		FileOutputStream fos = null;
-//		try {
-//			fos = new FileOutputStream(strFileName);
-//			if (null != fos) {
-//				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
-//				fos.flush();
-//				fos.close();
-//			}
-//		} catch (FileNotFoundException e) {
-//			e.printStackTrace();
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
-//	}
-//
-//	// 程序入口
-//	public static void shoot(Activity a) {
-//		ScreenShot.savePic(ScreenShot.takeScreenShot(a), "sdcard/xx.png");
-//	}
+	private static void savePic(Bitmap b, String strFileName) {
+		FileOutputStream fos = null;
+		try {
+			fos = new FileOutputStream(strFileName);
+			if (null != fos) {
+				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
+				fos.flush();
+				fos.close();
+			}
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+
+	// 程序入口
+	public static void shoot(Activity a) {
+		ScreenShot.savePic(ScreenShot.takeScreenShot(a), "sdcard/xx.png");
+	}
 }

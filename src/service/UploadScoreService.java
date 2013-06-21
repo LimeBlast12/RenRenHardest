@@ -1,20 +1,11 @@
 package service;
 
-import helper.NetworkChecker;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import model.FriendListModel;
-import android.annotation.SuppressLint;
-import android.app.Service;
-import android.content.Context;
-import android.content.Intent;
-import android.os.Binder;
-import android.os.IBinder;
-import android.util.Log;
 
 import com.renren.api.connect.android.AsyncRenren;
 import com.renren.api.connect.android.Renren;
@@ -24,14 +15,24 @@ import com.renren.api.connect.android.friends.FriendsGetFriendsRequestParam;
 import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean;
 import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Friend;
 
-public class LoadFriendsService extends Service {
+import helper.NetworkChecker;
+import android.annotation.SuppressLint;
+import android.app.Service;
+import android.content.Context;
+import android.content.Intent;
+import android.os.Binder;
+import android.os.IBinder;
+import android.util.Log;
+
+public class UploadScoreService extends Service {
 	private final IBinder binder = new MyBinder();
 	private NetworkChecker networkChecker = new NetworkChecker(
-			LoadFriendsService.this);
+			UploadScoreService.this);
+	private final String TAG = "UploadScoreService";
 	
 	@Override
 	public void onCreate() {
-		Log.i("LoadFriendsService", "onCreate");
+		Log.i(TAG, "onCreate");
 		super.onCreate();
 		networkChecker.init(this);
 	}
@@ -39,19 +40,19 @@ public class LoadFriendsService extends Service {
 	@SuppressLint("InlinedApi")
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startedId) {
-		Log.i("LoadFriendsService", "onStartCommand");
+		Log.i(TAG, "onStartCommand");
 		networkChecker.checkAndShowTip(this,intent);
 		return Service.START_REDELIVER_INTENT;
 	}
 
 	@Override
 	public IBinder onBind(Intent intent) {
-		Log.i("LoadFriendsService", "onBind");
-		loadFriends(intent);
+		Log.i(TAG, "onBind");
+		uploadScore(intent);
 		return binder;
 	}
 
-	public void loadFriends(Intent intent) {
+	public void uploadScore(Intent intent) {
 		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
 		Log.i("loadFriends", "begin");
 		if (renren != null) {
@@ -112,10 +113,10 @@ public class LoadFriendsService extends Service {
         iService.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
         c.stopService(iService);
     }
-	
+
 	public class MyBinder extends Binder {
-		public LoadFriendsService getService() {
-			return LoadFriendsService.this;
+		public UploadScoreService getService() {
+			return UploadScoreService.this;
 		}
 	}
 }

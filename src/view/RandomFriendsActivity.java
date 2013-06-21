@@ -29,11 +29,12 @@ import com.origamilabs.library.views.StaggeredGridView;
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
+import game.Game;
 
 @SuppressLint("NewApi")
 public class RandomFriendsActivity extends Activity implements ModelListener,
 		SensorEventListener {
-	private final int COUNT_FRIENDS = 30;// 一组好友个数
+	private final int COUNT_FRIENDS = 20;// 一组好友个数
 	private SensorManager mSensorManager = null; // Sensor管理器
 	private Vibrator mVibrator = null; // 震动
 	private ActivityHelper helper;
@@ -75,7 +76,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 		friendListModel.register(RandomFriendsActivity.this);
 		loadFriends();
 		
-		helper.showLongTip(this, R.string.shake_tips);
+		helper.showLongTip(this, R.string.shake_tips);			
 	}
 
 	@Override
@@ -194,6 +195,11 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 	public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 		case R.id.start_game:
+			Game game = Game.getInstance();
+			game.start();
+			Log.i("RandomFriendsActivity", "start game process");
+			Log.i("RandomFriendsActivity", "game time:"+game.getTimeLeft());
+			Log.i("RandomFriendsActivity", "game score:"+game.getScore());			
 			startGameMainActivity();//跳转到游戏界面
 			return true;
 		default:

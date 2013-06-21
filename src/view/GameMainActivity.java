@@ -13,6 +13,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -56,14 +57,12 @@ public class GameMainActivity extends Activity implements ModelListener {
 		game = Game.getInstance();// 一定要在initButtons之前
 
 		initButtons();
-		initTextViews();
-		helper.showWaitingDialog(GameMainActivity.this);
+		initTextViews();		
 		mImageView = (ImageView) findViewById(R.id.iv);
 
 		initModels();
 				
-		game.start();// 开始游戏
-		// timer();
+		helper.showWaitingDialog(GameMainActivity.this);
 	}
 
 	public void onResume() {
@@ -78,8 +77,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 	public void onDestroy() {
 		System.out.println("onDestroy");
-		// mTimer.cancel();
-		// mTimerTask.cancel();
 		super.onDestroy();
 	}
 
@@ -109,14 +106,16 @@ public class GameMainActivity extends Activity implements ModelListener {
 		
 		gameStatusHandler = new Handler() {
 			@Override
-			public void handleMessage(Message msg) {//覆盖handleMessage方法  
+			public void handleMessage(Message msg) {//覆盖handleMessage方法
+				Log.i("gameStatusHandler", msg.what+"");
 				switch (msg.what) {
 				case GameStatusModel.GAMEOVER_MSG:
 					startGameOverView();
 					break;				
-				case GameStatusModel.GAMEREADY_MSG:
-				default:
+				case GameStatusModel.GAMEREADY_MSG:				
 					helper.dismissProgress();
+					break;
+				default:
 					break;
 				}
 				

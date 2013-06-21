@@ -19,11 +19,13 @@ import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
 import game.Game;
+import helper.ScreenShot;
 
 public class GameOverActivity extends Activity {
 	private Renren renren;
 	private ActivityHelper helper;
 	private TextView mTextView_score;
+	private TextView mButton_share;
 	private Button mButton_replay, mButton_return;
 	
 	@SuppressLint("NewApi")
@@ -34,11 +36,11 @@ public class GameOverActivity extends Activity {
 		getOverflowMenu();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
-		
+
 		initButtons();
 		showScore();
 	}
-	
+
 	private void initButtons() {
 		mButton_replay = (Button) findViewById(R.id.replay);
 		mButton_replay.setOnClickListener(new OnClickListener() {
@@ -47,7 +49,7 @@ public class GameOverActivity extends Activity {
 				replay();
 			}
 		});
-		
+
 		mButton_return = (Button) findViewById(R.id.return_menu);
 		mButton_return.setOnClickListener(new OnClickListener() {
 			@Override
@@ -55,24 +57,38 @@ public class GameOverActivity extends Activity {
 				returnHome();
 			}
 		});
-		
+
+		mButton_share = (TextView) findViewById(R.id.share_score);
+		mButton_share.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				ScreenShot.shoot(GameOverActivity.this);
+			}
+		});
+
 	}
-	
+
+	/**
+	 * 显示分数
+	 */
 	private void showScore() {
 		int score = Game.getInstance().getScore();
 		mTextView_score = (TextView) findViewById(R.id.score_final);
-		mTextView_score.setText(score+"");
+		mTextView_score.setText(score + "");
 	}
-	
+
 	/**
-	 * 展示随机好友列表的界面
+	 * 展示随机好友列表的界面，即重新玩游戏
 	 */
 	private void replay() {
 		Intent intent = new Intent(this, RandomFriendsActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
 		startActivity(intent);
 	}
-	
+
+	/**
+	 * 返回主菜单页
+	 */
 	private void returnHome() {
 		Intent parentActivityIntent = new Intent(GameOverActivity.this,
 				LoginedMainActivity.class);
@@ -81,64 +97,60 @@ public class GameOverActivity extends Activity {
 		startActivity(parentActivityIntent);
 		finish();
 	}
-	
-	/*当按后退键时，不会返回游戏主界面而是返回选择界面*/
+
+	/* 当按后退键时，不会返回游戏主界面而是返回选择界面 */
 	@Override
 	public void onBackPressed() {
 		Intent intent = new Intent(this, LoginedMainActivity.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
-		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);  //by lys 避免startActivity创建新的LoginedMainActivity实例
+		intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // by lys
+															// 避免startActivity创建新的LoginedMainActivity实例
 		startActivity(intent);
 		return;
 	}
-	
-	/*无论何种机型都显示overflow*/
+
+	/* 无论何种机型都显示overflow */
 	@SuppressLint("NewApi")
 	private void getOverflowMenu() {
 
-        try {
-           ViewConfiguration config = ViewConfiguration.get(this);
-           Field menuKeyField = ViewConfiguration.class.getDeclaredField("sHasPermanentMenuKey");
-           if(menuKeyField != null) {
-               menuKeyField.setAccessible(true);
-               menuKeyField.setBoolean(config, false);
-           }
-       } catch (Exception e) {
-           e.printStackTrace();
-       }
-   }
-	
+		try {
+			ViewConfiguration config = ViewConfiguration.get(this);
+			Field menuKeyField = ViewConfiguration.class
+					.getDeclaredField("sHasPermanentMenuKey");
+			if (menuKeyField != null) {
+				menuKeyField.setAccessible(true);
+				menuKeyField.setBoolean(config, false);
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+
 	@Override
-	public boolean onCreateOptionsMenu(Menu menu){
+	public boolean onCreateOptionsMenu(Menu menu) {
 		MenuInflater inflater = getMenuInflater();
-		inflater.inflate(R.menu.game_over_menu,menu);
+		inflater.inflate(R.menu.game_over_menu, menu);
 		return true;
 	}
-	
-	public boolean onOptionsItemSelected(MenuItem item){
-		
-		switch(item.getItemId()){
-			case R.id.item_allMyImages:
-				helper.startMyImagesActivity(this);
-				return true;
-				
-			case R.id.item_allMyFriendsImages:
-				helper.startAllFriendsActivity(this);
-				return true;
-				
-			case R.id.item_gameRule:
-				helper.showGameRule(this);
-				return true;
-				
-			case R.id.item_quitGame:
-				helper.exit();
-				return true;
-				
-			default:
-				return super.onOptionsItemSelected(item);
+
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+		switch (item.getItemId()) {
+		case R.id.item_allMyImages:
+			helper.startMyImagesActivity(this);
+			return true;
+		case R.id.item_allMyFriendsImages:
+			helper.startAllFriendsActivity(this);
+			return true;
+		case R.id.item_gameRule:
+			helper.showGameRule(this);
+			return true;
+		case R.id.item_quitGame:
+			helper.exit();
+			return true;
+		default:
+			return super.onOptionsItemSelected(item);
 		}
-		
 	}
-	
-	
+
 }

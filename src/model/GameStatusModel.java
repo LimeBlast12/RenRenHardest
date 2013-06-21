@@ -44,14 +44,18 @@ public class GameStatusModel {
 		timeHandlers.remove(timeHandler);
 	}
 	
-	public void addGameStatusListener(Handler gameOverHandler) {
-		gameStatusHandlers.add(gameOverHandler);
+	public void addGameStatusListener(Handler gameStatusHandler) {
+		gameStatusHandlers.add(gameStatusHandler);
 	}
 	
 	public void removeGameStatusListener(Handler gameStatusHandler) {
 		gameStatusHandlers.remove(gameStatusHandler);
 	}
 	
+	/**
+	 * 通知界面更新分数
+	 * @param score 分数
+	 */
 	public void updateScore(int score) {
 		Log.i("GameStatusModel","update score");
 		for (Handler h: scoreHandlers) {
@@ -63,6 +67,10 @@ public class GameStatusModel {
 		}
 	}
 	
+	/**
+	 * 通知界面更新时间
+	 * @param time 时间
+	 */
 	public void updateTime(int time) {
 		Log.i("GameStatusModel","update time");
 		for (Handler h: timeHandlers) {
@@ -90,6 +98,10 @@ public class GameStatusModel {
 		updateGameStatus(GAMEREADY_MSG);
 	}
 	
+	/**
+	 * 通知界面游戏状态的消息
+	 * @param what
+	 */
 	private void updateGameStatus(int what) {
 		for (Handler h: gameStatusHandlers) {
 			Message msg = Message.obtain(h, what);
