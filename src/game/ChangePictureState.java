@@ -1,5 +1,6 @@
 package game;
 
+import model.GameStatusModel;
 import model.SingleImageModel;
 import imagefilter.BitmapFilter;
 import helper.ImageDownloader;
@@ -17,7 +18,6 @@ public class ChangePictureState extends State{
 	public void execute(Game theGame) {
 		Log.w("State", "ChangePictureState");
 		theGame.increaseCurImgIndx();
-//		downloadImage(theGame);
 		applyFilter(theGame);
 		displayImage(theGame);
 		gotoInputState(theGame);
@@ -26,11 +26,6 @@ public class ChangePictureState extends State{
 	private void gotoInputState(Game theGame){
 		theGame.changeState(new InputState());
 	}
-	
-//	private void downloadImage(Game theGame){
-//		Bitmap newBitmap = ImageDownloader.downloadBitmap(theGame.getCurrentImageUrl());
-//		theGame.setCurrentBitmap(newBitmap);
-//	}
 	
 	private void applyFilter(Game theGame){
 		Bitmap oldBitmap = theGame.getCurrentBitmap();
@@ -56,7 +51,11 @@ public class ChangePictureState extends State{
 
 	@Override
 	public void enter(Game theGame) {
-		// TODO Auto-generated method stub
+		if(!theGame.isStarted()){
+			GameStatusModel.getInstance().notifyGameDataReady();
+			theGame.startTimer();
+			theGame.setStarted(true);
+		}
 	}
 
 }

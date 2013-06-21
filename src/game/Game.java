@@ -43,8 +43,7 @@ public class Game {
 	
 	private int score;		//当前分数
 	
-//	private Bitmap currentBitmap;
-	
+	private boolean started;	//游戏是否开始
 	private List<ImageDisplay> imageList;
 	
 	TimerTask updateTimeTask;
@@ -75,6 +74,7 @@ public class Game {
 	}
 	
 	public void resetGameState(){
+		this.setStarted(false);
 		this.setTimeLeft(10);	//10秒钟一局
 		this.setRightPic_own(0);
 		this.setRightPic_friends(0);
@@ -390,5 +390,13 @@ public class Game {
 
 	public void setScore(int score) {
 		this.score = score;
+	}
+
+	public boolean isStarted() {
+		return started;
+	}
+
+	public void setStarted(boolean started) {
+		this.started = started;
 	}
 }
