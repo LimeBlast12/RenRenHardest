@@ -1,12 +1,15 @@
 package view;
 
+import game.Game;
+import helper.ScreenShot;
+
 import java.lang.reflect.Field;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -14,13 +17,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renren.api.connect.android.Renren;
 
 import edu.nju.renrenhardest.R;
-import game.Game;
-import helper.ScreenShot;
 
 public class GameOverActivity extends Activity {
 	private Renren renren;
@@ -63,7 +65,10 @@ public class GameOverActivity extends Activity {
 		mButton_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				ScreenShot.shoot(GameOverActivity.this);
+				//ScreenShot.shoot(GameOverActivity.this);
+				Bitmap bitmap = ScreenShot.takeScreenShot(GameOverActivity.this);
+				//ImageView iv = (ImageView) findViewById(R.id.star);
+				//iv.setImageBitmap(bitmap);
 			}
 		});
 

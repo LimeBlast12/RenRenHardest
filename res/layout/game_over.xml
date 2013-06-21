@@ -1,79 +1,77 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-
-    <TextView
+    
+     <Button
+        android:id="@+id/share_button"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="30dip"
-        android:layout_marginTop="30dip"
-        android:text="@string/new_record"
-        android:textSize="20sp" />
-    
-    <TextView
-        android:id="@+id/score_final"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"        
-        android:layout_gravity="center"
-        android:layout_marginTop="40dip"
-        android:text="@string/final_score"
-        android:textSize="70sp"
-        android:textStyle="bold|italic" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:background="@drawable/button_yellow"
+        android:drawableLeft="@drawable/renren_logo"
+        android:text="@string/share_score" />
     
     <ImageView
         android:id="@+id/star"
-        android:src="@drawable/star2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dip"
-        android:contentDescription="@string/app_name" />
-    
+        android:layout_centerHorizontal="true"
+        android:layout_below="@+id/score_final"        
+        android:contentDescription="@string/app_name"
+        android:src="@drawable/star2" />
+
     <LinearLayout
+        android:id="@+id/button_group"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dip"
-        android:layout_gravity="center"
+        android:layout_below="@+id/star"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp"
         android:orientation="horizontal" >
-        
+
         <Button
             android:id="@+id/replay"
-            android:background="@drawable/button_blue"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:background="@drawable/button_blue"
             android:text="@string/replay"
-            android:textStyle="bold"
-            android:textSize="25sp" />
-        
+            android:textSize="25sp"
+            android:textStyle="bold" />
+
         <Button
             android:id="@+id/return_menu"
-            android:background="@drawable/button_red"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dip"
+            android:background="@drawable/button_red"
             android:text="@string/return_menu"
-            android:textStyle="bold"
-            android:textSize="25sp" />
+            android:textSize="25sp"
+            android:textStyle="bold" />
     </LinearLayout>
-    	
-    <LinearLayout
-        android:layout_width="175dp"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="20dip"
-        android:orientation="horizontal" >
-        
-        <Button 
-           	android:id="@+id/share_button"
-           	android:drawableLeft="@drawable/renren_logo"
-           	android:text="@string/share_score"
-           	android:layout_width="fill_parent"
-           	android:layout_height="wrap_content"
-           	android:background="@drawable/button_yellow" />
-    </LinearLayout>
-    
 
-</LinearLayout>
+    <TextView
+        android:id="@+id/score_final"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/share_button"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="59dp"
+        android:text="@string/final_score"
+        android:textSize="70sp"
+        android:textStyle="bold|italic" />
+
+    <TextView
+        android:id="@+id/new_record"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/score_final"
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp"
+        android:text="@string/new_record"
+        android:textSize="20sp" />
+
+</RelativeLayout>

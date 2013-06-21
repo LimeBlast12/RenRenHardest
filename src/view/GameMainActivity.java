@@ -8,6 +8,7 @@ import model.ModelListener;
 import model.SingleImageModel;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -37,6 +38,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private Button filter_buttons[] = new Button[COUNT_FILTER_TYPE];// 现版本游戏设定两个filter，0代表左，1代表右
 	private Button game_friend_button = null;
 	private ActivityHelper helper;
+	private ProgressDialog loadingDialog;
 	private Game game;
 	/* 使用handler来避免更新UI的线程安全问题 */
 	private Handler singleImageHandler;
@@ -62,7 +64,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 		initModels();
 				
-		helper.showWaitingDialog(GameMainActivity.this);
+		//helper.showWaitingDialog(GameMainActivity.this);
+		loadingDialog = ProgressDialog.show(this, "Loading...", "正在努力加载中...");
 	}
 
 	public void onResume() {
@@ -113,7 +116,8 @@ public class GameMainActivity extends Activity implements ModelListener {
 					startGameOverView();
 					break;				
 				case GameStatusModel.GAMEREADY_MSG:				
-					helper.dismissProgress();
+					//helper.dismissProgress();
+					loadingDialog.dismiss();
 					break;
 				default:
 					break;

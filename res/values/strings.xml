@@ -52,5 +52,5 @@
    	<string name="final_score">100</string>
    	<string name="replay">重玩</string>
    	<string name="return_menu">返回</string>
-   	<string name="share_score">上传成绩到人人</string>
+   	<string name="share_score">上传成绩</string>
 </resources>
