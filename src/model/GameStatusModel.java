@@ -11,16 +11,19 @@ import android.util.Log;
 public class GameStatusModel {
 	private List<Handler> scoreHandlers;
 	private List<Handler> timeHandlers;
+	private List<Handler> uploadFinishHandlers;
 	private List<Handler> gameStatusHandlers;
 	private static GameStatusModel thisRef;
 	public static final int SCORE_MSG = 1;
 	public static final int TIME_MSG = 2;
 	public static final int GAMEOVER_MSG = 3;
 	public static final int GAMEREADY_MSG = 4;
+	public static final int UPLOAD_FINISH_MSG = 5;
 	
 	private GameStatusModel() {
 		scoreHandlers = new ArrayList<Handler>();
 		timeHandlers = new ArrayList<Handler>();
+		uploadFinishHandlers = new ArrayList<Handler>();
 		gameStatusHandlers = new ArrayList<Handler>();
 	}
 	
@@ -42,6 +45,14 @@ public class GameStatusModel {
 	
 	public void removeTimeListner(Handler timeHandler) {
 		timeHandlers.remove(timeHandler);
+	}
+	
+	public void addUploadFinishListener(Handler uploadFinishHandler) {
+		uploadFinishHandlers.add(uploadFinishHandler);
+	}
+	
+	public void removeUploadFinishListener(Handler uploadFinishHandler) {
+		uploadFinishHandlers.remove(uploadFinishHandler);
 	}
 	
 	public void addGameStatusListener(Handler gameStatusHandler) {
@@ -96,6 +107,17 @@ public class GameStatusModel {
 	public void notifyGameDataReady() {
 		Log.i("GameStatusModel","notify gameready");
 		updateGameStatus(GAMEREADY_MSG);
+	}
+	
+	/**
+	 * 通知界面，游戏数据准备完毕
+	 */
+	public void notifyUploadFinish() {
+		Log.i("GameStatusModel","notify upload finish");
+		for (Handler h: gameStatusHandlers) {
+			Message msg = Message.obtain(h, UPLOAD_FINISH_MSG);
+			msg.sendToTarget();
+		}
 	}
 	
 	/**

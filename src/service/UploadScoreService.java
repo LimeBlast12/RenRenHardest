@@ -5,6 +5,11 @@ import helper.ScreenShot;
 
 import java.io.File;
 
+import view.ActivityHelper;
+import view.GameOverActivity;
+
+import model.GameStatusModel;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
@@ -93,12 +98,7 @@ public class UploadScoreService extends Service {
 						public void onComplete(PhotoUploadResponseBean bean) {
 							if (bean != null) {
 								Log.i("uploadScore", "finish");
-								// Message message = new Message();
-								// Bundle bundle = new Bundle();
-								// bundle.putParcelable(BEAN_LABEL, bean);
-								// message.what = DATA_COMPLETE;
-								// message.setData(bundle);
-								// handler.sendMessage(message);
+								GameStatusModel.getInstance().notifyUploadFinish();
 							}
 						}
 					});

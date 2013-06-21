@@ -5,11 +5,15 @@ import helper.ScreenShot;
 
 import java.lang.reflect.Field;
 
+import model.GameStatusModel;
+
 import service.UploadScoreService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
@@ -30,6 +34,7 @@ public class GameOverActivity extends Activity {
 	private TextView mTextView_score;
 	private Button mButton_share;
 	private Button mButton_replay, mButton_return;
+	private Handler uploadFinishHandler;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -43,6 +48,14 @@ public class GameOverActivity extends Activity {
 			renren = helper.getRenren();
 		}
 
+		uploadFinishHandler = new Handler() {
+			@Override
+			public void handleMessage(Message msg) {//覆盖handleMessage方法
+				helper.showShortTip(GameOverActivity.this, "上传成功，你可以到你的人人新鲜事查看");
+			}
+		};
+		
+		GameStatusModel.getInstance().addUploadFinishListener(uploadFinishHandler);
 		initButtons();
 		showScore();
 	}
