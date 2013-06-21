@@ -45,7 +45,7 @@ public class ScreenShot {
 	private static void savePic(Bitmap b, String strFileName) {
 		FileOutputStream fos = null;
 		try {
-			file = File.createTempFile(strFileName, "png");
+			file = File.createTempFile(strFileName, ".png");
 			fos = new FileOutputStream(file);
 			if (null != fos) {
 				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
