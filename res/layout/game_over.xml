@@ -4,25 +4,54 @@
     android:layout_height="match_parent"
     android:background="@drawable/background"
     android:orientation="vertical" >
-    
-     <Button
-        android:id="@+id/share_button"
+
+    <TextView
+        android:id="@+id/new_record"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentTop="true"
-        android:background="@drawable/button_yellow"
-        android:drawableLeft="@drawable/renren_logo"
-        android:text="@string/share_score" />
+        android:layout_alignParentLeft="true"
+        android:layout_marginLeft="22dp"
+        android:layout_marginTop="10dp"
+        android:text="@string/new_record"
+        android:textSize="20sp" />
+
+    <FrameLayout
+        android:id="@+id/show_result"
+        android:layout_width="wrap_content"
+        android:layout_height="150dip"
+        android:layout_below="@+id/new_record"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/score_final"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingBottom="15dip"
+            android:text="@string/final_score"
+            android:textSize="70sp"
+            android:textStyle="bold|italic"
+            android:layout_gravity="center"/>
+
+        <Button
+            android:id="@+id/share_button"
+            android:layout_width="wrap_content"
+            android:layout_height="70dip"
+            android:background="@drawable/renren_share"
+            android:layout_gravity="bottom" />
+
+        
+    </FrameLayout>
     
     <ImageView
-        android:id="@+id/star"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:layout_below="@+id/score_final"        
-        android:contentDescription="@string/app_name"
-        android:src="@drawable/star2" />
+            android:id="@+id/star"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/show_result"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="10dp"
+            android:contentDescription="@string/app_name"
+            android:src="@drawable/star2"
+            android:layout_gravity="bottom" />
 
     <LinearLayout
         android:id="@+id/button_group"
@@ -30,7 +59,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@+id/star"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
+        android:layout_marginTop="50dp"
         android:orientation="horizontal" >
 
         <Button
@@ -52,26 +81,5 @@
             android:textSize="25sp"
             android:textStyle="bold" />
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/score_final"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/share_button"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="59dp"
-        android:text="@string/final_score"
-        android:textSize="70sp"
-        android:textStyle="bold|italic" />
-
-    <TextView
-        android:id="@+id/new_record"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_above="@+id/score_final"
-        android:layout_alignParentLeft="true"
-        android:layout_marginLeft="22dp"
-        android:text="@string/new_record"
-        android:textSize="20sp" />
 
 </RelativeLayout>
