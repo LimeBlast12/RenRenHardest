@@ -11,16 +11,17 @@ import android.util.Log;
 public class GameStatusModel {
 	private List<Handler> scoreHandlers;
 	private List<Handler> timeHandlers;
-	private List<Handler> gameOverHandlers;
+	private List<Handler> gameStatusHandlers;
 	private static GameStatusModel thisRef;
 	public static final int SCORE_MSG = 1;
 	public static final int TIME_MSG = 2;
 	public static final int GAMEOVER_MSG = 3;
+	public static final int GAMEREADY_MSG = 4;
 	
 	private GameStatusModel() {
 		scoreHandlers = new ArrayList<Handler>();
 		timeHandlers = new ArrayList<Handler>();
-		gameOverHandlers = new ArrayList<Handler>();
+		gameStatusHandlers = new ArrayList<Handler>();
 	}
 	
 	public static GameStatusModel getInstance() {
@@ -43,12 +44,12 @@ public class GameStatusModel {
 		timeHandlers.remove(timeHandler);
 	}
 	
-	public void addGameOverListener(Handler gameOverHandler) {
-		gameOverHandlers.add(gameOverHandler);
+	public void addGameStatusListener(Handler gameOverHandler) {
+		gameStatusHandlers.add(gameOverHandler);
 	}
 	
-	public void removeGameOverListener(Handler gameOverHandler) {
-		gameOverHandlers.remove(gameOverHandler);
+	public void removeGameStatusListener(Handler gameStatusHandler) {
+		gameStatusHandlers.remove(gameStatusHandler);
 	}
 	
 	public void updateScore(int score) {
@@ -73,10 +74,25 @@ public class GameStatusModel {
 		}
 	}
 	
+	/**
+	 * 通知界面，游戏结束
+	 */
 	public void notifyGameOver() {
 		Log.i("GameStatusModel","notify gameover");
-		for (Handler h: gameOverHandlers) {
-			Message msg = Message.obtain(h, GAMEOVER_MSG);
+		updateGameStatus(GAMEOVER_MSG);
+	}
+	
+	/**
+	 * 通知界面，游戏数据准备完毕
+	 */
+	public void notifyGameDataReady() {
+		Log.i("GameStatusModel","notify gameready");
+		updateGameStatus(GAMEREADY_MSG);
+	}
+	
+	private void updateGameStatus(int what) {
+		for (Handler h: gameStatusHandlers) {
+			Message msg = Message.obtain(h, what);
 			msg.sendToTarget();
 		}
 	}
