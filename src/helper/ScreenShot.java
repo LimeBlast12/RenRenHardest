@@ -1,16 +1,21 @@
 package helper;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
+
 import android.app.Activity;
 import android.graphics.Bitmap;
 import android.graphics.Rect;
+import android.os.Environment;
 import android.view.View;
 
 public class ScreenShot {
+	private static File file;
+	
 	// 获取指定Activity的截屏，保存到png文件
-	public static Bitmap takeScreenShot(Activity activity) {
+	private static Bitmap takeScreenShot(Activity activity) {
 		// View是你需要截图的View
 		View view = activity.getWindow().getDecorView();
 		view.setDrawingCacheEnabled(true);
@@ -40,7 +45,8 @@ public class ScreenShot {
 	private static void savePic(Bitmap b, String strFileName) {
 		FileOutputStream fos = null;
 		try {
-			fos = new FileOutputStream(strFileName);
+			file = File.createTempFile(strFileName, "png");
+			fos = new FileOutputStream(file);
 			if (null != fos) {
 				b.compress(Bitmap.CompressFormat.PNG, 90, fos);
 				fos.flush();
@@ -55,6 +61,10 @@ public class ScreenShot {
 
 	// 程序入口
 	public static void shoot(Activity a) {
-		ScreenShot.savePic(ScreenShot.takeScreenShot(a), "sdcard/xx.png");
+		savePic(takeScreenShot(a), "temp.png");
+	}
+	
+	public static File getFile() {
+		return file;
 	}
 }

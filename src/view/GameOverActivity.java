@@ -5,11 +5,12 @@ import helper.ScreenShot;
 
 import java.lang.reflect.Field;
 
+import service.UploadScoreService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -17,7 +18,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renren.api.connect.android.Renren;
@@ -39,6 +39,9 @@ public class GameOverActivity extends Activity {
 		getOverflowMenu();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
+		if (renren == null) {
+			renren = helper.getRenren();
+		}
 
 		initButtons();
 		showScore();
@@ -65,13 +68,21 @@ public class GameOverActivity extends Activity {
 		mButton_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				//ScreenShot.shoot(GameOverActivity.this);
-				Bitmap bitmap = ScreenShot.takeScreenShot(GameOverActivity.this);
-				//ImageView iv = (ImageView) findViewById(R.id.star);
-				//iv.setImageBitmap(bitmap);
+				ScreenShot.shoot(GameOverActivity.this);
+				uploadScore();
 			}
 		});
 
+	}
+	
+	/**
+	 * 上传分数
+	 */
+	private void uploadScore() {
+		Intent intent = new Intent(GameOverActivity.this, UploadScoreService.class);
+		intent.putExtra(Renren.RENREN_LABEL, renren);
+		startService(intent);
+		Log.i("GameOverActivity", "click share");
 	}
 
 	/**

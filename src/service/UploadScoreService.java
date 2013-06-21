@@ -1,21 +1,10 @@
 package service;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
-import model.FriendListModel;
-
-import com.renren.api.connect.android.AsyncRenren;
-import com.renren.api.connect.android.Renren;
-import com.renren.api.connect.android.common.AbstractRequestListener;
-import com.renren.api.connect.android.exception.RenrenError;
-import com.renren.api.connect.android.friends.FriendsGetFriendsRequestParam;
-import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean;
-import com.renren.api.connect.android.friends.FriendsGetFriendsResponseBean.Friend;
-
 import helper.NetworkChecker;
+import helper.ScreenShot;
+
+import java.io.File;
+
 import android.annotation.SuppressLint;
 import android.app.Service;
 import android.content.Context;
@@ -23,6 +12,13 @@ import android.content.Intent;
 import android.os.Binder;
 import android.os.IBinder;
 import android.util.Log;
+
+import com.renren.api.connect.android.AsyncRenren;
+import com.renren.api.connect.android.Renren;
+import com.renren.api.connect.android.common.AbstractRequestListener;
+import com.renren.api.connect.android.exception.RenrenError;
+import com.renren.api.connect.android.photos.PhotoUploadRequestParam;
+import com.renren.api.connect.android.photos.PhotoUploadResponseBean;
 
 public class UploadScoreService extends Service {
 	private final IBinder binder = new MyBinder();
@@ -42,6 +38,7 @@ public class UploadScoreService extends Service {
 	public int onStartCommand(Intent intent, int flags, int startedId) {
 		Log.i(TAG, "onStartCommand");
 		networkChecker.checkAndShowTip(this,intent);
+		uploadScore(intent);
 		return Service.START_REDELIVER_INTENT;
 	}
 
@@ -53,50 +50,57 @@ public class UploadScoreService extends Service {
 	}
 
 	public void uploadScore(Intent intent) {
-		Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
-		Log.i("loadFriends", "begin");
-		if (renren != null) {
-			Log.i("loadFriends", "renren is not null");
-			AsyncRenren asyncRenren = new AsyncRenren(renren);
-			FriendsGetFriendsRequestParam param = new FriendsGetFriendsRequestParam();
-			AbstractRequestListener<FriendsGetFriendsResponseBean> listener = new AbstractRequestListener<FriendsGetFriendsResponseBean>() {
+		Log.i("uploadScore", "begin");
+		final Renren renren = intent.getParcelableExtra(Renren.RENREN_LABEL);
+		final File file = ScreenShot.getFile();		
+		if (renren != null && file != null) {
+			Log.i("uploadScore", "renren and picture is not null");
+			PhotoUploadRequestParam photoParam = new PhotoUploadRequestParam();	
+			photoParam.setFile(file);
+			// 调用SDK异步上传照片的接口
+			new AsyncRenren(renren).publishPhoto(photoParam,
+					new AbstractRequestListener<PhotoUploadResponseBean>() {
+						@Override
+						public void onRenrenError(RenrenError renrenError) {
+							if (renrenError != null) {
+//								Message message = new Message();
+//								Bundle bundle = new Bundle();
+//								bundle.putString(ERROR_LABEL,
+//										renrenError.getMessage());
+//								message.what = DATA_ERROR;
+//								message.setData(bundle);
+//								handler.sendMessage(message);
+							}
+						}
 
-				@Override
-				public void onComplete(final FriendsGetFriendsResponseBean bean) {
-					Log.i("FriendListService", "complete");
-					setData(bean.getFriendList());
-					stopSelf();
-				}
+						@Override
+						public void onFault(Throwable fault) {
+							if (fault != null) {
+//								Message message = new Message();
+//								Bundle bundle = new Bundle();
+//								bundle.putString(ERROR_LABEL,
+//										fault.getMessage());
+//								message.what = DATA_FAULT;
+//								message.setData(bundle);
+//								handler.sendMessage(message);
+							}
+						}
 
-				@Override
-				public void onRenrenError(RenrenError renrenError) {
-					// TODO Auto-generated method stub
-				}
-
-				@Override
-				public void onFault(Throwable fault) {
-					// TODO Auto-generated method stub
-				}
-
-			};
-			asyncRenren.getFriends(param, listener);
+						@Override
+						public void onComplete(PhotoUploadResponseBean bean) {
+							if (bean != null) {
+								Log.i("uploadScore","finish");
+//								Message message = new Message();
+//								Bundle bundle = new Bundle();
+//								bundle.putParcelable(BEAN_LABEL, bean);
+//								message.what = DATA_COMPLETE;
+//								message.setData(bundle);
+//								handler.sendMessage(message);
+							}
+						}
+					});		
 		}
 
-	}
-
-	private void setData(List<Friend> friendList) {
-		List<Map<String, Object>> data = new ArrayList<Map<String, Object>>();
-
-		for (Friend friend : friendList) {
-			Map<String, Object> map = new HashMap<String, Object>();
-			map.put("name", friend.getName());
-			map.put("image", friend.getHeadurl());
-			map.put("uid", friend.getUid());
-			data.add(map);
-		}
-
-		FriendListModel model = FriendListModel.getInstance();
-		model.setFriendList(data);
 	}
 
 	@Override
