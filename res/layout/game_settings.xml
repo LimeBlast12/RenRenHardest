@@ -31,7 +31,10 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/music_label"
             android:background="@drawable/button_blue"
-            android:checked="true" />
+            android:checked="true"
+            android:textOn="@string/music_on"
+            android:textOff="@string/music_off" />
+
     </RelativeLayout>
     
     <RelativeLayout
@@ -60,7 +63,9 @@
             android:layout_marginLeft="20dp"
             android:layout_toRightOf="@+id/sound_effect_label" 
             android:background="@drawable/button_yellow"
-            android:checked="true" />
+            android:checked="true"
+            android:textOn="@string/music_on"
+            android:textOff="@string/music_off" />
     </RelativeLayout>
     
     <RelativeLayout 

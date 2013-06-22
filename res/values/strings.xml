@@ -46,6 +46,8 @@
     <string name="difficulty_simple">简单</string>
     <string name="difficulty_middle">中等</string>
     <string name="difficulty_hard">困难</string>
+    <string name="music_on">开</string>
+    <string name="music_off">关</string>
     
     <!-- Game Over -->
     <string name="new_record">新记录诞生啦！</string>

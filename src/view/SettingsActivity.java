@@ -35,13 +35,14 @@ public class SettingsActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		Log.i("SettingsActivity", "on create");
 		super.onCreate(savedInstanceState);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		if (getActionBar() != null) {
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+		}
 		setContentView(R.layout.game_settings);
 		storer = ValueStorer.getInstance();
 		initButtons();
 		helper = ActivityHelper.getInstance();
-		helper.addActivity(this);
-		
+		helper.addActivity(this);		
 	}
 
 	private void initButtons() {
