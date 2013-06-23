@@ -24,7 +24,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	
 	
 	private int[] imageID = { R.drawable.t1, R.drawable.t2, R.drawable.t3,  
-	            R.drawable.t4, R.drawable.t5 };  
+	            R.drawable.t4, R.drawable.t5,R.drawable.t6};  
 	private ViewFlipper viewFlipper = null;
 	private GestureDetector gestureDetector = null; 
 	private ActivityHelper helper;
