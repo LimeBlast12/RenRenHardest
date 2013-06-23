@@ -66,14 +66,14 @@ public class LoginedMainActivity extends Activity {
 	}
 
 	private void initButtons() {
-		scoresButton = (Button) findViewById(R.id.choose_scores);
+		/*scoresButton = (Button) findViewById(R.id.choose_scores);
 		scoresButton.setOnClickListener(new View.OnClickListener() {
 
 			@Override
 			public void onClick(View v) {
 				startScoresActivity();
 			}
-		});
+		});*/
 
 		settingsButton = (Button) findViewById(R.id.choose_settings);
 		settingsButton.setOnClickListener(new View.OnClickListener() {
