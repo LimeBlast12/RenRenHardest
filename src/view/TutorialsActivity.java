@@ -31,12 +31,14 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	private int viewCount = 5;
 	private Intent intent; 
 	 
+	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
 		getOverflowMenu();
+		getActionBar().setTitle("游戏规则");
 		init();
 		
 	}

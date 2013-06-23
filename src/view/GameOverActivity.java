@@ -42,6 +42,7 @@ public class GameOverActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.game_over);
 		getOverflowMenu();
+		getActionBar().setTitle("游戏结束");
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		if (renren == null) {

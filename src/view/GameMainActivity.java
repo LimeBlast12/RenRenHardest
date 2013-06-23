@@ -55,6 +55,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 		setContentView(R.layout.game_mainview);
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
+		getActionBar().setTitle("正在游戏");
 		initHandlers();
 		game = Game.getInstance();// 一定要在initButtons之前
 

@@ -34,6 +34,7 @@ public class LoginedMainActivity extends Activity {
 	private Button logoutButton;
 	private long mExitTime;
 
+	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		/*初始化音乐和音效管理器*/
@@ -42,6 +43,7 @@ public class LoginedMainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
 		getOverflowMenu();
+		getActionBar().setTitle("游戏主页");
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		Intent intent = getIntent();

@@ -38,6 +38,7 @@ public class SettingsActivity extends Activity {
 		if (getActionBar() != null) {
 			getActionBar().setDisplayHomeAsUpEnabled(true);
 		}
+		getActionBar().setTitle("游戏设置");
 		setContentView(R.layout.game_settings);
 		storer = ValueStorer.getInstance();
 		initButtons();

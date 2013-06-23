@@ -42,6 +42,7 @@ public class AllFriendsActivity extends Activity implements ModelListener {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
+		getActionBar().setTitle("好友头像");
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		Intent intent = getIntent();

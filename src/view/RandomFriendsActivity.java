@@ -56,7 +56,7 @@ public class RandomFriendsActivity extends Activity implements ModelListener,
 
 		mSensorManager = (SensorManager) getSystemService(SENSOR_SERVICE);
 		mVibrator = (Vibrator) getSystemService(VIBRATOR_SERVICE);
-
+		getActionBar().setTitle("摇一摇换组");
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		handler = new Handler();
