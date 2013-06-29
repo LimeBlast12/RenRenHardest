@@ -70,6 +70,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 	}
 
 	public void onResume() {
+		Game.getInstance().resume();
 		super.onResume();
 		System.out.println("onResume");
 	}
@@ -260,6 +261,12 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private void updateTime(int time) {
 		mTextView_time = (TextView) findViewById(R.id.time_left);
 		mTextView_time.setText(time+"秒");
+	}
+
+	@Override
+	protected void onPause() {
+		Game.getInstance().pause();
+		super.onPause();
 	}
 	
 }

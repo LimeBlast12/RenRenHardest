@@ -44,6 +44,7 @@ public class Game {
 	private int score;		//当前分数
 	
 	private boolean started;	//游戏是否开始
+	private boolean paused;		//游戏是否暂停
 	private List<ImageDisplay> imageList;
 	
 	TimerTask updateTimeTask;
@@ -75,6 +76,7 @@ public class Game {
 	
 	public void resetGameState(){
 		this.setStarted(false);
+		this.setPaused(false);
 		this.setTimeLeft(10);	//10秒钟一局
 		this.setRightPic_own(0);
 		this.setRightPic_friends(0);
@@ -126,6 +128,43 @@ public class Game {
 	}
 	
 	private void startTimeUpdate(){
+		updateTimeTask = new TimerTask() {  
+	        @Override
+	        public void run(){
+	        	updateTime();
+	        }
+	    };
+		Timer timer = new Timer();
+		timer.schedule(updateTimeTask, 1000, 1000);
+	}
+	
+	private void pauseTime(){
+		if(this.updateTimeTask!=null){
+			this.updateTimeTask.cancel();
+		}
+	}
+	
+	public void pause(){
+		if(!this.isPaused()){
+			pauseTime();
+			stateMachine.changeState(new PauseState());
+			this.setPaused(true);
+		}
+	}
+	
+	public void resume(){
+		if(this.isPaused()){
+			stateMachine.revertState();
+			Thread thread = this.getTheThread();
+			synchronized (thread) {
+				thread.notify();
+			}
+			resumeTimeUpdate();
+			this.setPaused(false);
+		}
+	}
+	
+	private void resumeTimeUpdate(){
 		updateTimeTask = new TimerTask() {  
 	        @Override
 	        public void run(){
@@ -398,5 +437,13 @@ public class Game {
 
 	public void setStarted(boolean started) {
 		this.started = started;
+	}
+
+	public boolean isPaused() {
+		return paused;
+	}
+
+	public void setPaused(boolean paused) {
+		this.paused = paused;
 	}
 }
