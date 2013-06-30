@@ -51,7 +51,9 @@ public class SettingsActivity extends Activity {
 		soundEffectButton = (ToggleButton) findViewById(R.id.sound_effect_button);
 		difficultyButton = (Button) findViewById(R.id.difficulty_button);
 		
-		setMusicButton();
+		initMusicButton();
+		initSoundEffectButton();
+		initDifficultyButton();
 		
 		final Game game = Game.getInstance();
 		final int difficulty = game.getDifficulty();
@@ -69,9 +71,8 @@ public class SettingsActivity extends Activity {
 					//关闭音乐
 					SoundPlayer.setMusicSt(false);
 				}
-				//更改音乐设置
+				//存储音乐设置
 				storer.editMusicSetting(getApplicationContext(), PREFS_NAME, SoundPlayer.isMusicSt());
-				System.out.println(storer.readMusicSetting(getApplicationContext(), PREFS_NAME));
 			}		
 		});
 		
@@ -108,17 +109,32 @@ public class SettingsActivity extends Activity {
 				}
 				game.setDifficulty(newDifficulty);
 				setDifficultyButton(newDifficulty);
+				/*存储难度设置*/
+				storer.editDifficultySetting(getApplicationContext(), PREFS_NAME, newDifficulty);
 			}
 		});
 	}
 
-	private void setMusicButton(){
+	private void initMusicButton(){
 		boolean musicSt = storer.readMusicSetting(getApplicationContext(), PREFS_NAME);
 		if(musicSt){
 			musicButton.setChecked(true);
 		}else{
 			musicButton.setChecked(false);
 		}
+	}
+	
+	private void initSoundEffectButton(){
+		boolean soundEffectSt = storer.readSoundEffectSetting(getApplicationContext(), PREFS_NAME);
+		if(soundEffectSt){
+			soundEffectButton.setChecked(true);
+		}else{
+			soundEffectButton.setChecked(false);
+		}
+	}
+	
+	private void initDifficultyButton(){
+		
 	}
 	
 	private void setDifficultyButton(int difficulty) {

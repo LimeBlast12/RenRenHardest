@@ -1,10 +1,13 @@
 package game;
 
+import helper.ValueStorer;
 import imagefilter.BitmapFilter;
 
 import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import view.SettingsActivity;
 
 import model.GameStatusModel;
 import model.ImageDisplay;
@@ -17,6 +20,8 @@ import android.util.Log;
  *
  */
 public class Game {
+	public static final String PREFS_NAME = "SettingFile";
+	
 	public static final int DIFFICULTY_SIMPLE = 0;
 	public static final int DIFFICULTY_MIDDLE = 1;
 	public static final int DIFFICULTY_HARD = 2;
@@ -24,10 +29,11 @@ public class Game {
 	private static Game instance=null;
 	private StateMachine stateMachine;
 	private MyThread theThread;
+	private ValueStorer storer;
 	
 	/*游戏状态信息*/
 	private int timeLeft;	//剩余时间
-	private int difficulty = DIFFICULTY_SIMPLE;		//游戏难度级别,初始值为简单
+	private int difficulty;		//游戏难度级别
 	private int totalPic_own;	//自己的头像数量
 	private int totalPic_friends;	//好友头像数量
 	private int rightPic_own;		//答对的自己头像数
@@ -51,8 +57,7 @@ public class Game {
 	
 	private Game() {
 		stateMachine = new StateMachine(this);
-		leftBtnFilterType = BitmapFilter.ECLOSION_STYLE;	//给一个默认值
-		rightBtnFilterType = BitmapFilter.OIL_STYLE;
+		storer = ValueStorer.getInstance();
 	}
 	
 	public static Game getInstance(){

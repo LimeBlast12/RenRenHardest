@@ -47,5 +47,37 @@ public class ValueStorer {
 		return musicSetting;
 	}
 	
+	/*更改音效设置*/
+	public void editSoundEffectSetting(Context ctx, String prefsName, boolean soundEffectSetting){
+		SharedPreferences soundEffectPref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = soundEffectPref.edit();
+		editor.putBoolean("soundEffectSetting", soundEffectSetting);
+		// Commit the edits
+		editor.commit();
+	}
+
+	/*读取音效设置*/
+	public boolean readSoundEffectSetting(Context ctx, String prefsName){
+		SharedPreferences soundEffectPref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		boolean soundEffectSetting= soundEffectPref.getBoolean("soundEffectSetting", true);
+		return soundEffectSetting;
+	}
+	
+	/*更改难度设置*/
+	public void editDifficultySetting(Context ctx, String prefsName, int difficultySetting){
+		SharedPreferences difficultyPref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = difficultyPref.edit();
+		editor.putInt("difficultySetting", difficultySetting);
+		// Commit the edits
+		editor.commit();
+	}
+
+	/*读取难度设置*/
+	public int readDifficultySetting(Context ctx, String prefsName){
+		SharedPreferences difficultyPref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		int difficultySetting= difficultyPref.getInt("difficultySetting", 0);
+		return difficultySetting;
+	}
+	
 	
 }

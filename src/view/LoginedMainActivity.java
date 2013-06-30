@@ -1,6 +1,7 @@
 package view;
 
 
+import game.Game;
 import helper.SoundPlayer;
 import helper.ValueStorer;
 
@@ -39,6 +40,8 @@ public class LoginedMainActivity extends Activity {
 	public void onCreate(Bundle savedInstanceState) {
 		/*初始化音乐和音效管理器*/
 		initSoundPlayer();
+		/*初始化游戏难度*/
+		initDifficulty();
 		
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.game_chooseview);
@@ -119,6 +122,13 @@ public class LoginedMainActivity extends Activity {
 				SoundPlayer.setMusicSt(true);
 			}	
 		}
+	}
+	
+	public void initDifficulty(){
+		/*初始化游戏难度*/
+		final Game game = Game.getInstance();
+		int difficulty = storer.readDifficultySetting(getApplicationContext(), SettingsActivity.PREFS_NAME);
+		game.setDifficulty(difficulty);
 	}
 
 	/**
