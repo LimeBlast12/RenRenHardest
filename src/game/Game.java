@@ -48,6 +48,7 @@ public class Game {
 	private int inputFilterType;	//用户输入的滤镜类型，-1表示未输入
 	
 	private int score;		//当前分数
+	private int level;		//当前得分的星级
 	
 	private boolean started;	//游戏是否开始
 	private boolean paused;		//游戏是否暂停
@@ -109,7 +110,9 @@ public class Game {
 		int rightCount = this.getRightPic_own() + this.getRightPic_friends();
 		int wrongCount = this.getCurrentImageIndx() + 1 - rightCount;
 		int score = GameScorer.score(this.getTotalPic_own(), this.getTotalPic_friends(), rightCount, wrongCount, this.getDifficulty());
+		int level = GameScorer.getLevel(score);
 		this.setScore(score);
+		this.setLevel(level);
 		Log.i("filter", "MyImage : " + String.valueOf(this.getTotalPic_own()));
 		Log.i("filter", "Friends : " + String.valueOf(this.getTotalPic_friends()));
 		Log.i("filter", "rightFriends : " + String.valueOf(this.getRightPic_friends()));
@@ -450,5 +453,13 @@ public class Game {
 
 	public void setPaused(boolean paused) {
 		this.paused = paused;
+	}
+
+	public int getLevel() {
+		return level;
+	}
+
+	public void setLevel(int level) {
+		this.level = level;
 	}
 }

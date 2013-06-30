@@ -103,7 +103,7 @@ public class GameScorer {
 	/*
 	 * 获得游戏得分的星级
 	 */
-	public int getLevel(int score){
+	public static int getLevel(int score){
 		int starLevel = 0 ;
 		
 		if(score<5000)
