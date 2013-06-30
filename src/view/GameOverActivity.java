@@ -2,6 +2,7 @@ package view;
 
 import game.Game;
 import helper.ScreenShot;
+import helper.ValueStorer;
 
 import java.lang.reflect.Field;
 
@@ -29,8 +30,12 @@ import com.renren.api.connect.android.Renren;
 import edu.nju.renrenhardest.R;
 
 public class GameOverActivity extends Activity {
+	public static final String PREFS_NAME = "ScoreFile";
+
 	private Renren renren;
 	private ActivityHelper helper;
+	private ValueStorer storer;
+	private TextView mTextView_new_record;
 	private TextView mTextView_score;
 	private Button mButton_share;
 	private Button mButton_replay, mButton_return;
@@ -43,6 +48,7 @@ public class GameOverActivity extends Activity {
 		setContentView(R.layout.game_over);
 		getOverflowMenu();
 		getActionBar().setTitle("游戏结束");
+		storer = ValueStorer.getInstance();
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		if (renren == null) {
@@ -58,6 +64,7 @@ public class GameOverActivity extends Activity {
 		
 		GameStatusModel.getInstance().addUploadFinishListener(uploadFinishHandler);
 		initButtons();
+		isNewRecord();
 		showScore();
 	}
 
@@ -87,6 +94,24 @@ public class GameOverActivity extends Activity {
 			}
 		});
 
+	}
+	
+	/**
+	 * 判断是否创造新记录，是则更新最高记录
+	 */
+	private void isNewRecord(){
+		mTextView_new_record = (TextView) findViewById(R.id.new_record);
+		int score = Game.getInstance().getScore();
+		String string_to_show = "";
+		int highestScore = storer.readHighestScore(getApplicationContext(), PREFS_NAME);
+		if(score > highestScore){
+			storer.editHighestScore(getApplicationContext(), PREFS_NAME, score);
+			string_to_show = "新记录诞生啦！";
+		}else{
+			string_to_show = "木有突破最高分"+highestScore+"！继续努力~";
+		}
+		
+		mTextView_new_record.setText(string_to_show);
 	}
 	
 	/**

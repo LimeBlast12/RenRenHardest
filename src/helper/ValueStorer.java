@@ -79,5 +79,21 @@ public class ValueStorer {
 		return difficultySetting;
 	}
 	
+	/*更改最高分*/
+	public void editHighestScore(Context ctx, String prefsName, int highestScore){
+		SharedPreferences highestScorePref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		SharedPreferences.Editor editor = highestScorePref.edit();
+		editor.putInt("highestScore", highestScore);
+		// Commit the edits
+		editor.commit();
+	}
+
+	/*读取最高分*/
+	public int readHighestScore(Context ctx, String prefsName){
+		SharedPreferences highestScorePref = ctx.getSharedPreferences(prefsName, Context.MODE_PRIVATE);
+		int highestScore= highestScorePref.getInt("highestScore", 0);
+		return highestScore;
+	}
+	
 	
 }
