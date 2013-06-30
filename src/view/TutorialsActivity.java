@@ -38,6 +38,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
 		getOverflowMenu();
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setTitle("游戏规则");
 		init();
 		

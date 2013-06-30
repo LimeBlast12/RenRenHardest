@@ -100,5 +100,22 @@ public class GameScorer {
 				Math.min(30+30,numOfMyImages+numOfMyFriendsImages);
 	}
 
-	
+	/*
+	 * 获得游戏得分的星级
+	 */
+	public int getLevel(int score){
+		int starLevel = 0 ;
+		
+		if(score<5000)
+			starLevel = 0;        
+		if(5000<=score && score<7000)
+			starLevel = 1;
+		if(7000<=score && score<9000)
+			starLevel = 2;
+		if(score>=9000)
+			starLevel = 3;
+		
+		return starLevel;
+		
+	}
 }
