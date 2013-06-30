@@ -30,7 +30,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	private ActivityHelper helper;
 	private int viewCount = 5;
 	private Intent intent; 
-	 
+	
 	@SuppressLint("NewApi")
 	@SuppressWarnings("deprecation")
 	public void onCreate(Bundle savedInstanceState) {
@@ -206,6 +206,10 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 
 		switch(item.getItemId()){
 		
+			case android.R.id.home:
+				finish();
+				return true;
+			
 			case R.id.item_allMyImages:
 				helper.startMyImagesActivity(this);
 				return true;
