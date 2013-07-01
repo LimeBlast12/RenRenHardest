@@ -39,24 +39,26 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
 		getOverflowMenu();
-		// 从overflow进入教程
-    	if(intent.getStringExtra("enterFrom").equals("overflow")){
-    		getActionBar().setDisplayHomeAsUpEnabled(true);
-    	}
 		getActionBar().setTitle("游戏规则");
 		init();
 		
 	}
 	
+	
 	/*
 	 * 初始化
 	 */
+	@SuppressLint("NewApi")
 	private void init() {
 		helper = ActivityHelper.getInstance();
 		helper.addActivity(this);
 		viewFlipper = (ViewFlipper) findViewById(R.id.viewflipper);    
         gestureDetector = new GestureDetector(this);  // 生成GestureDetector对象，用于检测手势事件
         intent = getIntent();
+    	// 从overflow进入教程,有up button
+        if(intent.getStringExtra("enterFrom").equals("overflow")){
+    		getActionBar().setDisplayHomeAsUpEnabled(true);
+    	}
         for (int i = 0; i < imageID.length; i++)  
         {    
             ImageView image = new ImageView(this);  
@@ -213,7 +215,8 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		switch(item.getItemId()){
 		
 			case android.R.id.home:
-				finish();
+				if(intent.getStringExtra("enterFrom").equals("overflow"))
+					finish();
 				return true;
 			
 			case R.id.item_allMyImages:
