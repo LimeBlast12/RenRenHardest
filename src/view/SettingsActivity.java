@@ -82,10 +82,14 @@ public class SettingsActivity extends Activity {
 					boolean isChecked) {
 				// TODO Auto-generated method stub
 				if(isChecked){
-					
+					//打开音乐
+					SoundPlayer.setSoundSt(true);
 				}else{
-					
+					//关闭音乐
+					SoundPlayer.setSoundSt(false);
 				}
+				//存储音乐设置
+				storer.editSoundEffectSetting(getApplicationContext(), PREFS_NAME, SoundPlayer.isSoundSt());
 			}		
 		});
 		

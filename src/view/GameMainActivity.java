@@ -2,6 +2,7 @@ package view;
 
 import edu.nju.renrenhardest.R;
 import game.Game;
+import helper.SoundPlayer;
 import imagefilter.BitmapFilter;
 import model.GameStatusModel;
 import model.ModelListener;
@@ -172,6 +173,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 		filter_buttons[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				SoundPlayer.boom();
 				game.pickFilter(filterType[0]);
 			}
 		});
@@ -179,6 +181,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 		filter_buttons[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				SoundPlayer.boom();
 				game.pickFilter(filterType[1]);
 			}
 		});
@@ -187,6 +190,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 		game_friend_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				SoundPlayer.boom();
 				game.pickFriend();
 			}
 		});
