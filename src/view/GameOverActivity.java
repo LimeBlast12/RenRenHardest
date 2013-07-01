@@ -2,12 +2,12 @@ package view;
 
 import game.Game;
 import helper.ScreenShot;
+import helper.SoundPlayer;
 import helper.ValueStorer;
 
 import java.lang.reflect.Field;
 
 import model.GameStatusModel;
-
 import service.UploadScoreService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -24,6 +24,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewConfiguration;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.renren.api.connect.android.Renren;
@@ -38,6 +39,7 @@ public class GameOverActivity extends Activity {
 	private ValueStorer storer;
 	private TextView mTextView_new_record;
 	private TextView mTextView_score;
+	private ImageView mImageView_stars;
 	private Button mButton_share;
 	private Button mButton_replay, mButton_return;
 	private Handler uploadFinishHandler;
@@ -61,14 +63,17 @@ public class GameOverActivity extends Activity {
 			@Override
 			public void handleMessage(Message msg) {//覆盖handleMessage方法
 				uploadingDialog.dismiss();
-				helper.showShortTip(GameOverActivity.this, "上传成功，你可以到你的人人新鲜事查看");
+				helper.showShortTip(getApplicationContext(), "上传成功，你可以到你的人人新鲜事查看");
 			}
 		};
 		
 		GameStatusModel.getInstance().addUploadFinishListener(uploadFinishHandler);
 		initButtons();
+		initStars();
 		isNewRecord();
 		showScore();
+		
+		SoundPlayer.startMusic();
 	}
 
 	private void initButtons() {
@@ -93,11 +98,31 @@ public class GameOverActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				uploadingDialog = ProgressDialog.show(GameOverActivity.this, "上传成绩", "正在上传成绩到人人网...");
+				uploadingDialog.setCancelable(true);
 				ScreenShot.shoot(GameOverActivity.this);
 				uploadScore();
 			}
 		});
 
+	}
+	
+	private void initStars() {
+		int starLevel = Game.getInstance().getLevel();
+		mImageView_stars = (ImageView) findViewById(R.id.star);
+		switch (starLevel) {
+		case 0:
+			mImageView_stars.setImageResource(R.drawable.star0);
+			break;
+		case 1:
+			mImageView_stars.setImageResource(R.drawable.star1);
+			break;
+		case 2:
+			mImageView_stars.setImageResource(R.drawable.star2);
+			break;
+		case 3:
+			mImageView_stars.setImageResource(R.drawable.star3);
+			break;
+		}
 	}
 	
 	/**
@@ -108,7 +133,7 @@ public class GameOverActivity extends Activity {
 		int score = Game.getInstance().getScore();
 		String string_to_show = "";
 		int highestScore = storer.readHighestScore(getApplicationContext(), PREFS_NAME);
-		if(score > highestScore){
+		if(score >= highestScore){
 			storer.editHighestScore(getApplicationContext(), PREFS_NAME, score);
 			string_to_show = "新记录诞生啦！";
 		}else{

@@ -47,6 +47,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 	private SingleImageModel singleImageModel;
 	private GameStatusModel gameStatusModel;
+	private int lastScore = 0;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -116,10 +117,10 @@ public class GameMainActivity extends Activity implements ModelListener {
 				Log.i("gameStatusHandler", msg.what+"");
 				switch (msg.what) {
 				case GameStatusModel.GAMEOVER_MSG:
-					startGameOverView();
+					startGameOverView();					
 					break;				
 				case GameStatusModel.GAMEREADY_MSG:				
-					//helper.dismissProgress();
+					SoundPlayer.pauseMusic();
 					loadingDialog.dismiss();
 					break;
 				default:
@@ -173,7 +174,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 		filter_buttons[0].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SoundPlayer.boom();
 				game.pickFilter(filterType[0]);
 			}
 		});
@@ -181,7 +181,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 		filter_buttons[1].setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SoundPlayer.boom();
 				game.pickFilter(filterType[1]);
 			}
 		});
@@ -190,7 +189,6 @@ public class GameMainActivity extends Activity implements ModelListener {
 		game_friend_button.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				SoundPlayer.boom();
 				game.pickFriend();
 			}
 		});
@@ -256,6 +254,13 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private void updateScore(int score) {
 		mTextView_score = (TextView) findViewById(R.id.score_realtime);
 		mTextView_score.setText("分数："+score);
+		//根据得分播放音效
+		if (lastScore < score) {
+			SoundPlayer.soundYeah();
+		} else {
+			SoundPlayer.soundBoom();
+		}
+		lastScore = score;
 	}
 	
 	/**

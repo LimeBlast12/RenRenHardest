@@ -47,6 +47,7 @@ public class SoundPlayer {
 		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100);      
         soundMap = new HashMap<Integer,Integer>();
         soundMap.put(R.raw.boom, soundPool.load(context, R.raw.boom, 1));
+        soundMap.put(R.raw.yeah, soundPool.load(context, R.raw.yeah, 1));
 	}
 
 	// 初始化音乐播放器
@@ -147,8 +148,15 @@ public class SoundPlayer {
 	/**
 	 * 发出‘邦’的声音
 	 */
-	public static void boom() {
+	public static void soundBoom() {
 		playSound(R.raw.boom);
+	}
+	
+	/**
+	 * 发出‘yeah’的声音
+	 */
+	public static void soundYeah() {
+		playSound(R.raw.yeah);
 	}
 
 	/**
