@@ -11,6 +11,7 @@ import model.GameStatusModel;
 import service.UploadScoreService;
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
@@ -40,6 +41,7 @@ public class GameOverActivity extends Activity {
 	private Button mButton_share;
 	private Button mButton_replay, mButton_return;
 	private Handler uploadFinishHandler;
+	private ProgressDialog uploadingDialog;
 	
 	@SuppressLint("NewApi")
 	@Override
@@ -58,6 +60,7 @@ public class GameOverActivity extends Activity {
 		uploadFinishHandler = new Handler() {
 			@Override
 			public void handleMessage(Message msg) {//覆盖handleMessage方法
+				uploadingDialog.dismiss();
 				helper.showShortTip(GameOverActivity.this, "上传成功，你可以到你的人人新鲜事查看");
 			}
 		};
@@ -89,6 +92,7 @@ public class GameOverActivity extends Activity {
 		mButton_share.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				uploadingDialog = ProgressDialog.show(GameOverActivity.this, "上传成绩", "正在上传成绩到人人网...");
 				ScreenShot.shoot(GameOverActivity.this);
 				uploadScore();
 			}
@@ -120,7 +124,7 @@ public class GameOverActivity extends Activity {
 	private void uploadScore() {
 		Intent intent = new Intent(GameOverActivity.this, UploadScoreService.class);
 		intent.putExtra(Renren.RENREN_LABEL, renren);
-		startService(intent);
+		startService(intent);	
 		Log.i("GameOverActivity", "click share");
 	}
 
