@@ -116,11 +116,15 @@ public class LoginedMainActivity extends Activity {
 		/*初始化音乐和音效管理器，根据存储的设置来判断是否播放BGM*/
 		storer = ValueStorer.getInstance();
 		boolean musicSt = storer.readMusicSetting(getApplicationContext(), SettingsActivity.PREFS_NAME);
+		boolean soundSt = storer.readSoundEffectSetting(getApplicationContext(), SettingsActivity.PREFS_NAME);
 		if(SoundPlayer.getMusic() == null){
 			SoundPlayer.init(getApplicationContext());
 			if(musicSt){
 				SoundPlayer.setMusicSt(true);
-			}	
+			}
+			if(soundSt){
+				SoundPlayer.setSoundSt(true);
+			}
 		}
 	}
 	

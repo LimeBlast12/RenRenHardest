@@ -1,9 +1,11 @@
 package helper;
 
+import java.util.HashMap;
 import java.util.Map;
 
 import edu.nju.renrenhardest.R;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.media.AudioManager;
 import android.media.MediaPlayer;
@@ -40,8 +42,11 @@ public class SoundPlayer {
 	}
 
 	// 初始化音效播放器
+	@SuppressLint("UseSparseArrays")
 	private static void initSound() {
-		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100);
+		soundPool = new SoundPool(10, AudioManager.STREAM_MUSIC, 100);      
+        soundMap = new HashMap<Integer,Integer>();
+        soundMap.put(R.raw.boom, soundPool.load(context, R.raw.boom, 1));
 	}
 
 	// 初始化音乐播放器
@@ -57,7 +62,12 @@ public class SoundPlayer {
 	 *            音效资源id
 	 */
 	public static void playSound(int resId) {
-
+		if(soundSt == false)
+            return;
+         
+        Integer soundId = soundMap.get(resId);
+        if(soundId != null)
+            soundPool.play(soundId, 1, 1, 1, 0, 1);
 	}
 
 	/**
