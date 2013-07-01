@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -277,5 +278,14 @@ public class GameMainActivity extends Activity implements ModelListener {
 		Game.getInstance().pause();
 		super.onPause();
 	}
-	
+
+	// 屏蔽返回键
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_BACK:
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
+	}
 }

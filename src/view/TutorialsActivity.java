@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.GestureDetector;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -38,7 +39,10 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 		super.onCreate(savedInstanceState);
 		this.setContentView(R.layout.tutorials);	
 		getOverflowMenu();
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+		// 从overflow进入教程
+    	if(intent.getStringExtra("enterFrom").equals("overflow")){
+    		getActionBar().setDisplayHomeAsUpEnabled(true);
+    	}
 		getActionBar().setTitle("游戏规则");
 		init();
 		
@@ -78,6 +82,7 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
 	/*
 	 * 设置从左向右滑的动画效果,若教程结束,调用进入主界面的方法
 	 */ 
+	@SuppressLint("NewApi")
 	private void animationLtoR(){
 		
 		  this.viewFlipper.setInAnimation(AnimationUtils.loadAnimation(this,  
@@ -89,9 +94,10 @@ public class TutorialsActivity extends Activity implements OnGestureListener{
           
           if(viewCount==0){
         	// 从overflow进入教程
-        	if(intent.getStringExtra("enterFrom").equals("overflow"))
+        	if(intent.getStringExtra("enterFrom").equals("overflow")){
+        		getActionBar().setDisplayHomeAsUpEnabled(true);
         		viewFlipper.stopFlipping();
-     
+        	}
         	// 第一次使用从main进入教程
         	else if(intent.getStringExtra("enterFrom").equals("main"))
         		StartMainWhenAnimEnd();
