@@ -34,7 +34,7 @@ public class LoginedMainActivity extends Activity {
 	private Button startGameButton;
 	private Button logoutButton;
 	private long mExitTime;
-
+//	public static final int FLAG_HOMEKEY_DISPATCHED = 0x80000000;
 	@SuppressLint("NewApi")
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class LoginedMainActivity extends Activity {
 		initDifficulty();
 		
 		super.onCreate(savedInstanceState);
+//	    this.getWindow().setFlags(FLAG_HOMEKEY_DISPATCHED, FLAG_HOMEKEY_DISPATCHED);//关键代码
 		this.setContentView(R.layout.game_chooseview);
 		getOverflowMenu();
 		getActionBar().setTitle("游戏主页");
@@ -238,15 +239,23 @@ public class LoginedMainActivity extends Activity {
                   }
                   return true;
           }
+          /*
+          if (keyCode == KeyEvent.KEYCODE_HOME) {
+        	  helper.showShortTip(getApplicationContext(),"home home home");
+        	  helper.pauseMusic();
+          }
+          */
           return super.onKeyDown(keyCode, event);
 	}
 	
 	/**
 	 * 屏蔽Home键，但是好像屏蔽不了,待处理...
 	 */
-    @SuppressLint("NewApi")
+	
+    @SuppressLint("NewApi")  
 	public void onAttachedToWindow() {  
          this.getWindow().setType(WindowManager.LayoutParams.TYPE_KEYGUARD);     
          super.onAttachedToWindow();    
     }
+   
 }
