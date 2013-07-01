@@ -39,6 +39,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private final int COUNT_FILTER_TYPE = 2;
 	private Button filter_buttons[] = new Button[COUNT_FILTER_TYPE];// 现版本游戏设定两个filter，0代表左，1代表右
 	private Button game_friend_button = null;
+	private Button game_pause_button = null;
 	private ActivityHelper helper;
 	private ProgressDialog loadingDialog;
 	private Game game;
@@ -49,6 +50,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 	private SingleImageModel singleImageModel;
 	private GameStatusModel gameStatusModel;
 	private int lastScore = 0;
+	private boolean pauseManually;
 
 	@SuppressLint("NewApi")
 	@Override
@@ -73,7 +75,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 	}
 
 	public void onResume() {
-		Game.getInstance().resume();
+		//resumeGame();
 		super.onResume();
 		System.out.println("onResume");
 	}
@@ -193,6 +195,30 @@ public class GameMainActivity extends Activity implements ModelListener {
 				game.pickFriend();
 			}
 		});
+		
+		game_pause_button = (Button) findViewById(R.id.pause);
+		game_pause_button.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				if (pauseManually) {
+					resumeGame();
+				} else {
+					pauseGame();
+				}
+			}
+		});
+	}
+	
+	private void pauseGame() {
+		game_pause_button.setBackgroundResource(R.drawable.resume);
+		pauseManually = true;
+		game.pause();
+	}
+	
+	private void resumeGame() {
+		game_pause_button.setBackgroundResource(R.drawable.pause);
+		pauseManually = false;
+		game.resume();
 	}
 	
 	private void initTextViews() {
@@ -275,7 +301,7 @@ public class GameMainActivity extends Activity implements ModelListener {
 
 	@Override
 	protected void onPause() {
-		Game.getInstance().pause();
+		pauseGame();
 		super.onPause();
 	}
 
